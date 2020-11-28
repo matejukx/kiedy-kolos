@@ -6,6 +6,7 @@ $password = "Rakoczego19";
 $dbname = "aleksand_sps";
 
 $connection = new mysqli($servername, $username, $password, $dbname);
+mysqli_set_charset($connection, 'utf8'); 
 $date = $_GET['date'];
 
 // Check connection

@@ -6,7 +6,7 @@ $password = "Rakoczego19";
 $dbname = "aleksand_sps";
 
 $connection = new mysqli($servername, $username, $password, $dbname);
-
+mysqli_set_charset($connection, 'utf8'); 
 // Check connection
 if ($connection -> connect_errno) {
   echo "Failed to connect to MySQL: " . $connection -> connect_error;
