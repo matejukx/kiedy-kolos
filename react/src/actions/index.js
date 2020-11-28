@@ -1,6 +1,6 @@
-export const increment = (value) => {
+export const setDate = (value) => {
     return {
-        type: 'INCREMENT',
+        type: 'SET',
         payload: value
     };
 }

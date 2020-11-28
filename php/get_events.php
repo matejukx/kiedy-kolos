@@ -13,7 +13,7 @@ if ($connection -> connect_errno) {
   exit();
 }
 
-$sql = "SELECT events.date, year_group.number, course.name
+$sql = "SELECT events.id, events.date, year_group.number, course.name, course.short_name
         FROM events
         INNER JOIN year_group ON events.year_group_fk=year_group.id
         INNER JOIN course ON events.course_fk=course.id";

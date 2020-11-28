@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const AddEventPanel = ({refreshEvents}) => {
-    const API_URL_GET = `http://aleksanderblaszkiewicz.pl/kiedykolos/get_courses.php`;
+    const API_URL_GET = 'https://aleksanderblaszkiewicz.pl/kiedykolos/get_courses.php';
     const [courses, setCourses] = useState([]);
     const [name, setName] = useState("jezyki programowania");
     const [date, setDate] = useState("2020-12-12");
@@ -17,7 +17,8 @@ const AddEventPanel = ({refreshEvents}) => {
     }
 
     const addEvent = async () => {
-        const response = await fetch(`http://aleksanderblaszkiewicz.pl/kiedykolos/add_event.php?name=${name}&date=${date}`);
+        console.log(`Adding event ${name} to date ${date}`)
+        const response = await fetch(`https://aleksanderblaszkiewicz.pl/kiedykolos/add_event.php?name=${name}&date=${date}`);
         refreshEvents();
     }
 
@@ -33,7 +34,7 @@ const AddEventPanel = ({refreshEvents}) => {
         <>
             <select name="course" id="course" form="add-event" value={name} onChange={updateName}>
             {courses.map(course => (
-                <option key={course.id} value={course.id}>
+                <option key={course.id} value={course.name}>
                     {course.name}
                 </option>
             ))}

@@ -13,7 +13,7 @@ if ($connection -> connect_errno) {
   exit();
 }
 
-$sql = "SELECT name FROM course";
+$sql = "SELECT id, short_name, name FROM course";
         
 $result = mysqli_query($connection, $sql) or die("Error in Selecting " . mysqli_error($connection));
 

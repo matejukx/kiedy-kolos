@@ -1,8 +1,8 @@
-import counterReducer from './counter';
+import dateReducer from './chosenDate';
 import {combineReducers} from 'redux';
 
 const allReducers = combineReducers({
-    counter: counterReducer
+    chosenDate: dateReducer
 });
 
 export default allReducers;
