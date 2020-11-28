@@ -26,8 +26,8 @@ const Callendar = () => {
     }
 
     const initializeDays = () => {
-        let days = new Array(31);
-        for(let i=0; i<31; i++) {
+        let days = new Array(42);
+        for(let i=0; i<42; i++) {
             days[i] = i+1;
         }
         setDays(days);
@@ -43,13 +43,31 @@ const Callendar = () => {
         return specificEvents;
     }
 
+    var groupSize = 7;
+    var rows = days.map(function(day) {
+        // map content to html elements
+        return <CallendarCard key={day} day={day} month={month} year="2020" events={getEventsForDay(day)}/>;
+    }).reduce(function(r, element, index) {
+        // create element groups with size 3, result looks like:
+        // [[elem1, elem2, elem3], [elem4, elem5, elem6], ...]
+        index % groupSize === 0 && r.push([]);
+        r[r.length - 1].push(element);
+        return r;
+    }, []).map(function(rowContent) {
+        // surround every group with 'row'
+        return <div className="calendar__row">{rowContent}</div>;
+    });
+
     return (
-        <div className="callendar">
+        <div className="app__calendar">
             <AddEventPanel refreshEvents={getEvents}/>
-            <br />
-            {days.map(day => (
-                <CallendarCard key={day} day={day} month={month} year="2020" events={getEventsForDay(day)}/>
-            ))}
+            <div className="calendar__month">Listopad</div>
+            <div className="calendar__days">
+                    {rows}
+                    {/* {days.map(day => (
+                        <CallendarCard key={day} day={day} month={month} year="2020" events={getEventsForDay(day)}/>
+                    ))} */}
+            </div>
         </div>
     )
 

@@ -5,9 +5,11 @@ import InfoPanel from "./components/InfoPanel"
 
 const App = () => {
     return  (
-        <div className="App">
-            <Callendar />
-            <InfoPanel />
+        <div class="container">
+            <div class="app">
+                <Callendar />
+                <InfoPanel />
+            </div>
         </div>
     )
 }

@@ -22,14 +22,14 @@ const InfoPanel = () => {
     }
 
     return(
-        <div className="info-panel">
-            <div className="events">
+        <div className="app__extension">
+            <div className="app__events">
                 <p>Wybrana data: {date}</p>
                 {events.map((event) => (
                     <InfoEvent key={event.id} event={event} setChosenEvent={setChosenEvent}/>
                 ))}
             </div>
-            <div className="event-description">
+            <div className="app__info">
                 {chosenEvent && chosenEvent.description}
             </div>
         </div>
