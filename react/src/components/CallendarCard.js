@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setDate } from "./../actions";
+import { motion } from "framer-motion";
 import './../App.css';
 
 const CallendarCard = ({day, month, year, events}) => {
@@ -13,16 +14,23 @@ const CallendarCard = ({day, month, year, events}) => {
     }
 
     return(
-        <div class="calendar__day" tabindex="0" onClick={callendarCardClicked}>
-            <div class="day__events">
-                {events.map(event => (
-                    <p key={event.id}>
-                        {event.short_name.toUpperCase()}
-                    </p>
-                ))}
-            </div>
-            <div class="day__number">{day}</div>
-        </div>
+        <motion.div
+            className="calendar__day" tabindex="0"
+            onClick={callendarCardClicked}
+            initial={{y: 50}}
+            animate={{y: 0}}
+            transition={{type: "spring", stiffness: 400}}>
+                <div className="events">
+                    <ul class="events__list">
+                        {events.map(event => (
+                            <li className="events__item events__item--exam" key={event.id}>
+                                {event.short_name.toUpperCase()}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div class="day__number">{day}</div>
+        </motion.div>
     )
 }
 
