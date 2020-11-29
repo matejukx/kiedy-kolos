@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/kiedy-kolos/static/css/main.278605fb.chunk.css",
-    "main.js": "/kiedy-kolos/static/js/main.78fb31bb.chunk.js",
-    "main.js.map": "/kiedy-kolos/static/js/main.78fb31bb.chunk.js.map",
+    "main.css": "/kiedy-kolos/static/css/main.819e31e7.chunk.css",
+    "main.js": "/kiedy-kolos/static/js/main.e2e59585.chunk.js",
+    "main.js.map": "/kiedy-kolos/static/js/main.e2e59585.chunk.js.map",
     "runtime-main.js": "/kiedy-kolos/static/js/runtime-main.65f4db74.js",
     "runtime-main.js.map": "/kiedy-kolos/static/js/runtime-main.65f4db74.js.map",
-    "static/js/2.59740a43.chunk.js": "/kiedy-kolos/static/js/2.59740a43.chunk.js",
-    "static/js/2.59740a43.chunk.js.map": "/kiedy-kolos/static/js/2.59740a43.chunk.js.map",
+    "static/js/2.b98bd8bc.chunk.js": "/kiedy-kolos/static/js/2.b98bd8bc.chunk.js",
+    "static/js/2.b98bd8bc.chunk.js.map": "/kiedy-kolos/static/js/2.b98bd8bc.chunk.js.map",
     "static/js/3.71efb5e4.chunk.js": "/kiedy-kolos/static/js/3.71efb5e4.chunk.js",
     "static/js/3.71efb5e4.chunk.js.map": "/kiedy-kolos/static/js/3.71efb5e4.chunk.js.map",
     "index.html": "/kiedy-kolos/index.html",
-    "static/css/main.278605fb.chunk.css.map": "/kiedy-kolos/static/css/main.278605fb.chunk.css.map",
-    "static/js/2.59740a43.chunk.js.LICENSE.txt": "/kiedy-kolos/static/js/2.59740a43.chunk.js.LICENSE.txt"
+    "static/css/main.819e31e7.chunk.css.map": "/kiedy-kolos/static/css/main.819e31e7.chunk.css.map",
+    "static/js/2.b98bd8bc.chunk.js.LICENSE.txt": "/kiedy-kolos/static/js/2.b98bd8bc.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.65f4db74.js",
-    "static/js/2.59740a43.chunk.js",
-    "static/css/main.278605fb.chunk.css",
-    "static/js/main.78fb31bb.chunk.js"
+    "static/js/2.b98bd8bc.chunk.js",
+    "static/css/main.819e31e7.chunk.css",
+    "static/js/main.e2e59585.chunk.js"
   ]
 }
