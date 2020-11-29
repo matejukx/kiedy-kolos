@@ -13,13 +13,15 @@ const CallendarCard = ({day, month, year, events}) => {
     }
 
     return(
-        <div className="calendar__day" onClick={callendarCardClicked}>
-            <p className="title">{day}.{month}.{year} </p>
-            {events.map(event => (
-                <p key={event.id}>
-                    {event.short_name}
-                </p>
-            ))}
+        <div class="calendar__day" tabindex="0" onClick={callendarCardClicked}>
+            <div class="day__events">
+                {events.map(event => (
+                    <p key={event.id}>
+                        {event.short_name.toUpperCase()}
+                    </p>
+                ))}
+            </div>
+            <div class="day__number">{day}</div>
         </div>
     )
 }

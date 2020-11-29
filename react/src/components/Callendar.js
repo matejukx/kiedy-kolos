@@ -60,8 +60,23 @@ const Callendar = () => {
 
     return (
         <div className="app__calendar">
-            <AddEventPanel refreshEvents={getEvents}/>
-            <div className="calendar__month">Listopad</div>
+            {/* <AddEventPanel refreshEvents={getEvents}/> */}
+            <div className="calendar__month">
+                <button className="month__button">&lt;</button>
+                <h2 className="month__title">Listopad</h2>
+                <button className="month__button">&gt;</button>
+            </div>
+            <div className="calendar__names">
+                <ul>
+                <li>poniedziałek</li>
+                <li>wtorek</li>
+                <li>środa</li>
+                <li>czwartek</li>
+                <li>piątek</li>
+                <li>sobota</li>
+                <li>niedziela</li>
+                </ul>
+            </div>
             <div className="calendar__days">
                     {rows}
                     {/* {days.map(day => (
