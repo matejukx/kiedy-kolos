@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import dayjs from "dayjs";
 import './../App.css';
 
-const CallendarCard = ({day, active, events}) => {
+const CalendarCard = ({day, active, events}) => {
     const chosenDate = useSelector(state => state.chosenDate);
     const dispatch = useDispatch();
 
@@ -16,6 +16,7 @@ const CallendarCard = ({day, active, events}) => {
     const item = {
         hidden: { opacity: 0, x: -25 },
         show: { opacity: 1, x: 0 }
+        
       }
 
     return(
@@ -34,4 +35,4 @@ const CallendarCard = ({day, active, events}) => {
     )
 }
 
-export default CallendarCard;
+export default CalendarCard;

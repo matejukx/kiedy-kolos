@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import CallendarCard from "./CallendarCard";
+import CalendarCard from "./CalendarCard";
 import AddEventPanel from "./AddEventPanel";
 import { motion } from "framer-motion";
 import dayjs from "dayjs";
 import "./../App.css"
 import { setDate } from "../actions";
 
-const Callendar = () => {
+const Calendar = () => {
     const API_URL = `https://aleksanderblaszkiewicz.pl/kiedykolos/get_events.php`;
     const [events, setEvents] = useState([]);
     const [days, setDays] = useState([]);
@@ -97,18 +97,14 @@ const Callendar = () => {
         }
       }
 
-    var groupSize = 7;
+    const groupSize = 7;
     var rows = days.map(function(day) {
-        // map content to html elements
-        return <CallendarCard key={day} active={isDayActive(day)} day={day} events={getEventsForDay(day)}/>;
+        return <CalendarCard key={day} active={isDayActive(day)} day={day} events={getEventsForDay(day)}/>;
     }).reduce(function(r, element, index) {
-        // create element groups with size 3, result looks like:
-        // [[elem1, elem2, elem3], [elem4, elem5, elem6], ...]
         index % groupSize === 0 && r.push([]);
         r[r.length - 1].push(element);
         return r;
     }, []).map(function(rowContent) {
-        // surround every group with 'row'
         return <motion.div className="calendar__row" variants={container} initial="hidden" animate="show">{rowContent}</motion.div>;
     });
 
@@ -161,4 +157,4 @@ const WeekDays = () => {
 
 }
 
-export default Callendar;
+export default Calendar;
