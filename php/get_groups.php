@@ -13,10 +13,7 @@ if ($connection -> connect_errno) {
   exit();
 }
 
-$sql = "SELECT events.id, events.date, year_group.name AS group_name, course.name, course.short_name
-        FROM events
-        INNER JOIN year_group ON events.year_group_fk=year_group.id
-        INNER JOIN course ON events.course_fk=course.id";
+$sql = "SELECT name FROM group";
         
 $result = mysqli_query($connection, $sql) or die("Error in Selecting " . mysqli_error($connection));
 
@@ -27,8 +24,6 @@ while($row =mysqli_fetch_assoc($result))
     $emparray[] = $row;
 }
 echo json_encode($emparray);
-
-//http://aleksanderblaszkiewicz.pl/kiedykolos/get_events.php
 
 //close the db connection
 mysqli_close($connection);
