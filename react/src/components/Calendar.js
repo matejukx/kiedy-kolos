@@ -110,7 +110,7 @@ const Calendar = () => {
             {/* <AddEventPanel refreshEvents={getEvents}/> */}
             <div className="calendar__month">
                 <button className="month__button" onClick={() => decreaseMonth()}>&lt;</button>
-                <h2 className="month__title">{monthsWords[month-1]}</h2>
+                <motion.h2 key={month} className="month__title" initial={{x: swipeDirection * 50}} animate={{x: 0}}  transition={{ type: 'spring', stiffness: 600, damping: 50 }}>{monthsWords[month-1]}</motion.h2>
                 <button className="month__button" onClick={() => increaseMonth()}>&gt;</button>
             </div>
             <WeekDays />
