@@ -5,15 +5,17 @@ import { motion } from "framer-motion";
 import dayjs from "dayjs";
 import './../App.css';
 
-const CalendarCard = ({day, active, events}) => {
+const CalendarCard = ({day, active, events, swipeDirection}) => {
     const dispatch = useDispatch();
 
     const callendarCardClicked = () => {
         dispatch(setDate(day));
     }
 
+    console.log(swipeDirection);
+
     const item = {
-        hidden: { opacity: 0, x: -100 },
+        hidden: { opacity: 0, x: swipeDirection * 100 },
         show: { opacity: 1, x: 0 , transition: {
             type: 'spring', stiffness: 600, damping: 50
         } }

@@ -13,10 +13,12 @@ const Calendar = () => {
     const [days, setDays] = useState([]);
     const [month, setMonth] = useState();
     const [monthOffset, setMonthOffset] = useState(0);
+    const [swipeDirection, setSwipeDirection] = useState(1);
     const dispatch = useDispatch();
 
     const daysOfWeek = [7, 1, 2, 3, 4, 5, 6];
     const monthsWords = ['Styczeń', 'Luty',  'Marzec',  'Kwiecień',  'Maj', 'Czerwiec', 'Lipiec',  'Sierpień',  'Wrzesień',  'Październik',  'Listopad',  'Grudzień'];
+
     let today = dayjs();
    
     useEffect(() => {
@@ -35,8 +37,7 @@ const Calendar = () => {
     }
 
     const increaseMonth = () => {
-        setDays([]);
-
+        setSwipeDirection(1);
         let offset = monthOffset;
         offset++;
         setMonthOffset(offset);
@@ -46,6 +47,7 @@ const Calendar = () => {
     }
 
     const decreaseMonth = () => {
+        setSwipeDirection(-1);
         let offset = monthOffset;
         offset--;
         setMonthOffset(offset);
@@ -88,16 +90,13 @@ const Calendar = () => {
     const container = {
         hidden: { opacity: 0 },
         show: {
-          opacity: 1,
-          transition: {
-            staggerChildren: 0.05
-          }
+          opacity: 1
         }
       }
 
     const groupSize = 7;
     var rows = days.map(function(day) {
-        return <CalendarCard key={day} active={isDayActive(day)} day={day} events={getEventsForDay(day)}/>;
+        return <CalendarCard key={day} active={isDayActive(day)} day={day} events={getEventsForDay(day)} swipeDirection={swipeDirection}/>;
     }).reduce(function(r, element, index) {
         index % groupSize === 0 && r.push([]);
         r[r.length - 1].push(element);
@@ -108,7 +107,7 @@ const Calendar = () => {
 
     return (
         <div className="app__calendar">
-            <AddEventPanel refreshEvents={getEvents}/>
+            {/* <AddEventPanel refreshEvents={getEvents}/> */}
             <div className="calendar__month">
                 <button className="month__button" onClick={() => decreaseMonth()}>&lt;</button>
                 <h2 className="month__title">{monthsWords[month-1]}</h2>
