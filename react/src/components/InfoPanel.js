@@ -41,10 +41,10 @@ const InfoPanel = () => {
     return(
         <div className="app__extension">
             <motion.div className="app__events">
-                <h2 class="events__header">Wydarzenia {date}</h2>
-                <motion.ul class="events-list" variants={container} initial="hidden" animate={events.length > 0 && "show"}>
+                <h2 className="events__header">Wydarzenia {date}</h2>
+                <motion.ul className="events-list" variants={container} initial="hidden" animate={events.length > 0 && "show"}>
                     {events.map((event) => (
-                        <EventButton event={event} setChosenEvent={setChosenEvent}/>
+                        <EventButton key={event.id} event={event} setChosenEvent={setChosenEvent}/>
                     ))}
                 </motion.ul>
             </motion.div>
@@ -64,9 +64,9 @@ const EventButton = ({event, setChosenEvent}) => {
     return (
         <motion.li key={event.id} className="events-list__item" variants={item} whileTap={{scale: 0.95}} whileHover={{y: -5, scale: 1.02}} onClick={() => setChosenEvent(event)}>
             <h3>{event.name}</h3>
-            <div class="events-list__info">
-                <div class="events-list__time">11:30 - 12:45</div>
-                <div class="events-list__category">Projekt</div>
+            <div className="events-list__info">
+                <div className="events-list__time">11:30 - 12:45</div>
+                <div className="events-list__category">Projekt</div>
             </div>
         </motion.li>
     )
@@ -90,16 +90,16 @@ const EventDescription = ({event}) => {
       }
 
     return (
-        <div class="app__info">
+        <div className="app__info">
             {event &&
             <div key={event.id}>
              <motion.h3 initial={{y: 10, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{ type: "spring", stiffness: 600, damping: 50}}>{event.name}</motion.h3>
-            <motion.ul class="app__links" variants={container} initial="hidden" animate="show">
-              <a><motion.li class="app__link"  variants={item}>eNauczanie</motion.li></a>
-              <a><motion.li class="app__link"  variants={item}>Prezentacja</motion.li></a>
-              <a><motion.li class="app__link"  variants={item}>Dysk Google</motion.li></a>
+            <motion.ul className="app__links" variants={container} initial="hidden" animate="show">
+              <a><motion.li className="app__link"  variants={item}>eNauczanie</motion.li></a>
+              <a><motion.li className="app__link"  variants={item}>Prezentacja</motion.li></a>
+              <a><motion.li className="app__link"  variants={item}>Dysk Google</motion.li></a>
             </motion.ul>
-            <motion.div class="app__info-text" initial={{y: 50, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{ type: "spring", stiffness: 600, damping: 50, delay: 0.1}}>{event.description}</motion.div>
+            <motion.div className="app__info-text" initial={{y: 50, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{ type: "spring", stiffness: 600, damping: 50, delay: 0.1}}>{event.description}</motion.div>
             </div>}
           </div>
     )

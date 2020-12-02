@@ -81,8 +81,6 @@ const Calendar = () => {
     const isDayActive = (day) => {
         let thisMonth = today.add(monthOffset, 'month');
         let tmpDay = dayjs(day);
-
-        console.log("Checking if " + tmpDay.format('MM') + " belongs to " + thisMonth.format('MM') + ": ");
         return tmpDay.format('MM') == thisMonth.format('MM');
     }
 
@@ -110,7 +108,7 @@ const Calendar = () => {
 
     return (
         <div className="app__calendar">
-            {/* <AddEventPanel refreshEvents={getEvents}/> */}
+            <AddEventPanel refreshEvents={getEvents}/>
             <div className="calendar__month">
                 <button className="month__button" onClick={() => decreaseMonth()}>&lt;</button>
                 <h2 className="month__title">{monthsWords[month-1]}</h2>
