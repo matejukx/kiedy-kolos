@@ -3,11 +3,15 @@ import React, { useEffect, useState } from "react";
 const AddEventPanel = ({refreshEvents}) => {
     const API_URL_GET_COURSES = 'https://aleksanderblaszkiewicz.pl/kiedykolos/get_courses.php';
     const API_URL_GET_GROUPS = 'https://aleksanderblaszkiewicz.pl/kiedykolos/get_groups.php';
+    const API_URL_GET_TYPES = 'https://aleksanderblaszkiewicz.pl/kiedykolos/get_types.php';
     const [courses, setCourses] = useState([]);
     const [groups, setGroups] = useState([]);
+    const [types, setTypes] = useState([]);
+
 
     const [courseID, setCourseID] = useState(0);
     const [groupID, setGroupID] = useState(0);
+    const [typeID, setTypeID] = useState(0);
     const [date, setDate] = useState("2020-12-12");
     const [time, setTime] = useState("12:00");
     const [description, setDescription] = useState("Tu wpisz opis...");
@@ -15,6 +19,7 @@ const AddEventPanel = ({refreshEvents}) => {
     useEffect(() => {
         getCourses();
         getGroups();
+        getTypes();
     }, []);
 
     const getCourses = async () => {
@@ -31,11 +36,18 @@ const AddEventPanel = ({refreshEvents}) => {
         setGroupID(data[0].id);
     }
 
+    const getTypes = async () => {
+        const response = await fetch(API_URL_GET_TYPES);
+        const data = await response.json();
+        setTypes(data);
+        setTypeID(data[0].id);
+    }
+
     const addEvent = async () => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', },
-            body: JSON.stringify({ courseID: courseID, groupID: groupID, time:time, date: date, description: description}),
+            body: JSON.stringify({ courseID: courseID, groupID: groupID, time:time, date: date, description: description, typeID: typeID}),
             mode: 'no-cors', // no-cors, cors, *same-origin
         };
         const response = await fetch(`https://aleksanderblaszkiewicz.pl/kiedykolos/add_event.php`, requestOptions);
@@ -63,6 +75,10 @@ const AddEventPanel = ({refreshEvents}) => {
         setDescription(e.target.value);
     }
 
+    const updateTypeID = e => {
+        setTypeID(e.target.value);
+    }
+
     return(
         <>
             <select name="course" id="course" form="add-event" value={courseID} onChange={updateCourseID}>
@@ -76,6 +92,13 @@ const AddEventPanel = ({refreshEvents}) => {
             {groups.map(group => (
                 <option key={group.id} value={group.id}>
                     {group.name}
+                </option>
+            ))}
+            </select>
+            <select name="typeID" id="typeID" form="add-event" value={typeID} onChange={updateTypeID}>
+            {types.map(type => (
+                <option key={type.id} value={type.id}>
+                    {type.name}
                 </option>
             ))}
             </select>

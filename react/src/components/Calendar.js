@@ -107,7 +107,7 @@ const Calendar = () => {
 
     return (
         <div className="app__calendar">
-            {/* <AddEventPanel refreshEvents={getEvents}/> */}
+            <AddEventPanel refreshEvents={getEvents}/>
             <div className="calendar__month">
                 <button className="month__button" onClick={() => decreaseMonth()}>&lt;</button>
                 <motion.h2 key={month} className="month__title" initial={{x: swipeDirection * 50}} animate={{x: 0}}  transition={{ type: 'spring', stiffness: 600, damping: 50 }}>{monthsWords[month-1]}</motion.h2>

@@ -23,10 +23,11 @@ $groupID = $input["groupID"];
 $date = $input["date"];
 $time = $input["time"];
 $description = $input["description"];
+$typeID = $input["typeID"];
 
 $sql = "INSERT 
-        INTO `events` (`id`, `date`, `time`, `description`, `course_fk`, `year_group_fk`)
-        VALUES (NULL, '$date', '$time', '$description', '$courseID', '$groupID')";
+        INTO `events` (`id`, `date`, `time`, `description`, `course_fk`, `year_group_fk`, `type_fk`)
+        VALUES (NULL, '$date', '$time', '$description', '$courseID', '$groupID', '$typeID')";
 
 $result = mysqli_query($connection, $sql) or die("Error in Selecting " . mysqli_error($connection));
 
