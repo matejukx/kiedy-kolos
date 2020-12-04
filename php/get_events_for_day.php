@@ -6,6 +6,7 @@ $password = "Rakoczego19";
 $dbname = "aleksand_sps";
 
 $connection = new mysqli($servername, $username, $password, $dbname);
+mysqli_set_charset($connection, 'utf8'); 
 $date = $_GET['date'];
 
 // Check connection
@@ -15,7 +16,7 @@ if ($connection -> connect_errno) {
 }
 
 
-$sql = "SELECT events.id, events.date, events.description, year_group.number, course.name
+$sql = "SELECT events.id, events.date, events.description, year_group.name as group_name, course.name
         FROM events
         INNER JOIN year_group ON events.year_group_fk=year_group.id
         INNER JOIN course ON events.course_fk=course.id

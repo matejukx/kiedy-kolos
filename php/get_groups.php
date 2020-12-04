@@ -13,7 +13,7 @@ if ($connection -> connect_errno) {
   exit();
 }
 
-$sql = "SELECT id, short_name, name FROM course";
+$sql = "SELECT name FROM group";
         
 $result = mysqli_query($connection, $sql) or die("Error in Selecting " . mysqli_error($connection));
 
@@ -24,8 +24,6 @@ while($row =mysqli_fetch_assoc($result))
     $emparray[] = $row;
 }
 echo json_encode($emparray);
-
-//http://aleksanderblaszkiewicz.pl/kiedykolos/get_courses.php
 
 //close the db connection
 mysqli_close($connection);

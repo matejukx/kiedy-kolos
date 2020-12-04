@@ -6,14 +6,14 @@ $password = "Rakoczego19";
 $dbname = "aleksand_sps";
 
 $connection = new mysqli($servername, $username, $password, $dbname);
-
+mysqli_set_charset($connection, 'utf8'); 
 // Check connection
 if ($connection -> connect_errno) {
   echo "Failed to connect to MySQL: " . $connection -> connect_error;
   exit();
 }
 
-$sql = "SELECT events.id, events.date, year_group.number, course.name, course.short_name
+$sql = "SELECT events.id, events.date, year_group.name AS group_name, course.name, course.short_name
         FROM events
         INNER JOIN year_group ON events.year_group_fk=year_group.id
         INNER JOIN course ON events.course_fk=course.id";
