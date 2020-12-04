@@ -23,6 +23,7 @@ const InfoPanel = () => {
         const data = await response.json();
         const filteredData = data.filter(shouldBeDisplayed);
         setEvents(filteredData);
+        setChosenEvent(filteredData[0]);
         console.log(filteredData);
     }
 
@@ -101,7 +102,6 @@ const EventButton = ({event, setChosenEvent, chosenEvent}) => {
         return styleText;
     }
 
-    console.log(event);
     return (
         <motion.li key={event.id} className={"events-list__item" + style()} variants={item} whileTap={{scale: 0.95}} whileHover={{y: -5, scale: 1.02}} onClick={() => setChosenEvent(event)}>
             <h3>{event.name}</h3>

@@ -14,7 +14,8 @@ const AddEventPanel = ({refreshEvents}) => {
     const [typeID, setTypeID] = useState(0);
     const [date, setDate] = useState("2020-12-12");
     const [time, setTime] = useState("12:00");
-    const [description, setDescription] = useState("Tu wpisz opis...");
+    const [description, setDescription] = useState("");
+    const [password, setPassword] = useState("");
    
     useEffect(() => {
         getCourses();
@@ -47,7 +48,7 @@ const AddEventPanel = ({refreshEvents}) => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', },
-            body: JSON.stringify({ courseID: courseID, groupID: groupID, time:time, date: date, description: description, typeID: typeID}),
+            body: JSON.stringify({ courseID: courseID, groupID: groupID, time:time, date: date, description: description, typeID: typeID, password: password}),
             mode: 'no-cors', // no-cors, cors, *same-origin
         };
         const response = await fetch(`https://aleksanderblaszkiewicz.pl/kiedykolos/add_event.php`, requestOptions);
@@ -79,6 +80,10 @@ const AddEventPanel = ({refreshEvents}) => {
         setTypeID(e.target.value);
     }
 
+    const updatePassword = e => {
+        setPassword(e.target.value);
+    }
+
     return(
         <>
             <select name="course" id="course" form="add-event" value={courseID} onChange={updateCourseID}>
@@ -104,9 +109,10 @@ const AddEventPanel = ({refreshEvents}) => {
             </select>
             <input type="date" id="date" name="date" value="2020-11-25" min="2020-11-25" max="2021-12-31" value={date} onChange={updateDate}></input>
             <input type="time" id="time" name="time" min="07:00"  value ="16:00:00" max="21:00" value={time} onChange={updateTime}></input>
-            <textarea id="description" name="description" rows="4" cols="50" value={description} onChange={updateDescription}></textarea>
+            <input type="text" id="fname" name="fname" placeholder="Hasło" onChange={updatePassword}></input>
+            <textarea id="description" name="description" rows="4" cols="50" placeholder="Tu wpisz opis..." value={description} onChange={updateDescription}></textarea>
             
-            <button onClick={addEvent}>click here</button>
+            <button onClick={addEvent}>DODAJ WYDARZENIE</button>
             
         </>
     )

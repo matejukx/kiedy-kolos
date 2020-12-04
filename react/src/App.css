@@ -169,6 +169,7 @@ body {
   border-radius: 0.4rem;
   font-size: 2rem;
   box-shadow: var(--shadow-light);
+  transition: background-color 0.2s;
 }
 
 .group__number--selected {
