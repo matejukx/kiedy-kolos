@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { setDate } from "./../actions";
 import { motion } from "framer-motion";
 import dayjs from "dayjs";
@@ -7,6 +8,7 @@ import './../App.css';
 
 const CalendarCard = ({day, active, events, swipeDirection}) => {
     const dispatch = useDispatch();
+    const chosenDate = useSelector(state => state.chosenDate);
 
     const callendarCardClicked = () => {
         dispatch(setDate(day));
@@ -22,8 +24,20 @@ const CalendarCard = ({day, active, events, swipeDirection}) => {
         
       }
 
+    const style = () => {
+        if(day == chosenDate) {
+            return "calendar__day--selected";
+        }
+        else if(!active) {
+            return " calendar__day--inactive ";
+        }
+        else if(dayjs(day).day() == 0 || dayjs(day).day() == 6) {
+            return " calendar__day--weekend ";
+        }
+    }
+
     return(
-        <motion.div className={"calendar__day " + (active ? "" : "calendar__day--inactive")} tabindex="0" onClick={callendarCardClicked} variants={item} whileHover={{y: -2, scale: 1.05}} whileTap={{y: 0, scale: 0.95}}>
+        <motion.div className={"calendar__day " + style()} tabindex="0" onClick={callendarCardClicked} variants={item} whileHover={{y: -2, scale: 1.05}} whileTap={{y: 0, scale: 0.95}}>
                 <div className="events">
                     <ul className="events__list">
                         {events.map(event => (

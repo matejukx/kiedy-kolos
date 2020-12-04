@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import CalendarCard from "./CalendarCard";
 import AddEventPanel from "./AddEventPanel";
+import CalendarTools from "./CalendarTools";
 import { motion } from "framer-motion";
 import dayjs from "dayjs";
 import "./../App.css"
@@ -107,12 +108,13 @@ const Calendar = () => {
 
     return (
         <div className="app__calendar">
-            <AddEventPanel refreshEvents={getEvents}/>
+            {/* <AddEventPanel refreshEvents={getEvents}/> */}
             <div className="calendar__month">
                 <button className="month__button" onClick={() => decreaseMonth()}>&lt;</button>
                 <motion.h2 key={month} className="month__title" initial={{x: swipeDirection * 50}} animate={{x: 0}}  transition={{ type: 'spring', stiffness: 600, damping: 50 }}>{monthsWords[month-1]}</motion.h2>
                 <button className="month__button" onClick={() => increaseMonth()}>&gt;</button>
             </div>
+            <CalendarTools />
             <WeekDays />
             <motion.div className="calendar__days">
                     {rows}

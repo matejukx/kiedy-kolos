@@ -45,7 +45,7 @@ const InfoPanel = () => {
                 <h2 className="events__header">Wydarzenia {dayjs(date).format('DD.MM')}</h2>
                 <motion.ul className="events-list" variants={container} initial="hidden" animate={events.length > 0 && "show"}>
                     {events.map((event) => (
-                        <EventButton key={event.id} event={event} setChosenEvent={setChosenEvent}/>
+                        <EventButton key={event.id} event={event} setChosenEvent={setChosenEvent} chosenEvent={chosenEvent}/>
                     ))}
                 </motion.ul>
             </motion.div>
@@ -54,7 +54,7 @@ const InfoPanel = () => {
     )
 }
 
-const EventButton = ({event, setChosenEvent}) => {
+const EventButton = ({event, setChosenEvent, chosenEvent}) => {
     const item = {
         hidden: { opacity: 0, x: 100 },
         show: { opacity: 1, x: 0, transition: {
@@ -64,17 +64,32 @@ const EventButton = ({event, setChosenEvent}) => {
 
       
     const style = () => {
+        let styleText = "";
         if(event.type == "Kolokwium") {
-            return "events-list__item--exam";
+            styleText+= " events-list__item--exam ";
         }
         else if (event.type == "Projekt"){
-            return "events-list__item--project";
+            styleText+= " events-list__item--project ";
         }
+        else if (event.type == "Egzamin"){
+            styleText+= " events-list__item--exam ";
+        }
+        else if (event.type == "Laboratorium"){
+            styleText+= " events-list__item--lab ";
+        }
+        else if (event.type == "Inne"){
+            styleText+= " events-list__item--other ";
+        }
+
+        if(event == chosenEvent) {
+            styleText+= " events-list__item--selected ";
+        }
+        return styleText;
     }
 
     console.log(event);
     return (
-        <motion.li key={event.id} className={"events-list__item " + style()} variants={item} whileTap={{scale: 0.95}} whileHover={{y: -5, scale: 1.02}} onClick={() => setChosenEvent(event)}>
+        <motion.li key={event.id} className={"events-list__item" + style()} variants={item} whileTap={{scale: 0.95}} whileHover={{y: -5, scale: 1.02}} onClick={() => setChosenEvent(event)}>
             <h3>{event.name}</h3>
             <div className="events-list__info">
                 <div className="events-list__time">{event.time.slice(0,5)}</div>

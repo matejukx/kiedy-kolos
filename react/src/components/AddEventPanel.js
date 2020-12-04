@@ -52,7 +52,7 @@ const AddEventPanel = ({refreshEvents}) => {
         };
         const response = await fetch(`https://aleksanderblaszkiewicz.pl/kiedykolos/add_event.php`, requestOptions);
         console.log(response);
-        refreshEvents();
+        //refreshEvents();
     }
 
     const updateCourseID = e => {
