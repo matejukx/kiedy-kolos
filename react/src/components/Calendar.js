@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CalendarCard from "./CalendarCard";
 import AddEventPanel from "./AddEventPanel";
+import CalendarTools from "./CalendarTools";
 import { motion } from "framer-motion";
 import dayjs from "dayjs";
 import "./../App.css"
@@ -13,10 +14,14 @@ const Calendar = () => {
     const [days, setDays] = useState([]);
     const [month, setMonth] = useState();
     const [monthOffset, setMonthOffset] = useState(0);
+    const [swipeDirection, setSwipeDirection] = useState(1);
+    
     const dispatch = useDispatch();
+    const chosenGroup = useSelector(state => state.chosenGroup);
 
     const daysOfWeek = [7, 1, 2, 3, 4, 5, 6];
     const monthsWords = ['Styczeń', 'Luty',  'Marzec',  'Kwiecień',  'Maj', 'Czerwiec', 'Lipiec',  'Sierpień',  'Wrzesień',  'Październik',  'Listopad',  'Grudzień'];
+
     let today = dayjs();
    
     useEffect(() => {
@@ -27,16 +32,20 @@ const Calendar = () => {
         getEvents();
     }, []);
 
+    useEffect(() => {
+        getEvents();
+    }, [chosenGroup])
+
     const getEvents = async () => {
         const response = await fetch(API_URL);
         const data = await response.json();
-        setEvents(data);
-        console.log(data);
+        const filteredData = data.filter(shouldBeDisplayed);
+        setEvents(filteredData);
+        console.log(filteredData);
     }
 
     const increaseMonth = () => {
-        setDays([]);
-
+        setSwipeDirection(1);
         let offset = monthOffset;
         offset++;
         setMonthOffset(offset);
@@ -46,12 +55,24 @@ const Calendar = () => {
     }
 
     const decreaseMonth = () => {
+        setSwipeDirection(-1);
         let offset = monthOffset;
         offset--;
         setMonthOffset(offset);
         today = today.add(offset, 'month');
         setMonth(parseInt(today.format('MM')));
         initializeDays();
+    }
+
+    const shouldBeDisplayed = (event) => {
+        if(event.group_name == "Wszystkie" || event.group_name == chosenGroup) {
+            console.log("event " + event.id + " should be displayed");
+            return true;
+        }
+        else {
+            console.log("event " + event.id + " should NOT be displayed");
+            return false;
+        }
     }
 
 
@@ -81,8 +102,6 @@ const Calendar = () => {
     const isDayActive = (day) => {
         let thisMonth = today.add(monthOffset, 'month');
         let tmpDay = dayjs(day);
-
-        console.log("Checking if " + tmpDay.format('MM') + " belongs to " + thisMonth.format('MM') + ": ");
         return tmpDay.format('MM') == thisMonth.format('MM');
     }
 
@@ -90,16 +109,13 @@ const Calendar = () => {
     const container = {
         hidden: { opacity: 0 },
         show: {
-          opacity: 1,
-          transition: {
-            staggerChildren: 0.05
-          }
+          opacity: 1
         }
       }
 
     const groupSize = 7;
     var rows = days.map(function(day) {
-        return <CalendarCard key={day} active={isDayActive(day)} day={day} events={getEventsForDay(day)}/>;
+        return <CalendarCard key={day} active={isDayActive(day)} day={day} events={getEventsForDay(day)} swipeDirection={swipeDirection}/>;
     }).reduce(function(r, element, index) {
         index % groupSize === 0 && r.push([]);
         r[r.length - 1].push(element);
@@ -113,9 +129,10 @@ const Calendar = () => {
             {/* <AddEventPanel refreshEvents={getEvents}/> */}
             <div className="calendar__month">
                 <button className="month__button" onClick={() => decreaseMonth()}>&lt;</button>
-                <h2 className="month__title">{monthsWords[month-1]}</h2>
+                <motion.h2 key={month} className="month__title" initial={{x: swipeDirection * 50}} animate={{x: 0}}  transition={{ type: 'spring', stiffness: 600, damping: 50 }}>{monthsWords[month-1]}</motion.h2>
                 <button className="month__button" onClick={() => increaseMonth()}>&gt;</button>
             </div>
+            <CalendarTools />
             <WeekDays />
             <motion.div className="calendar__days">
                     {rows}
