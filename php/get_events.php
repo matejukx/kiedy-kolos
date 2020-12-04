@@ -13,10 +13,11 @@ if ($connection -> connect_errno) {
   exit();
 }
 
-$sql = "SELECT events.id, events.date, year_group.name AS group_name, course.name, course.short_name
+$sql = "SELECT events.id, events.date, year_group.name AS group_name, course.name, course.short_name, event_type.name as type
         FROM events
         INNER JOIN year_group ON events.year_group_fk=year_group.id
-        INNER JOIN course ON events.course_fk=course.id";
+        INNER JOIN course ON events.course_fk=course.id
+        INNER JOIN event_type ON events.type_fk=event_type.id";
         
 $result = mysqli_query($connection, $sql) or die("Error in Selecting " . mysqli_error($connection));
 

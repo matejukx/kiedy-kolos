@@ -14,8 +14,6 @@ const CalendarCard = ({day, active, events, swipeDirection}) => {
         dispatch(setDate(day));
     }
 
-    console.log(swipeDirection);
-
     const item = {
         hidden: { opacity: 0, x: swipeDirection * 100 },
         show: { opacity: 1, x: 0 , transition: {
@@ -36,14 +34,14 @@ const CalendarCard = ({day, active, events, swipeDirection}) => {
         }
     }
 
+
+
     return(
         <motion.div className={"calendar__day " + style()} tabindex="0" onClick={callendarCardClicked} variants={item} whileHover={{y: -2, scale: 1.05}} whileTap={{y: 0, scale: 0.95}}>
                 <div className="events">
                     <ul className="events__list">
                         {events.map(event => (
-                            <li className="events__item events__item--exam" key={event.id}>
-                                {event.short_name.toUpperCase()}
-                            </li>
+                            <Event event={event}/>
                         ))}
                     </ul>
                 </div>
@@ -53,3 +51,32 @@ const CalendarCard = ({day, active, events, swipeDirection}) => {
 }
 
 export default CalendarCard;
+
+
+const Event = ({event}) => {
+    
+    const style = () => {
+        console.log("EEEEEEEEEEEEEE: " + event.type);
+        if(event.type == "Kolokwium") {
+            return " events__item--exam ";
+        }
+        else if (event.type == "Projekt"){
+            return " events__item--project ";
+        }
+        else if (event.type == "Egzamin"){
+            return " events__item--exam ";
+        }
+        else if (event.type == "Laboratorium"){
+            return " events__item--lab ";
+        }
+        else if (event.type == "Inne"){
+            return " events__item--other ";
+        }
+    }
+
+    return (
+        <li className={"events__item " + style()} key={event.id}>
+            {event.short_name.toUpperCase()}
+        </li>
+    )
+}

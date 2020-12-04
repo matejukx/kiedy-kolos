@@ -10,20 +10,34 @@ const InfoPanel = () => {
     const [events, setEvents] = useState([]);
     const [chosenEvent, setChosenEvent] = useState();
     const date = useSelector(state => state.chosenDate);
+    const chosenGroup = useSelector(state => state.chosenGroup);
     const API_URL = `https://aleksanderblaszkiewicz.pl/kiedykolos/get_events_for_day.php?date=${date}`;
 
     useEffect(() => {
         setEvents([]);
         getEvents();
-    }, [date]);
+    }, [date, chosenGroup]);
 
     const getEvents = async () => {
         const response = await fetch(API_URL);
         const data = await response.json();
-        setEvents(data);
-        setChosenEvent(data[0]);
+        const filteredData = data.filter(shouldBeDisplayed);
+        setEvents(filteredData);
+        console.log(filteredData);
     }
 
+
+
+    const shouldBeDisplayed = (event) => {
+        if(event.group_name == "Wszystkie" || event.group_name == chosenGroup) {
+            console.log("event " + event.id + " should be displayed");
+            return true;
+        }
+        else {
+            console.log("event " + event.id + " should NOT be displayed");
+            return false;
+        }
+    }
 
 
     const container = {

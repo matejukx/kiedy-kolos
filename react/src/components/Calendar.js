@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CalendarCard from "./CalendarCard";
 import AddEventPanel from "./AddEventPanel";
 import CalendarTools from "./CalendarTools";
@@ -15,7 +15,9 @@ const Calendar = () => {
     const [month, setMonth] = useState();
     const [monthOffset, setMonthOffset] = useState(0);
     const [swipeDirection, setSwipeDirection] = useState(1);
+    
     const dispatch = useDispatch();
+    const chosenGroup = useSelector(state => state.chosenGroup);
 
     const daysOfWeek = [7, 1, 2, 3, 4, 5, 6];
     const monthsWords = ['Styczeń', 'Luty',  'Marzec',  'Kwiecień',  'Maj', 'Czerwiec', 'Lipiec',  'Sierpień',  'Wrzesień',  'Październik',  'Listopad',  'Grudzień'];
@@ -30,11 +32,16 @@ const Calendar = () => {
         getEvents();
     }, []);
 
+    useEffect(() => {
+        getEvents();
+    }, [chosenGroup])
+
     const getEvents = async () => {
         const response = await fetch(API_URL);
         const data = await response.json();
-        setEvents(data);
-        console.log(data);
+        const filteredData = data.filter(shouldBeDisplayed);
+        setEvents(filteredData);
+        console.log(filteredData);
     }
 
     const increaseMonth = () => {
@@ -55,6 +62,17 @@ const Calendar = () => {
         today = today.add(offset, 'month');
         setMonth(parseInt(today.format('MM')));
         initializeDays();
+    }
+
+    const shouldBeDisplayed = (event) => {
+        if(event.group_name == "Wszystkie" || event.group_name == chosenGroup) {
+            console.log("event " + event.id + " should be displayed");
+            return true;
+        }
+        else {
+            console.log("event " + event.id + " should NOT be displayed");
+            return false;
+        }
     }
 
 
