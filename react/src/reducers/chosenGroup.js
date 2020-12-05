@@ -1,10 +1,10 @@
-const dateReducer = (state = "2020-11-01", action) => {
+const groupReducer = (state = "Grupa 1", action) => {
     switch(action.type) {
-        case 'SET_DATE':
+        case 'SET_GROUP':
             return action.payload
         default:
             return state
     }
 }
 
-export default dateReducer;
+export default groupReducer;

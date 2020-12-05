@@ -6,22 +6,31 @@ import reportWebVitals from './reportWebVitals';
 import { createStore } from 'redux';
 import allReducer from './reducers';
 import { Provider } from 'react-redux';
+import { HashRouter } from "react-router-dom";
+import { loadState, saveState } from './storage/localStorage';
 
+const persistedStore = loadState();
 const store = createStore(
     allReducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    persistedStore
   );
+
+store.subscribe(() => {
+  saveState({
+    chosenGroup: store.getState().chosenGroup
+  });
+});
+
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <HashRouter basename="/">
+        <App />
+      </HashRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
