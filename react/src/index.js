@@ -7,11 +7,20 @@ import { createStore } from 'redux';
 import allReducer from './reducers';
 import { Provider } from 'react-redux';
 import { HashRouter } from "react-router-dom";
+import { loadState, saveState } from './storage/localStorage';
 
+const persistedStore = loadState();
 const store = createStore(
     allReducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    persistedStore
   );
+
+store.subscribe(() => {
+  saveState({
+    chosenGroup: store.getState().chosenGroup
+  });
+});
+
 
 ReactDOM.render(
   <React.StrictMode>
