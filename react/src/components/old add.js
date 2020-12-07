@@ -109,7 +109,7 @@ const OldAdd = ({refreshEvents}) => {
             </select>
             <input type="date" id="date" name="date" value="2020-11-25" min="2020-11-25" max="2021-12-31" value={date} onChange={updateDate}></input>
             <input type="time" id="time" name="time" min="07:00"  value ="16:00:00" max="21:00" value={time} onChange={updateTime}></input>
-            <input type="text" id="fname" name="fname" placeholder="Hasło" onChange={updatePassword}></input>
+            <input type="text" id="password" name="password" placeholder="Hasło" onChange={updatePassword}></input>
             <textarea id="description" name="description" rows="4" cols="50" placeholder="Tu wpisz opis..." value={description} onChange={updateDescription}></textarea>
             
             <button onClick={addEvent}>DODAJ WYDARZENIE</button>

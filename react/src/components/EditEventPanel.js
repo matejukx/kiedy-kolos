@@ -4,11 +4,68 @@ import './../AdminPanel.css';
 
 const AddEventPanel = () => {
     const chosenEvent = useSelector(state => state.chosenEventAdmin);
+    const API_URL_GET_COURSES = 'https://aleksanderblaszkiewicz.pl/kiedykolos/get_courses.php';
+    const API_URL_GET_GROUPS = 'https://aleksanderblaszkiewicz.pl/kiedykolos/get_groups.php';
+    const API_URL_GET_TYPES = 'https://aleksanderblaszkiewicz.pl/kiedykolos/get_types.php';
+
     const [event, setEvent] = useState([]);
+
+    const [courses, setCourses] = useState([]);
+    const [groups, setGroups] = useState([]);
+    const [types, setTypes] = useState([]);
+
+    const [courseID, setCourseID] = useState(0);
+    const [groupID, setGroupID] = useState(0);
+    const [typeID, setTypeID] = useState(0);
+    const [date, setDate] = useState("2020-12-12");
+    const [time, setTime] = useState("12:00");
+    const [description, setDescription] = useState("");
+    const [password, setPassword] = useState("");
+
+    useEffect(() => {
+        getCourses();
+        getGroups();
+        getTypes();
+    }, []);
 
     useEffect(() => {
         getEventInfo();
     }, [chosenEvent])
+
+    useEffect(() => {
+        initializeEventInfo();
+    }, [event])
+
+    const initializeEventInfo = () => {
+        console.log("Initializing fields");
+        setDescription(event.description);
+        setDate(event.date);
+        setTime(event.time);
+        setGroupID(event.group_id);
+        setTypeID(event.type_id);
+        setCourseID(event.course_id);
+    }
+
+    const getCourses = async () => {
+      const response = await fetch(API_URL_GET_COURSES);
+      const data = await response.json();
+      setCourses(data);
+      setCourseID(data[0].id);
+     }
+
+    const getGroups = async () => {
+      const response = await fetch(API_URL_GET_GROUPS);
+      const data = await response.json();
+      setGroups(data);
+      setGroupID(data[0].id);
+    }
+
+    const getTypes = async () => {
+      const response = await fetch(API_URL_GET_TYPES);
+      const data = await response.json();
+      setTypes(data);
+      setTypeID(data[0].id);
+    }
 
     const getEventInfo = async () => {
         const response = await fetch(`https://aleksanderblaszkiewicz.pl/kiedykolos/get_event_details.php?id=${chosenEvent}`);
@@ -17,60 +74,88 @@ const AddEventPanel = () => {
         console.log(data[0]);
     }
 
+    const updateCourseID = e => {
+        setCourseID(e.target.value);
+    }
+
+    const updateDate = e => {
+        setDate(e.target.value);
+    }
+
+    const updateGroupID = e => {
+        setGroupID(e.target.value);
+    }
+
+    const updateTime = e => {
+        setTime(e.target.value);
+    }
+
+    const updateDescription = e => {
+        setDescription(e.target.value);
+    }
+
+    const updateTypeID = e => {
+        setTypeID(e.target.value);
+    }
+
+    const updatePassword = e => {
+        setPassword(e.target.value);
+    }
+
     return(
         <div class="event-info">
           <h2 class="events__header">Edycja Wydarzenia {event.id}</h2>
 
           <div class="option">
             <label class="events-form__label" for="title">Przedmiot</label>
-            <select name="title" id="title">
-              <option value="paa">Podstawy Analizy Algorytmów</option>
-              <option value="graf">Grafika Komputerowa</option>
-              <option value="mercedes">Mercedes</option>
-              <option value="audi">Audi</option>
+            <select name="course" id="course" form="add-event" value={courseID} onChange={updateCourseID}>
+            {courses.map(course => (
+                <option key={course.id} value={course.id}>
+                    {course.name}
+                </option>
+            ))}
             </select>
           </div>
 
           <div class="option">
             <label class="events-form__label" for="group">Grupa</label>
-            <select name="group" id="group">
-              <option value="gAll">Wszystkie</option>
-              <option value="g1">1</option>
-              <option value="g2">2</option>
-              <option value="g3">3</option>
-              <option value="g4">4</option>
-              <option value="g5">5</option>
-              <option value="g6">6</option>
+            <select name="groupID" id="groupID" form="add-event" value={groupID} onChange={updateGroupID}>
+                {groups.map(group => (
+                    <option key={group.id} value={group.id}>
+                        {group.name}
+                    </option>
+                ))}
             </select>
           </div>
 
           <div class="option">
             <label class="events-form__label" for="type">Typ</label>
-            <select name="type" id="type">
-              <option value="g1">Kolokwium</option>
-              <option value="g2">Laboratorium</option>
-              <option value="g3">Projekt</option>
-              <option value="g4">Inne</option>
+            <select name="typeID" id="typeID" form="add-event" value={typeID} onChange={updateTypeID}>
+                {types.map(type => (
+                    <option key={type.id} value={type.id}>
+                        {type.name}
+                    </option>
+                ))}
             </select>
           </div>
 
           <div class="option">
             <label class="events-form__label" for="date">Data</label>
-            <input id="date" type="date" />
+            <input type="date" id="date" name="date" value="2020-11-25" min="2020-11-25" max="2021-12-31" value={date} onChange={updateDate}></input>
           </div>
 
           <div class="option">
             <label class="events-form__label" for="time">Godzina</label>
-            <input id="time" type="time" />
+            <input type="time" id="time" name="time" min="07:00"  value ="16:00:00" max="21:00" value={time} onChange={updateTime}></input>
           </div>
 
           <div class="option">
             <label class="events-form__label" for="description">Opis</label>
-            <textarea cols="30" rows="5" id="description" value={event.description}></textarea>
+            <textarea id="description" name="description" rows="5" cols="30" placeholder="Tu wpisz opis..." value={description} onChange={updateDescription}></textarea>
           </div>
 
           <div class="option submit">
-            <input type="password" placeholder="Hasło" />
+          <input type="password" id="password" name="password" placeholder="Hasło" onChange={updatePassword}></input>
             <button class="submit__button submit__button--delete">Usuń</button>
             <button class="submit__button">Zapisz</button>
           </div>
