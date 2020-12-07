@@ -46,6 +46,27 @@ const AddEventPanel = () => {
         setCourseID(event.course_id);
     }
 
+    const editEvent = async () => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', },
+            body: JSON.stringify({ eventID: chosenEvent, courseID: courseID, groupID: groupID, time:time, date: date, description: description, typeID: typeID, password: password}),
+            mode: 'no-cors', // no-cors, cors, *same-origin
+        };
+        const response = await fetch(`https://aleksanderblaszkiewicz.pl/kiedykolos/edit_event.php`, requestOptions);
+    }
+
+    const deleteEvent = async () => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', },
+            body: JSON.stringify({ eventID: chosenEvent, password: password }),
+            mode: 'no-cors', // no-cors, cors, *same-origin
+        };
+        const response = await fetch(`https://aleksanderblaszkiewicz.pl/kiedykolos/delete_event.php`, requestOptions);
+    }
+    
+
     const getCourses = async () => {
       const response = await fetch(API_URL_GET_COURSES);
       const data = await response.json();
@@ -156,8 +177,8 @@ const AddEventPanel = () => {
 
           <div class="option submit">
           <input type="password" id="password" name="password" placeholder="Hasło" onChange={updatePassword}></input>
-            <button class="submit__button submit__button--delete">Usuń</button>
-            <button class="submit__button">Zapisz</button>
+            <button class="submit__button submit__button--delete" onClick={deleteEvent}>Usuń</button>
+            <button class="submit__button" onClick={editEvent}>Zapisz</button>
           </div>
         </div>
     )
