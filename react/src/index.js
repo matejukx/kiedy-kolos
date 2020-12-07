@@ -12,7 +12,8 @@ import { loadState, saveState } from './storage/localStorage';
 const persistedStore = loadState();
 const store = createStore(
     allReducer,
-    persistedStore
+    persistedStore,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   );
 
 store.subscribe(() => {

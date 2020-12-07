@@ -11,3 +11,10 @@ export const setGroup = (value) => {
         payload: value
     }
 }
+
+export const setChosenEventAdmin = (value) => {
+    return {
+        type: 'SET_EVENT',
+        payload: value
+    }
+}

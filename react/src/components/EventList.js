@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setChosenEventAdmin } from "../actions";
 import './../AdminPanel.css';
 
 const EventList = () => {
     const API_URL = `https://aleksanderblaszkiewicz.pl/kiedykolos/get_events.php`;
     const [events, setEvents] = useState([]);
+
 
     useEffect(() => {
         getEvents();
@@ -33,6 +36,7 @@ const EventList = () => {
 }
 
 const Event = ({event}) => {
+    const dispatch = useDispatch();
 
     const style = () => {
         let styleText = "";
@@ -58,8 +62,12 @@ const Event = ({event}) => {
         return styleText;
     }
 
+    const setChosenEventAdminGlobal = (event) => {
+        dispatch(setChosenEventAdmin(event.id));
+    }
+
     return (
-        <li class={"events-list__item " + style()}>
+        <li class={"events-list__item " + style()} onClick={() => setChosenEventAdminGlobal(event)}>
             <h3>{event.name}</h3>
             <div class="events-list__info">
                 <div class="events-list__time">17:00</div>

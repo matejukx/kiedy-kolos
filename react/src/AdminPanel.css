@@ -63,6 +63,16 @@ body {
 .app__events {
   padding: 4rem;
   padding-top: 3.2rem;
+  max-height: 60vh;
+  overflow: auto;
+}
+
+::-webkit-scrollbar {
+  background-color: var(--color-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-medium);
 }
 
 .event-info {

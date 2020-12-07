@@ -1,10 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import './../AdminPanel.css';
 
 const DataPanel = () => {
+    const chosenEvent = useSelector(state => state.chosenEventAdmin);
+
+
     return(
         <div class="event-info">
-          <h2 class="events__header">Edycja Wydarzenia</h2>
+          <h2 class="events__header">Edycja Wydarzenia {chosenEvent}</h2>
 
           <div class="option">
             <label class="events-form__label" for="title">Przedmiot</label>
