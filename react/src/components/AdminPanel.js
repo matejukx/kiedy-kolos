@@ -1,10 +1,17 @@
 import React from "react";
 import AddEventPanel from "./AddEventPanel";
-import './../App.css';
+import EventList from "./EventList";
+import DataPanel from "./DataPanel";
+import './../AdminPanel.css';
 
 const AdminPanel = () => {
     return(
-        <AddEventPanel/>
+        <div className="container">
+            <div className="admin-panel">
+                <EventList />
+                <DataPanel />
+            </div>
+        </div>
     )
 }
 
