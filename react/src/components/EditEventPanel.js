@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import './../AdminPanel.css';
 
-const DataPanel = () => {
+const AddEventPanel = () => {
     const chosenEvent = useSelector(state => state.chosenEventAdmin);
+    const [event, setEvent] = useState([]);
 
+    useEffect(() => {
+        getEventInfo();
+    }, [chosenEvent])
+
+    const getEventInfo = async () => {
+        const response = await fetch(`https://aleksanderblaszkiewicz.pl/kiedykolos/get_event_details.php?id=${chosenEvent}`);
+        const data = await response.json();
+        setEvent(data[0]);
+        console.log(data[0]);
+    }
 
     return(
         <div class="event-info">
-          <h2 class="events__header">Edycja Wydarzenia {chosenEvent}</h2>
+          <h2 class="events__header">Edycja Wydarzenia {event.id}</h2>
 
           <div class="option">
             <label class="events-form__label" for="title">Przedmiot</label>
@@ -55,7 +66,7 @@ const DataPanel = () => {
 
           <div class="option">
             <label class="events-form__label" for="description">Opis</label>
-            <textarea cols="30" rows="5" id="description"></textarea>
+            <textarea cols="30" rows="5" id="description" value={event.description}></textarea>
           </div>
 
           <div class="option submit">
@@ -67,4 +78,4 @@ const DataPanel = () => {
     )
 }
 
-export default DataPanel;
+export default AddEventPanel;

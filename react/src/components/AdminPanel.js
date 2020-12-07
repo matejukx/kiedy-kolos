@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import AddEventPanel from "./AddEventPanel";
+import EditEventPanel from  "./EditEventPanel";
 import EventList from "./EventList";
-import DataPanel from "./DataPanel";
 import './../AdminPanel.css';
 
 const AdminPanel = () => {
+    const editEnabled = useSelector(state => state.editEnabled);
+
+
     return(
         <div className="container">
             <div className="admin-panel">
                 <EventList />
-                <DataPanel />
+
+                {editEnabled ? <EditEventPanel /> : <AddEventPanel />} 
+                
             </div>
         </div>
     )

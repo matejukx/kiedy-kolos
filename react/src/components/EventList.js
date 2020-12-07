@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setChosenEventAdmin } from "../actions";
+import { editDisable, editEnable, setChosenEventAdmin } from "../actions";
 import './../AdminPanel.css';
 
 const EventList = () => {
     const API_URL = `https://aleksanderblaszkiewicz.pl/kiedykolos/get_events.php`;
     const [events, setEvents] = useState([]);
+    const dispatch = useDispatch();
 
 
     useEffect(() => {
@@ -19,11 +20,15 @@ const EventList = () => {
         console.log(data);
     }
 
+    const addEventClicked = () => {
+        dispatch(editDisable());
+    }
+
     return(
         <div class="app__events">
           <h2 class="events__header">Wydarzenia</h2>
           <ul class="events-list">
-            <li class="events-list__item events-list__adder">
+            <li class="events-list__item events-list__adder" onClick={() => addEventClicked()}>
               <i class="far fa-plus-square"></i>
               <h3>Dodaj Wydarzenie</h3>
             </li>
@@ -64,6 +69,7 @@ const Event = ({event}) => {
 
     const setChosenEventAdminGlobal = (event) => {
         dispatch(setChosenEventAdmin(event.id));
+        dispatch(editEnable());
     }
 
     return (
