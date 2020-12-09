@@ -11,7 +11,7 @@ const AdminPanel = () => {
 
     return(
         <div className="container">
-            <div className="admin-panel">
+            <div className="app app--small">
                 <EventList />
 
                 {editEnabled ? <EditEventPanel /> : <AddEventPanel />} 

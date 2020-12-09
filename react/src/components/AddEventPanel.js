@@ -86,11 +86,11 @@ const AddEventPanel = () => {
     }
 
     return(
-        <div class="event-info">
-          <h2 class="events__header">Dodawanie wydarzenia</h2>
+        <div class="edition">
+          <h2 class="edition__header">Dodawanie wydarzenia</h2>
 
-          <div class="option">
-            <label class="events-form__label" for="title">Przedmiot</label>
+          <div class="edition__setting">
+            <label class="edition__label" for="course">Przedmiot</label>
             <select name="course" id="course" form="add-event" value={courseID} onChange={updateCourseID}>
             {courses.map(course => (
                 <option key={course.id} value={course.id}>
@@ -100,8 +100,8 @@ const AddEventPanel = () => {
             </select>
           </div>
 
-          <div class="option">
-            <label class="events-form__label" for="group">Grupa</label>
+          <div class="edition__setting">
+            <label class="edition__label" for="group">Grupa</label>
             <select name="groupID" id="groupID" form="add-event" value={groupID} onChange={updateGroupID}>
                 {groups.map(group => (
                     <option key={group.id} value={group.id}>
@@ -111,8 +111,8 @@ const AddEventPanel = () => {
             </select>
           </div>
 
-          <div class="option">
-            <label class="events-form__label" for="type">Typ</label>
+          <div class="edition__setting">
+            <label class="edition__label" for="type">Typ</label>
             <select name="typeID" id="typeID" form="add-event" value={typeID} onChange={updateTypeID}>
                 {types.map(type => (
                     <option key={type.id} value={type.id}>
@@ -122,22 +122,22 @@ const AddEventPanel = () => {
             </select>
           </div>
 
-          <div class="option">
-            <label class="events-form__label" for="date">Data</label>
+          <div class="edition__setting">
+            <label class="edition__label" for="date">Data</label>
             <input type="date" id="date" name="date" value="2020-11-25" min="2020-11-25" max="2021-12-31" value={date} onChange={updateDate}></input>
           </div>
 
-          <div class="option">
-            <label class="events-form__label" for="time">Godzina</label>
+          <div class="edition__setting">
+            <label class="edition__label" for="time">Godzina</label>
             <input type="time" id="time" name="time" min="07:00"  value ="16:00:00" max="21:00" value={time} onChange={updateTime}></input>
           </div>
 
-          <div class="option">
-            <label class="events-form__label" for="description">Opis</label>
+          <div class="edition__setting">
+            <label class="edition__label" for="description">Opis</label>
             <textarea id="description" name="description" rows="5" cols="30" placeholder="Tu wpisz opis..." value={description} onChange={updateDescription}></textarea>
           </div>
 
-          <div class="option submit">
+          <div class="edition__setting submit">
           <input type="password" id="password" name="password" placeholder="Hasło" onChange={updatePassword}></input>
             <button class="submit__button submit__button--delete">Usuń</button>
             <button class="submit__button" onClick={addEvent}>Zapisz</button>

@@ -125,12 +125,12 @@ const Calendar = () => {
     });
 
     return (
-        <div className="app__calendar">
+        <div className="calendar">
             {/* <AddEventPanel refreshEvents={getEvents}/> */}
-            <div className="calendar__month">
-                <button className="month__button" onClick={() => decreaseMonth()}>&lt;</button>
-                <motion.h2 key={month} className="month__title" initial={{x: swipeDirection * 50}} animate={{x: 0}}  transition={{ type: 'spring', stiffness: 600, damping: 50 }}>{monthsWords[month-1]}</motion.h2>
-                <button className="month__button" onClick={() => increaseMonth()}>&gt;</button>
+            <div className="calendar__header">
+                <button className="button button--previous" onClick={() => decreaseMonth()}></button>
+                <motion.h2 key={month} className="calendar__title" initial={{x: swipeDirection * 50}} animate={{x: 0}}  transition={{ type: 'spring', stiffness: 600, damping: 50 }}>{monthsWords[month-1]}</motion.h2>
+                <button className="button button--next" onClick={() => increaseMonth()}></button>
             </div>
             <CalendarTools />
             <WeekDays />
@@ -160,14 +160,14 @@ const WeekDays = () => {
 
     return (
         <div className="calendar__names">
-            <motion.ul variants={container} initial="hidden" animate="show">
-                <motion.li variants={item}>poniedziałek</motion.li>
-                <motion.li variants={item}>wtorek</motion.li>
-                <motion.li variants={item}>środa</motion.li>
-                <motion.li variants={item}>czwartek</motion.li>
-                <motion.li variants={item}>piątek</motion.li>
-                <motion.li variants={item}>sobota</motion.li>
-                <motion.li variants={item}>niedziela</motion.li>
+            <motion.ul className="calendar__names-list" variants={container} initial="hidden" animate="show">
+                <motion.li className="calendar__names-item" variants={item}>poniedziałek</motion.li>
+                <motion.li className="calendar__names-item" variants={item}>wtorek</motion.li>
+                <motion.li className="calendar__names-item" variants={item}>środa</motion.li>
+                <motion.li className="calendar__names-item" variants={item}>czwartek</motion.li>
+                <motion.li className="calendar__names-item" variants={item}>piątek</motion.li>
+                <motion.li className="calendar__names-item" variants={item}>sobota</motion.li>
+                <motion.li className="calendar__names-item" variants={item}>niedziela</motion.li>
             </motion.ul>
         </div>
     )

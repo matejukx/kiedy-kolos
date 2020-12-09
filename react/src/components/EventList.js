@@ -25,17 +25,19 @@ const EventList = () => {
     }
 
     return(
-        <div class="app__events">
-          <h2 class="events__header">Wydarzenia</h2>
-          <ul class="events-list">
-            <li class="events-list__item events-list__adder" onClick={() => addEventClicked()}>
-              <i class="far fa-plus-square"></i>
-              <h3>Dodaj Wydarzenie</h3>
-            </li>
-            {events.map((event) => (
-                <Event event={event} />
-            ))}
-          </ul>
+        <div class="extension">
+            <div class="extension__events">
+                <h2 class="events__header">Wydarzenia</h2>
+                <ul class="events-list">
+                    <li class="events-list__item events-list__adder" onClick={() => addEventClicked()}>
+                    <i class="far fa-plus-square"></i>
+                    <h3>Dodaj Wydarzenie</h3>
+                    </li>
+                    {events.map((event) => (
+                        <Event event={event} />
+                    ))}
+                </ul>
+          </div>
         </div>
     )
 }
@@ -46,19 +48,19 @@ const Event = ({event}) => {
     const style = () => {
         let styleText = "";
         if(event.type == "Kolokwium") {
-            styleText+= " events-list__item--exam ";
+            styleText+= " extension__event--exam ";
         }
         else if (event.type == "Projekt"){
-            styleText+= " events-list__item--project ";
+            styleText+= " extension__event--project ";
         }
         else if (event.type == "Egzamin"){
-            styleText+= " events-list__item--exam ";
+            styleText+= " extension__event--exam ";
         }
         else if (event.type == "Laboratorium"){
-            styleText+= " events-list__item--lab ";
+            styleText+= " extension__event--lab ";
         }
         else if (event.type == "Inne"){
-            styleText+= " events-list__item--other ";
+            styleText+= " extension__event--other ";
         }
 
         // if(event == chosenEvent) {
@@ -73,12 +75,13 @@ const Event = ({event}) => {
     }
 
     return (
-        <li class={"events-list__item " + style()} onClick={() => setChosenEventAdminGlobal(event)}>
-            <h3>{event.name}</h3>
-            <div class="events-list__info">
-                <div class="events-list__time">17:00</div>
-                <div class="events-list__category">{event.type}</div>
-                <div class="events-list__date">{event.date}</div>
+        <li class={"extension__event " + style()} onClick={() => setChosenEventAdminGlobal(event)}>
+            <h3 className="extension__event-title">{event.name}</h3>
+            <div class="extension__event-panel">
+                <div class="extension__event-info">17:00</div>
+                <div class="extension__event-info">{event.type}</div>
+                <div class="extension__event-info">{event.date}</div>
+                <div class="extension__event-info">{event.group_name}</div>
             </div>
         </li>
     )

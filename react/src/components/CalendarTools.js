@@ -13,16 +13,11 @@ const CalendarTools = () => {
     }
 
     return(
-        <div class="calendar__tools">
-            <motion.button class="calendar__settings" onClick={toggleVisible}  whileTap={{scale: 0.9}} whileHover={{ scale: 1.1}}>
-              <i class="fas fa-cog"></i>
-            </motion.button>
-            <button class="calendar__notifications">
-              <i class="fas fa-bell"></i>
-              <div class="notification__count">
-                <i class="fas fa-infinity"></i>
-              </div>
+        <div className="calendar__options">
+            <button class="button button--notifications">
+              <div class="button__counter">1</div>
             </button>
+            <motion.button className="button button--settings" onClick={toggleVisible}  whileTap={{scale: 0.9}} whileHover={{ scale: 1.1}}/>
             <AnimatePresence>
                 {settingsVisible && (<Settings />)}
             </AnimatePresence>
@@ -42,32 +37,34 @@ const Settings = () => {
 
     const style = (name) => {
         if(name == chosenGroup) {
-            return " group__number--selected ";
+            return " calendar__setting-option--selected-solid ";
         }
     }
 
     return (
-        <motion.div class="settings" initial={{opacity: 0, y: -100, scale: 0}} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -100, scale: 0 }} transition={{ type: "spring", stiffness: 600, damping: 50}}>
-            <div class="group">
-            <h3 class="group__header">Grupa</h3>
-            <ul class="group__list">
-                <motion.li class={"group__number " + style("Grupa 1")} whileTap={{scale: 0.9, y: 0}} whileHover={{ scale: 1.1, y:-5}} onClick={() => setGroupGlobal("Grupa 1")}>1</motion.li>
-                <motion.li class={"group__number " + style("Grupa 2")} whileTap={{scale: 0.9, y: 0}} whileHover={{ scale: 1.1, y:-5}} onClick={() => setGroupGlobal("Grupa 2")}>2</motion.li>
-                <motion.li class={"group__number " + style("Grupa 3")} whileTap={{scale: 0.9, y: 0}} whileHover={{ scale: 1.1, y:-5}} onClick={() => setGroupGlobal("Grupa 3")}>3</motion.li>
-                <motion.li class={"group__number " + style("Grupa 4")} whileTap={{scale: 0.9, y: 0}} whileHover={{ scale: 1.1, y:-5}} onClick={() => setGroupGlobal("Grupa 4")}>4</motion.li>
-                <motion.li class={"group__number " + style("Grupa 5")} whileTap={{scale: 0.9, y: 0}} whileHover={{ scale: 1.1, y:-5}} onClick={() => setGroupGlobal("Grupa 5")}>5</motion.li>
-                <motion.li class={"group__number " + style("Grupa 6")} whileTap={{scale: 0.9, y: 0}} whileHover={{ scale: 1.1, y:-5}} onClick={() => setGroupGlobal("Grupa 6")}>6</motion.li>
-            </ul>
-            </div>
-            <div class="theme">
-            <h3 class="theme__header">Motyw</h3>
-            <ul class="theme__list">
-                <div class="theme__item theme__item--light"></div>
-                <div
-                class="theme__item theme__item--dark theme__item--selected"
-                ></div>
-            </ul>
-            </div>
+        <motion.div class="calendar__settings" initial={{opacity: 0, y: -100, scale: 0}} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -100, scale: 0 }} transition={{ type: "spring", stiffness: 600, damping: 50}}>
+            <div class="calendar__setting">
+                <h3 class="calendar__setting-name">Grupa</h3>
+                <ul class="calendar__setting-list">
+                  <motion.li class={"calendar__setting-option " + style("Grupa 1")} whileTap={{scale: 0.9, y: 0}} whileHover={{ scale: 1.1, y:-5}} onClick={() => setGroupGlobal("Grupa 1")}>1</motion.li>
+                  <motion.li class={"calendar__setting-option " + style("Grupa 2")} whileTap={{scale: 0.9, y: 0}} whileHover={{ scale: 1.1, y:-5}} onClick={() => setGroupGlobal("Grupa 2")}>2</motion.li>
+                  <motion.li class={"calendar__setting-option " + style("Grupa 3")} whileTap={{scale: 0.9, y: 0}} whileHover={{ scale: 1.1, y:-5}} onClick={() => setGroupGlobal("Grupa 3")}>3</motion.li>
+                  <motion.li class={"calendar__setting-option " + style("Grupa 4")} whileTap={{scale: 0.9, y: 0}} whileHover={{ scale: 1.1, y:-5}} onClick={() => setGroupGlobal("Grupa 4")}>4</motion.li>
+                  <motion.li class={"calendar__setting-option " + style("Grupa 5")} whileTap={{scale: 0.9, y: 0}} whileHover={{ scale: 1.1, y:-5}} onClick={() => setGroupGlobal("Grupa 5")}>5</motion.li>
+                  <motion.li class={"calendar__setting-option " + style("Grupa 6")} whileTap={{scale: 0.9, y: 0}} whileHover={{ scale: 1.1, y:-5}} onClick={() => setGroupGlobal("Grupa 6")}>6</motion.li>
+                </ul>
+              </div>
+              <div class="calendar__setting">
+                <h3 class="calendar__setting-name">Motyw</h3>
+                <ul class="calendar__setting-list">
+                  <div
+                    class="calendar__setting-option calendar__setting-option--dark"
+                  ></div>
+                  <div
+                    class="calendar__setting-option calendar__setting-option--light calendar__setting-option--selected"
+                  ></div>
+                </ul>
+              </div>
         </motion.div>
     )
 }

@@ -55,10 +55,10 @@ const InfoPanel = () => {
       
 
     return(
-        <div className="app__extension">
-            <motion.div className="app__events">
-                <h2 className="events__header">Wydarzenia {dayjs(date).format('DD.MM')}</h2>
-                <motion.ul className="events-list" variants={container} initial="hidden" animate={events.length > 0 && "show"}>
+        <div className="extension">
+            <motion.div className="extension__events">
+                <h2 className="extension__header">Wydarzenia {dayjs(date).format('DD.MM')}</h2>
+                <motion.ul className="extension__events-list" variants={container} initial="hidden" animate={events.length > 0 && "show"}>
                     {events.map((event) => (
                         <EventButton key={event.id} event={event} setChosenEvent={setChosenEvent} chosenEvent={chosenEvent}/>
                     ))}
@@ -81,33 +81,33 @@ const EventButton = ({event, setChosenEvent, chosenEvent}) => {
     const style = () => {
         let styleText = "";
         if(event.type == "Kolokwium") {
-            styleText+= " events-list__item--exam ";
+            styleText+= " extension__event--exam ";
         }
         else if (event.type == "Projekt"){
-            styleText+= " events-list__item--project ";
+            styleText+= " extension__event--project ";
         }
         else if (event.type == "Egzamin"){
-            styleText+= " events-list__item--exam ";
+            styleText+= " extension__event--exam ";
         }
         else if (event.type == "Laboratorium"){
-            styleText+= " events-list__item--lab ";
+            styleText+= " extension__event--lab ";
         }
         else if (event.type == "Inne"){
-            styleText+= " events-list__item--other ";
+            styleText+= " extension__event--other ";
         }
 
         if(event == chosenEvent) {
-            styleText+= " events-list__item--selected ";
+            styleText+= " extension__event--selected ";
         }
         return styleText;
     }
 
     return (
-        <motion.li key={event.id} className={"events-list__item" + style()} variants={item} whileTap={{scale: 0.95}} whileHover={{y: -5, scale: 1.02}} onClick={() => setChosenEvent(event)}>
-            <h3>{event.name}</h3>
-            <div className="events-list__info">
-                <div className="events-list__time">{event.time.slice(0,5)}</div>
-                <div className="events-list__category">{event.type}</div>
+        <motion.li key={event.id} className={"extension__event" + style()} variants={item} whileTap={{scale: 0.95}} whileHover={{y: -5, scale: 1.02}} onClick={() => setChosenEvent(event)}>
+            <h3 className="extension__event-title">{event.name}</h3>
+            <div className="extension__event-panel">
+                <div className="extension__event-info">{event.time.slice(0,5)}</div>
+                <div className="extension__event-info">{event.type}</div>
             </div>
         </motion.li>
     )
