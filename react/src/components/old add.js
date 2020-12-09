@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import './../AdminPanel.css';
+import React, { useEffect, useState } from "react";
 
-const AddEventPanel = () => {
+const OldAdd = ({refreshEvents}) => {
     const API_URL_GET_COURSES = 'https://aleksanderblaszkiewicz.pl/kiedykolos/get_courses.php';
     const API_URL_GET_GROUPS = 'https://aleksanderblaszkiewicz.pl/kiedykolos/get_groups.php';
     const API_URL_GET_TYPES = 'https://aleksanderblaszkiewicz.pl/kiedykolos/get_types.php';
-
     const [courses, setCourses] = useState([]);
     const [groups, setGroups] = useState([]);
     const [types, setTypes] = useState([]);
+
 
     const [courseID, setCourseID] = useState(0);
     const [groupID, setGroupID] = useState(0);
@@ -18,12 +16,33 @@ const AddEventPanel = () => {
     const [time, setTime] = useState("12:00");
     const [description, setDescription] = useState("");
     const [password, setPassword] = useState("");
-
+   
     useEffect(() => {
         getCourses();
         getGroups();
         getTypes();
     }, []);
+
+    const getCourses = async () => {
+        const response = await fetch(API_URL_GET_COURSES);
+        const data = await response.json();
+        setCourses(data);
+        setCourseID(data[0].id);
+    }
+
+    const getGroups = async () => {
+        const response = await fetch(API_URL_GET_GROUPS);
+        const data = await response.json();
+        setGroups(data);
+        setGroupID(data[0].id);
+    }
+
+    const getTypes = async () => {
+        const response = await fetch(API_URL_GET_TYPES);
+        const data = await response.json();
+        setTypes(data);
+        setTypeID(data[0].id);
+    }
 
     const addEvent = async () => {
         const requestOptions = {
@@ -33,31 +52,11 @@ const AddEventPanel = () => {
             mode: 'no-cors', // no-cors, cors, *same-origin
         };
         const response = await fetch(`https://aleksanderblaszkiewicz.pl/kiedykolos/add_event.php`, requestOptions);
+        console.log(response);
+        //refreshEvents();
     }
 
-    const getCourses = async () => {
-        const response = await fetch(API_URL_GET_COURSES);
-        const data = await response.json();
-        setCourses(data);
-        setCourseID(data[0].id);
-       }
-  
-      const getGroups = async () => {
-        const response = await fetch(API_URL_GET_GROUPS);
-        const data = await response.json();
-        setGroups(data);
-        setGroupID(data[0].id);
-      }
-  
-      const getTypes = async () => {
-        const response = await fetch(API_URL_GET_TYPES);
-        const data = await response.json();
-        setTypes(data);
-        setTypeID(data[0].id);
-      }
-
-
-      const updateCourseID = e => {
+    const updateCourseID = e => {
         setCourseID(e.target.value);
     }
 
@@ -86,11 +85,7 @@ const AddEventPanel = () => {
     }
 
     return(
-        <div class="edition">
-          <h2 class="edition__header">Dodawanie wydarzenia</h2>
-
-          <div class="edition__setting">
-            <label class="edition__label" for="course">Przedmiot</label>
+        <>
             <select name="course" id="course" form="add-event" value={courseID} onChange={updateCourseID}>
             {courses.map(course => (
                 <option key={course.id} value={course.id}>
@@ -98,52 +93,29 @@ const AddEventPanel = () => {
                 </option>
             ))}
             </select>
-          </div>
-
-          <div class="edition__setting">
-            <label class="edition__label" for="group">Grupa</label>
             <select name="groupID" id="groupID" form="add-event" value={groupID} onChange={updateGroupID}>
-                {groups.map(group => (
-                    <option key={group.id} value={group.id}>
-                        {group.name}
-                    </option>
-                ))}
+            {groups.map(group => (
+                <option key={group.id} value={group.id}>
+                    {group.name}
+                </option>
+            ))}
             </select>
-          </div>
-
-          <div class="edition__setting">
-            <label class="edition__label" for="type">Typ</label>
             <select name="typeID" id="typeID" form="add-event" value={typeID} onChange={updateTypeID}>
-                {types.map(type => (
-                    <option key={type.id} value={type.id}>
-                        {type.name}
-                    </option>
-                ))}
+            {types.map(type => (
+                <option key={type.id} value={type.id}>
+                    {type.name}
+                </option>
+            ))}
             </select>
-          </div>
-
-          <div class="edition__setting">
-            <label class="edition__label" for="date">Data</label>
             <input type="date" id="date" name="date" value="2020-11-25" min="2020-11-25" max="2021-12-31" value={date} onChange={updateDate}></input>
-          </div>
-
-          <div class="edition__setting">
-            <label class="edition__label" for="time">Godzina</label>
             <input type="time" id="time" name="time" min="07:00"  value ="16:00:00" max="21:00" value={time} onChange={updateTime}></input>
-          </div>
-
-          <div class="edition__setting">
-            <label class="edition__label" for="description">Opis</label>
-            <textarea id="description" name="description" rows="5" cols="30" placeholder="Tu wpisz opis..." value={description} onChange={updateDescription}></textarea>
-          </div>
-
-          <div class="edition__setting submit">
-          <input type="password" id="password" name="password" placeholder="Hasło" onChange={updatePassword}></input>
-            <button class="submit__button submit__button--delete">Usuń</button>
-            <button class="submit__button" onClick={addEvent}>Zapisz</button>
-          </div>
-        </div>
+            <input type="text" id="password" name="password" placeholder="Hasło" onChange={updatePassword}></input>
+            <textarea id="description" name="description" rows="4" cols="50" placeholder="Tu wpisz opis..." value={description} onChange={updateDescription}></textarea>
+            
+            <button onClick={addEvent}>DODAJ WYDARZENIE</button>
+            
+        </>
     )
 }
 
-export default AddEventPanel;
+export default OldAdd;

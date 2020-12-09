@@ -11,3 +11,22 @@ export const setGroup = (value) => {
         payload: value
     }
 }
+
+export const setChosenEventAdmin = (value) => {
+    return {
+        type: 'SET_EVENT',
+        payload: value
+    }
+}
+
+export const editEnable = () => {
+    return {
+        type: 'EDIT_ENABLE'
+    }
+}
+
+export const editDisable = () => {
+    return {
+        type: 'EDIT_DISABLE'
+    }
+}

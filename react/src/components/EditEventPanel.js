@@ -3,9 +3,12 @@ import { useSelector } from "react-redux";
 import './../AdminPanel.css';
 
 const AddEventPanel = () => {
+    const chosenEvent = useSelector(state => state.chosenEventAdmin);
     const API_URL_GET_COURSES = 'https://aleksanderblaszkiewicz.pl/kiedykolos/get_courses.php';
     const API_URL_GET_GROUPS = 'https://aleksanderblaszkiewicz.pl/kiedykolos/get_groups.php';
     const API_URL_GET_TYPES = 'https://aleksanderblaszkiewicz.pl/kiedykolos/get_types.php';
+
+    const [event, setEvent] = useState([]);
 
     const [courses, setCourses] = useState([]);
     const [groups, setGroups] = useState([]);
@@ -25,39 +28,74 @@ const AddEventPanel = () => {
         getTypes();
     }, []);
 
-    const addEvent = async () => {
+    useEffect(() => {
+        getEventInfo();
+    }, [chosenEvent])
+
+    useEffect(() => {
+        initializeEventInfo();
+    }, [event])
+
+    const initializeEventInfo = () => {
+        console.log("Initializing fields");
+        setDescription(event.description);
+        setDate(event.date);
+        setTime(event.time);
+        setGroupID(event.group_id);
+        setTypeID(event.type_id);
+        setCourseID(event.course_id);
+    }
+
+    const editEvent = async () => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', },
-            body: JSON.stringify({ courseID: courseID, groupID: groupID, time:time, date: date, description: description, typeID: typeID, password: password}),
+            body: JSON.stringify({ eventID: chosenEvent, courseID: courseID, groupID: groupID, time:time, date: date, description: description, typeID: typeID, password: password}),
             mode: 'no-cors', // no-cors, cors, *same-origin
         };
-        const response = await fetch(`https://aleksanderblaszkiewicz.pl/kiedykolos/add_event.php`, requestOptions);
+        const response = await fetch(`https://aleksanderblaszkiewicz.pl/kiedykolos/edit_event.php`, requestOptions);
     }
 
+    const deleteEvent = async () => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', },
+            body: JSON.stringify({ eventID: chosenEvent, password: password }),
+            mode: 'no-cors', // no-cors, cors, *same-origin
+        };
+        const response = await fetch(`https://aleksanderblaszkiewicz.pl/kiedykolos/delete_event.php`, requestOptions);
+    }
+    
+
     const getCourses = async () => {
-        const response = await fetch(API_URL_GET_COURSES);
-        const data = await response.json();
-        setCourses(data);
-        setCourseID(data[0].id);
-       }
-  
-      const getGroups = async () => {
-        const response = await fetch(API_URL_GET_GROUPS);
-        const data = await response.json();
-        setGroups(data);
-        setGroupID(data[0].id);
-      }
-  
-      const getTypes = async () => {
-        const response = await fetch(API_URL_GET_TYPES);
-        const data = await response.json();
-        setTypes(data);
-        setTypeID(data[0].id);
-      }
+      const response = await fetch(API_URL_GET_COURSES);
+      const data = await response.json();
+      setCourses(data);
+      setCourseID(data[0].id);
+     }
 
+    const getGroups = async () => {
+      const response = await fetch(API_URL_GET_GROUPS);
+      const data = await response.json();
+      setGroups(data);
+      setGroupID(data[0].id);
+    }
 
-      const updateCourseID = e => {
+    const getTypes = async () => {
+      const response = await fetch(API_URL_GET_TYPES);
+      const data = await response.json();
+      setTypes(data);
+      setTypeID(data[0].id);
+    }
+
+    const getEventInfo = async () => {
+        const response = await fetch(`https://aleksanderblaszkiewicz.pl/kiedykolos/get_event_details.php?id=${chosenEvent}`);
+        const data = await response.json();
+        setEvent(data[0]);
+        console.log(data[0]);
+    }
+
+    const updateCourseID = e => {
         setCourseID(e.target.value);
     }
 
@@ -87,7 +125,7 @@ const AddEventPanel = () => {
 
     return(
         <div class="edition">
-          <h2 class="edition__header">Dodawanie wydarzenia</h2>
+          <h2 class="edition__header">Edycja Wydarzenia {event.id}</h2>
 
           <div class="edition__setting">
             <label class="edition__label" for="course">Przedmiot</label>
@@ -139,8 +177,8 @@ const AddEventPanel = () => {
 
           <div class="edition__setting submit">
           <input type="password" id="password" name="password" placeholder="Hasło" onChange={updatePassword}></input>
-            <button class="submit__button submit__button--delete">Usuń</button>
-            <button class="submit__button" onClick={addEvent}>Zapisz</button>
+            <button class="submit__button submit__button--delete" onClick={deleteEvent}>Usuń</button>
+            <button class="submit__button" onClick={editEvent}>Zapisz</button>
           </div>
         </div>
     )

@@ -24,22 +24,22 @@ const CalendarCard = ({day, active, events, swipeDirection}) => {
 
     const style = () => {
         if(day == chosenDate) {
-            return "calendar__day--selected";
+            return "day--selected";
         }
         else if(!active) {
-            return " calendar__day--inactive ";
+            return " day--inactive ";
         }
         else if(dayjs(day).day() == 0 || dayjs(day).day() == 6) {
-            return " calendar__day--weekend ";
+            return " day--weekend ";
         }
     }
 
 
 
     return(
-        <motion.div className={"calendar__day " + style()} tabindex="0" onClick={callendarCardClicked} variants={item} whileHover={{y: -2, scale: 1.05}} whileTap={{y: 0, scale: 0.95}}>
-                <div className="events">
-                    <ul className="events__list">
+        <motion.div className={"day " + style()} tabindex="0" onClick={callendarCardClicked} variants={item} whileHover={{y: -2, scale: 1.05}} whileTap={{y: 0, scale: 0.95}}>
+                <div className="day__events">
+                    <ul className="day__events-list">
                         {events.map(event => (
                             <Event event={event}/>
                         ))}
@@ -56,26 +56,25 @@ export default CalendarCard;
 const Event = ({event}) => {
     
     const style = () => {
-        console.log("EEEEEEEEEEEEEE: " + event.type);
         if(event.type == "Kolokwium") {
-            return " events__item--exam ";
+            return " day__event--exam ";
         }
         else if (event.type == "Projekt"){
-            return " events__item--project ";
+            return " day__event--project ";
         }
         else if (event.type == "Egzamin"){
-            return " events__item--exam ";
+            return " day__event--exam ";
         }
         else if (event.type == "Laboratorium"){
-            return " events__item--lab ";
+            return " day__event--lab ";
         }
         else if (event.type == "Inne"){
-            return " events__item--other ";
+            return " day__event--other ";
         }
     }
 
     return (
-        <li className={"events__item " + style()} key={event.id}>
+        <li className={"day__event " + style()} key={event.id}>
             {event.short_name.toUpperCase()}
         </li>
     )
