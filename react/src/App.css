@@ -494,6 +494,7 @@ body {
 .extension__events-list {
   list-style: none;
   color: var(--color-font);
+  overflow-x: hidden;
 }
 
 .extension__event {
@@ -843,9 +844,15 @@ textarea {
   }
 
   .calendar {
-    min-height: 60%;
+    min-height: 60vh !important;
+    height: 60vh !important;
+    max-height: 60vh !important;
     padding: 0.8rem;
     padding-top: 1.6rem;
+  }
+
+  .extension {
+    flex: 1;
   }
 
   .calendar__options {
