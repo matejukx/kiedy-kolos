@@ -366,7 +366,7 @@ body {
 
 .day--inactive {
   background-color: var(--color-medium);
-  opacity: 0.3;
+  opacity: 0.3 !important;
   transition: background-color 0.4s, color 0.3s;
 }
 
