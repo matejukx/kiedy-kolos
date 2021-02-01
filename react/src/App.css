@@ -762,7 +762,7 @@ textarea {
 
 @media only screen and (max-width: 90rem) {
   html {
-    font-size: 56.25%;
+    font-size: 56.25% !important;
   }
 
   .app--small {
@@ -772,7 +772,7 @@ textarea {
 
 @media only screen and (max-width: 82rem) {
   html {
-    font-size: 50%;
+    font-size: 50% !important;
   }
 
   .app--small {
@@ -839,7 +839,7 @@ textarea {
   }
 
   html {
-    font-size: 40%;
+    font-size: 40% !important;
   }
 
   .calendar {
