@@ -5,10 +5,11 @@ import { motion } from "framer-motion";
 
 import dayjs from "dayjs";
 
-import { setDate } from "../actions";
+import { setDate } from "../../actions";
 
 import CalendarCard from "./CalendarCard";
 import CalendarTools from "./CalendarTools";
+import WeekDays from "./WeekDays";
 
 const Calendar = () => {
     const API_URL = `https://aleksanderblaszkiewicz.pl/kiedykolos/get_events.php`;
@@ -46,7 +47,8 @@ const Calendar = () => {
         setEvents(filteredData);
     }
 
-    const moveMonth = (direction) => {
+    const changeMonth = (direction) => {
+        console.log(days);
         setSwipeDirection(direction);
         const offset = monthOffset + direction;
         setMonthOffset(offset);
@@ -60,103 +62,78 @@ const Calendar = () => {
     }
 
     const initializeDays = () => {
-        const days = new Array(42);
+        const daysLocal = new Array(42);
         const startDayOfMonth = daysOfWeek[today.startOf('month').day()]; // 1 - monday, 7 sunday
         
         const startingDay = today.startOf('month').subtract(startDayOfMonth - 1, 'day');
 
         for(let i=0; i<42; i++)
-            days[i] = startingDay.add(i, 'day').format('YYYY-MM-DD');
+            daysLocal[i] = startingDay.add(i, 'day').format('YYYY-MM-DD');
 
-        setDays(days);
+        setDays(daysLocal);
     }
 
     const getEventsForDay = (day) => {
         return events.filter(eventDay => eventDay.date === day);
     }
 
-    const isDayActive = (day) => {
+    const isDayInCurrentMonth = (day) => {
         const thisMonth = today.add(monthOffset, 'month');
         return dayjs(day).format('MM') === thisMonth.format('MM');
     }
 
-    const container = {
-        hidden: { opacity: 0 },
-        show: {
-            opacity: 1
+    const calendarRowVariants = {
+        hidden: { opacity: 0, x: swipeDirection * 100 },
+        show: { opacity: 1, x: 0 , 
+            transition: {
+                type: 'spring', stiffness: 600, damping: 50
+            } 
         }
     }
 
-    const groupSize = 7;
     var rows = days.map(day => 
         <CalendarCard
             key={day}
-            active={isDayActive(day)}
-            day={day}
+            isInCurrentMonth={isDayInCurrentMonth(day)}
+            cardDate={day}
             events={getEventsForDay(day)}
             swipeDirection={swipeDirection}/>)
         .reduce((r, element, index) => {
-            index % groupSize === 0 && r.push([]);
+            index % 7 === 0 && r.push([]);
             r[r.length - 1].push(element);
             return r;
         }, [])
         .map((rowContent, index) => 
-            <motion.div 
-                key={index}
-                className="calendar__row" 
-                variants={container} 
-                initial="hidden" 
-                animate="show">
+            <div 
+                key={month+index}
+                className="calendar__row" >
                     {rowContent}
-            </motion.div>);
+            </div>);
 
     return (
         <div className="calendar">
             <div className="calendar__header">
-                <button className="button button--previous" onClick={() => moveMonth(-1)}></button>
-                <motion.h2 key={month}
+                <button className="button button--previous" onClick={() => changeMonth(-1)}></button>
+                <motion.h2
+                    key={month}
                     className="calendar__title"
                     initial={{x: swipeDirection * 50}}
                     animate={{x: 0}}
                     transition={{ type: 'spring', stiffness: 600, damping: 50 }}>
                         {monthsWords[month-1]}
                 </motion.h2>
-                <button className="button button--next" onClick={() => moveMonth(1)}></button>
+                <button className="button button--next" onClick={() => changeMonth(1)}></button>
             </div>
             <CalendarTools />
             <WeekDays/>
-            <motion.div className="calendar__days">
+            <motion.div
+                className="calendar__days"
+                key={month}
+                initial="hidden" 
+                animate="show"
+                variants={calendarRowVariants}>
                 {rows}
             </motion.div>
-        </div>
-    )
-}
-
-const WeekDays = () => {
-    const container = {
-        hidden: { opacity: 0 },
-        show: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.05
-            }
-        }
-    }
-    const item = {
-        hidden: { opacity: 0, x: -25 },
-        show: { opacity: 1, x: 0 }
-    }
-
-    const calendarDays = ['poniedziałek', 'wtorek', 'środa', 'czwartek', 'piątek', 'sobota', 'niedziela']
-        .map(day => {
-            return <motion.li key={day} className="calendar__names-item" variants={item}>{day}</motion.li>
-        });
-
-    return (
-        <div className="calendar__names">
-            <motion.ul className="calendar__names-list" variants={container} initial="hidden" animate="show">
-                {calendarDays}
-            </motion.ul>
         </div>
     )
 }

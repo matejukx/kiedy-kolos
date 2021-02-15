@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import { setGroup } from "../actions";
+import { setGroup } from "../../actions";
 
 const CalendarTools = () => {
     const [settingsVisible, SetSettingsVisible] = useState(false);

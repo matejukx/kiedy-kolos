@@ -1,15 +1,15 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setDate } from "./../actions";
+import { setDate } from "../../actions";
 import { motion } from "framer-motion";
 import dayjs from "dayjs";
 
-const CalendarCard = ({day, active, events, swipeDirection}) => {
+const CalendarCard = ({cardDate, isInCurrentMonth, events, swipeDirection}) => {
     const dispatch = useDispatch();
     const chosenDate = useSelector(state => state.chosenDate);
 
-    const callendarCardClicked = () => {
-        dispatch(setDate(day));
+    const onCallendarCardClicked = () => {
+        dispatch(setDate(cardDate));
     }
 
     const item = {
@@ -22,19 +22,19 @@ const CalendarCard = ({day, active, events, swipeDirection}) => {
     }
 
     const style = () => {
-        if(day === chosenDate)
-            return "day--selected";
-        else if(!active)
+        if(cardDate === chosenDate)
+            return "day--selected ";
+        else if(!isInCurrentMonth)
             return "day--inactive ";
-        else if(dayjs(day).day() === 0 || dayjs(day).day() === 6)
+        else if(dayjs(cardDate).day() === 0 || dayjs(cardDate).day() === 6)
             return "day--weekend ";
     }
 
     return(
         <motion.div className={"day " + style()}
             tabindex="0" 
-            onClick={callendarCardClicked}
-            variants={item}
+            onClick={onCallendarCardClicked}
+            //variants={item}
             whileHover={{y: -2, scale: 1.05}}
             whileTap={{y: 0, scale: 0.95}}>
             <div className="day__events">
@@ -44,7 +44,7 @@ const CalendarCard = ({day, active, events, swipeDirection}) => {
                     ))}
                 </ul>
             </div>
-            <div className="day__number">{dayjs(day).format('DD')}</div>
+            <div className="day__number">{dayjs(cardDate).format('DD')}</div>
         </motion.div>
     )
 }
