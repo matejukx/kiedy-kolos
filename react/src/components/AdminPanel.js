@@ -7,8 +7,6 @@ import './../AdminPanel.css';
 
 const AdminPanel = () => {
     const editEnabled = useSelector(state => state.editEnabled);
-
-
     return(
         <div className="container">
             <div className="app app--small">

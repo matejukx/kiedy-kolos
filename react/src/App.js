@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from "react";
 import './App.css';
-import Calendar from "./components/Calendar";
-import InfoPanel from "./components/InfoPanel";
 import AdminPanel from "./components/AdminPanel";
-import { Route, Switch } from "react-router";
 import UserPanel from "./components/UserPanel";
 
+import { Route, Switch } from "react-router";
 
 const App = () => {
     return  (
