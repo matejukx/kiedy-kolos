@@ -12,15 +12,6 @@ const CalendarCard = ({cardDate, isInCurrentMonth, events, swipeDirection}) => {
         dispatch(setDate(cardDate));
     }
 
-    const item = {
-        hidden: { opacity: 0, x: swipeDirection * 100 },
-        show: { opacity: 1, x: 0 , 
-            transition: {
-                type: 'spring', stiffness: 600, damping: 50
-            } 
-        }
-    }
-
     const style = () => {
         if(cardDate === chosenDate)
             return "day--selected ";
@@ -34,7 +25,6 @@ const CalendarCard = ({cardDate, isInCurrentMonth, events, swipeDirection}) => {
         <motion.div className={"day " + style()}
             tabindex="0" 
             onClick={onCallendarCardClicked}
-            //variants={item}
             whileHover={{y: -2, scale: 1.05}}
             whileTap={{y: 0, scale: 0.95}}>
             <div className="day__events">

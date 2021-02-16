@@ -48,7 +48,6 @@ const Calendar = () => {
     }
 
     const changeMonth = (direction) => {
-        console.log(days);
         setSwipeDirection(direction);
         const offset = monthOffset + direction;
         setMonthOffset(offset);
