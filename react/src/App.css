@@ -68,7 +68,7 @@ html {
 body {
   background-color: var(--color-background);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='12' viewBox='0 0 20 12'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='charlie-brown' fill='%235a6b76' fill-opacity='0.14'%3E%3Cpath d='M9.8 12L0 2.2V.8l10 10 10-10v1.4L10.2 12h-.4zm-4 0L0 6.2V4.8L7.2 12H5.8zm8.4 0L20 6.2V4.8L12.8 12h1.4zM9.8 0l.2.2.2-.2h-.4zm-4 0L10 4.2 14.2 0h-1.4L10 2.8 7.2 0H5.8z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  font-family: "Roboto", sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: normal;
   color: var(--color-font);
   transition: background-color 0.4s, color 0.3s;
@@ -164,7 +164,7 @@ body {
 .button__counter {
   background-color: var(--color-red-light);
   color: var(--color-font-light);
-  font-family: "Roboto", sans-serif;
+  font-family: "Lato", sans-serif;
   display: flex;
   justify-content: center;
   font-weight: bold;
@@ -207,7 +207,7 @@ body {
 
 .calendar__setting-name {
   color: var(--color-font);
-  font-family: "Roboto", sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: normal;
   font-size: 2rem;
   transition: background-color 0.4s, color 0.3s;
@@ -262,7 +262,7 @@ body {
 .calendar__header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 4rem;
+  margin-bottom: 3.2rem;
   text-align: center;
   width: 27rem;
   margin-left: auto;
@@ -328,7 +328,7 @@ body {
   cursor: pointer;
   background-color: var(--color-light);
   color: var(--color-font);
-  border-radius: 0.4rem;
+  border-radius: 0;
   flex: 1;
   height: 100%;
   box-shadow: var(--shadow-light);
@@ -403,12 +403,7 @@ body {
   transition: width 0.2s;
 }
 
-.day__event:first-child {
-  border-top-left-radius: 0.4rem;
-}
-
 .day__event:nth-child(4) {
-  border-bottom-left-radius: 0.4rem;
   box-shadow: none;
 }
 
@@ -449,7 +444,7 @@ body {
 }
 
 .day__number {
-  font-size: 3rem;
+  font-size: 2.4rem;
   margin-right: 1rem;
   margin-bottom: 1rem;
   text-align: right;
@@ -483,8 +478,7 @@ body {
 .extension__header {
   color: var(--color-font);
   font-size: 2rem;
-  font-family: "Roboto", sans-serif;
-  font-weight: bold;
+  font-family: "Lato", sans-serif;
   margin-bottom: 1rem;
   transition: background-color 0.4s, color 0.3s;
 }
@@ -563,7 +557,7 @@ body {
 
 .extension__event-title {
   font-size: 1.8rem;
-  font-family: "Roboto", sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: normal;
 }
 
@@ -571,7 +565,7 @@ body {
   display: flex;
   margin-top: 0.4rem;
   justify-content: space-between;
-  font-family: "Roboto", sans-serif;
+  font-family: "Lato", sans-serif;
   font-size: 1.2rem;
 }
 
@@ -588,9 +582,8 @@ body {
 .app__event-title {
   color: var(--color-font);
   font-size: 2rem;
-  font-family: "Roboto", sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: bold;
-  margin-bottom: 1rem;
   transition: background-color 0.4s, color 0.3s;
 }
 
@@ -626,13 +619,10 @@ body {
   color: var(--color-font);
   max-width: 40rem;
   font-size: 1.4rem;
-  font-family: "Roboto", sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: normal;
-  line-height: 1.4;
-  padding: 0 1.2rem 0 0.8rem;
   overflow-y: auto;
   overflow-x: hidden;
-  border-left: 2px solid var(--color-primary);
   transition: background-color 0.4s, color 0.3s;
 }
 
@@ -659,7 +649,7 @@ body {
 .edition__header {
   color: var(--color-font);
   font-size: 2rem;
-  font-family: "Roboto", sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: bold;
   margin-bottom: 1rem;
   transition: background-color 0.4s, color 0.3s;
@@ -667,7 +657,7 @@ body {
 
 .edition__label {
   font-size: 1.8rem;
-  font-family: "Roboto", sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: normal;
   color: var(--color-font);
   margin-bottom: 0.4rem;
@@ -753,7 +743,7 @@ textarea {
   }
 
   .calendar__header {
-    margin-bottom: 3.2rem;
+    margin-bottom: 2.4rem;
   }
 
   .extension__events {
