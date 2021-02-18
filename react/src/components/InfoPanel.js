@@ -42,7 +42,7 @@ const InfoPanel = () => {
     <div className="extension">
       <motion.div className="extension__events">
         <h2 className="extension__header">
-          Wydarzenia {dayjs(date).format("DD") + " " + monthNames[parseInt(dayjs(date).format("MM"))-1]}
+          Wydarzenia {dayjs(date).format("DD")} {monthNames[parseInt(dayjs(date).format("MM"))-1]}
         </h2>
         <motion.ul
           className="extension__events-list"
@@ -143,6 +143,7 @@ const EventDescription = ({ event }) => {
           />
           <motion.div
             className="app__info-text"
+            style={{whiteSpace: "pre-line"}}
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{
