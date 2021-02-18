@@ -32,7 +32,7 @@ const Calendar = () => {
         setMonth(parseInt(today.format('MM')));
         dispatch(setDate(today.format("YYYY-MM-DD")));
 
-        initializeMonthDays();
+        initializeMonthDays(0);
         getEvents();
     }, []);
 
@@ -51,34 +51,33 @@ const Calendar = () => {
         setSwipeDirection(1);
         const offset = monthOffset + 1;
         setMonthOffset(offset);
-        today = today.add(offset, 'month');
-        setMonth(parseInt(today.format('MM')));
-        initializeMonthDays();
+        setMonth(parseInt(today.add(offset, 'month').format('MM')));
+        initializeMonthDays(offset);
     }
 
     const decreaseMonth = () => {
         setSwipeDirection(-1);
         const offset = monthOffset - 1;
         setMonthOffset(offset);
-        today = today.add(offset, 'month');
-        setMonth(parseInt(today.format('MM')));
-        initializeMonthDays();
+        setMonth(parseInt(today.add(offset, 'month').format('MM')));
+        initializeMonthDays(offset);
     }
 
     const shouldBeDisplayed = (event) => {
         return (event.group_name === "Wszystkie" || event.group_name === chosenGroup);
     }
 
-    const initializeMonthDays = () => {
-        const daysLocal = new Array(42);
-        const startDayOfMonth = daysOfWeek[today.startOf('month').day()]; // 1 - monday, 7 sunday
+    const initializeMonthDays = (offset) => {
+        const desiredDay = today.add(offset, 'month');
+        const daysTemp = new Array(42);
+        const startDayOfMonth = daysOfWeek[desiredDay.startOf('month').day()]; // 1 - monday, 7 sunday
         
-        const startingDay = today.startOf('month').subtract(startDayOfMonth - 1, 'day');
+        const startingDay = desiredDay.startOf('month').subtract(startDayOfMonth - 1, 'day');
 
         for(let i=0; i<42; i++)
-            daysLocal[i] = startingDay.add(i, 'day').format('YYYY-MM-DD');
+            daysTemp[i] = startingDay.add(i, 'day').format('YYYY-MM-DD');
 
-        setDays(daysLocal);
+        setDays(daysTemp);
     }
 
     const getEventsForDay = (day) => {
