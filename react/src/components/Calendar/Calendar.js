@@ -32,7 +32,7 @@ const Calendar = () => {
         setMonth(parseInt(today.format('MM')));
         dispatch(setDate(today.format("YYYY-MM-DD")));
 
-        initializeDays();
+        initializeMonthDays();
         getEvents();
     }, []);
 
@@ -47,20 +47,29 @@ const Calendar = () => {
         setEvents(filteredData);
     }
 
-    const changeMonth = (direction) => {
-        setSwipeDirection(direction);
-        const offset = monthOffset + direction;
+    const increaseMonth = () => {
+        setSwipeDirection(1);
+        const offset = monthOffset + 1;
         setMonthOffset(offset);
         today = today.add(offset, 'month');
         setMonth(parseInt(today.format('MM')));
-        initializeDays();
+        initializeMonthDays();
+    }
+
+    const decreaseMonth = () => {
+        setSwipeDirection(-1);
+        const offset = monthOffset - 1;
+        setMonthOffset(offset);
+        today = today.add(offset, 'month');
+        setMonth(parseInt(today.format('MM')));
+        initializeMonthDays();
     }
 
     const shouldBeDisplayed = (event) => {
         return (event.group_name === "Wszystkie" || event.group_name === chosenGroup);
     }
 
-    const initializeDays = () => {
+    const initializeMonthDays = () => {
         const daysLocal = new Array(42);
         const startDayOfMonth = daysOfWeek[today.startOf('month').day()]; // 1 - monday, 7 sunday
         
@@ -112,7 +121,7 @@ const Calendar = () => {
     return (
         <div className="calendar">
             <div className="calendar__header">
-                <button className="button button--previous" onClick={() => changeMonth(-1)}></button>
+                <button className="button button--previous" onClick={() => decreaseMonth()}></button>
                 <motion.h2
                     key={month}
                     className="calendar__title"
@@ -121,7 +130,7 @@ const Calendar = () => {
                     transition={{ type: 'spring', stiffness: 600, damping: 50 }}>
                         {monthsWords[month-1]}
                 </motion.h2>
-                <button className="button button--next" onClick={() => changeMonth(1)}></button>
+                <button className="button button--next" onClick={() => increaseMonth()}></button>
             </div>
             <CalendarTools />
             <WeekDays/>
