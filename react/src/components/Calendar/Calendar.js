@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import { motion } from "framer-motion";
-
 import dayjs from "dayjs";
-
 import { setDate } from "../../actions";
-
 import CalendarCard from "./CalendarCard";
 import CalendarTools from "./CalendarTools";
 import WeekDays from "./WeekDays";
+import "./../API/Api";
+import { getAllEvents } from "./../API/Api";
 
 const Calendar = () => {
-    const API_URL = `https://aleksanderblaszkiewicz.pl/kiedykolos/get_events.php`;
-
     const [events, setEvents] = useState([]);
     const [days, setDays] = useState([]);
     const [month, setMonth] = useState();
@@ -32,7 +28,7 @@ const Calendar = () => {
         setMonth(parseInt(today.format('MM')));
         dispatch(setDate(today.format("YYYY-MM-DD")));
 
-        initializeDays();
+        initializeMonthDays(0);
         getEvents();
     }, []);
 
@@ -41,35 +37,42 @@ const Calendar = () => {
     }, [chosenGroup])
 
     const getEvents = async () => {
-        const response = await fetch(API_URL);
-        const data = await response.json();
+        const data = await getAllEvents();
         const filteredData = data.filter(shouldBeDisplayed);
         setEvents(filteredData);
     }
 
-    const changeMonth = (direction) => {
-        setSwipeDirection(direction);
-        const offset = monthOffset + direction;
+    const increaseMonth = () => {
+        setSwipeDirection(1);
+        const offset = monthOffset + 1;
         setMonthOffset(offset);
-        today = today.add(offset, 'month');
-        setMonth(parseInt(today.format('MM')));
-        initializeDays();
+        setMonth(parseInt(today.add(offset, 'month').format('MM')));
+        initializeMonthDays(offset);
+    }
+
+    const decreaseMonth = () => {
+        setSwipeDirection(-1);
+        const offset = monthOffset - 1;
+        setMonthOffset(offset);
+        setMonth(parseInt(today.add(offset, 'month').format('MM')));
+        initializeMonthDays(offset);
     }
 
     const shouldBeDisplayed = (event) => {
         return (event.group_name === "Wszystkie" || event.group_name === chosenGroup);
     }
 
-    const initializeDays = () => {
-        const daysLocal = new Array(42);
-        const startDayOfMonth = daysOfWeek[today.startOf('month').day()]; // 1 - monday, 7 sunday
+    const initializeMonthDays = (offset) => {
+        const desiredDay = today.add(offset, 'month');
+        const daysTemp = new Array(42);
+        const startDayOfMonth = daysOfWeek[desiredDay.startOf('month').day()]; // 1 - monday, 7 sunday
         
-        const startingDay = today.startOf('month').subtract(startDayOfMonth - 1, 'day');
+        const startingDay = desiredDay.startOf('month').subtract(startDayOfMonth - 1, 'day');
 
         for(let i=0; i<42; i++)
-            daysLocal[i] = startingDay.add(i, 'day').format('YYYY-MM-DD');
+            daysTemp[i] = startingDay.add(i, 'day').format('YYYY-MM-DD');
 
-        setDays(daysLocal);
+        setDays(daysTemp);
     }
 
     const getEventsForDay = (day) => {
@@ -112,7 +115,7 @@ const Calendar = () => {
     return (
         <div className="calendar">
             <div className="calendar__header">
-                <button className="button button--previous" onClick={() => changeMonth(-1)}></button>
+                <button className="button button--previous" onClick={() => decreaseMonth()}></button>
                 <motion.h2
                     key={month}
                     className="calendar__title"
@@ -121,7 +124,7 @@ const Calendar = () => {
                     transition={{ type: 'spring', stiffness: 600, damping: 50 }}>
                         {monthsWords[month-1]}
                 </motion.h2>
-                <button className="button button--next" onClick={() => changeMonth(1)}></button>
+                <button className="button button--next" onClick={() => increaseMonth()}></button>
             </div>
             <CalendarTools />
             <WeekDays/>
