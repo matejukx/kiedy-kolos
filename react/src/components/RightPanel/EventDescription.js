@@ -1,16 +1,6 @@
 import {motion} from "framer-motion";
 
 const EventDescription = ({ event }) => {
-    const container = {
-      hidden: { opacity: 0 },
-      show: {
-        opacity: 1,
-        transition: {
-          staggerChildren: 0.1,
-          delayChildren: 0.1,
-        },
-      },
-    };
   
     return (
       <div className="app__info">
@@ -24,12 +14,7 @@ const EventDescription = ({ event }) => {
             >
               {event.name}
             </motion.h3>
-            <motion.ul
-              className="app__links"
-              variants={container}
-              initial="hidden"
-              animate="show"
-            />
+            <motion.ul className="app__links" />
             <motion.div
               className="app__info-text"
               style={{whiteSpace: "pre-line"}}
