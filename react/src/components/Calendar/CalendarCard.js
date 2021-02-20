@@ -4,7 +4,7 @@ import { setDate } from "../../actions";
 import { motion } from "framer-motion";
 import dayjs from "dayjs";
 
-const CalendarCard = ({cardDate, isInCurrentMonth, events, swipeDirection}) => {
+const CalendarCard = ({cardDate, isInCurrentMonth, events}) => {
     const dispatch = useDispatch();
     const chosenDate = useSelector(state => state.chosenDate);
 
@@ -13,12 +13,22 @@ const CalendarCard = ({cardDate, isInCurrentMonth, events, swipeDirection}) => {
     }
 
     const style = () => {
-        if(cardDate === chosenDate)
-            return "day--selected ";
-        else if(!isInCurrentMonth)
+        let styleText = "";
+
+        if(!isInCurrentMonth)
             return "day--inactive ";
-        else if(dayjs(cardDate).day() === 0 || dayjs(cardDate).day() === 6)
-            return "day--weekend ";
+
+        if(cardDate === chosenDate)
+            styleText += "day--selected ";
+
+        if(dayjs(cardDate).day() === 0 || dayjs(cardDate).day() === 6)
+            styleText += "day--weekend ";
+
+        if(dayjs(cardDate).format("DD-MM-YYYY") === dayjs().format("DD-MM-YYYY")) {
+            styleText += "day--current ";
+        }
+            
+        return styleText;
     }
 
     return(
