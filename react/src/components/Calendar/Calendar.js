@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import { motion } from "framer-motion";
-
 import dayjs from "dayjs";
-
 import { setDate } from "../../actions";
-
 import CalendarCard from "./CalendarCard";
 import CalendarTools from "./CalendarTools";
 import WeekDays from "./WeekDays";
