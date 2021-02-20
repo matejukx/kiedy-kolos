@@ -6,10 +6,10 @@ import { setDate } from "../../actions";
 import CalendarCard from "./CalendarCard";
 import CalendarTools from "./CalendarTools";
 import WeekDays from "./WeekDays";
+import "./../API/Api";
+import { getAllEvents } from "./../API/Api";
 
 const Calendar = () => {
-    const API_URL = `https://aleksanderblaszkiewicz.pl/kiedykolos/get_events.php`;
-
     const [events, setEvents] = useState([]);
     const [days, setDays] = useState([]);
     const [month, setMonth] = useState();
@@ -37,8 +37,7 @@ const Calendar = () => {
     }, [chosenGroup])
 
     const getEvents = async () => {
-        const response = await fetch(API_URL);
-        const data = await response.json();
+        const data = await getAllEvents();
         const filteredData = data.filter(shouldBeDisplayed);
         setEvents(filteredData);
     }
