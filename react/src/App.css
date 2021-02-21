@@ -337,6 +337,11 @@ body {
   margin-right: 0.8rem;
 }
 
+.day--weekend {
+  background-color: var(--color-light-2);
+  transition: background-color 0.4s, color 0.3s;
+}
+
 .day--current {
   background-color: var(--color-primary);
   color: var(--color-font-light);
@@ -351,11 +356,6 @@ body {
 .day--selected {
   box-shadow: inset 0 0 0 0.4rem var(--color-primary);
   cursor: initial;
-}
-
-.day--weekend {
-  background-color: var(--color-light-2);
-  transition: background-color 0.4s, color 0.3s;
 }
 
 .day--inactive {
