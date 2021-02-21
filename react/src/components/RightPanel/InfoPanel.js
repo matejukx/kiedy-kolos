@@ -30,6 +30,14 @@ const InfoPanel = () => {
     return event.group_name == "Wszystkie" || event.group_name == chosenGroup;
   };
 
+  const dayWithoutZero = () => {
+    let dayString = dayjs(date).format("DD");
+    if(dayString[0] == '0') {
+      dayString = dayString.slice(1,2);
+    }
+    return dayString;
+  }
+
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -44,7 +52,7 @@ const InfoPanel = () => {
     <div className="extension">
       <motion.div className="extension__events">
         <h2 className="extension__header">
-          Wydarzenia {dayjs(date).format("DD")} {monthNames[parseInt(dayjs(date).format("MM"))-1]}
+          Wydarzenia {dayWithoutZero()} {monthNames[parseInt(dayjs(date).format("MM"))-1]}
         </h2>
         <motion.ul
           className="extension__events-list"
