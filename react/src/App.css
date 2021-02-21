@@ -601,7 +601,6 @@ body {
   color: var(--color-font);
   max-width: 40rem;
   font-size: 1.4rem;
-  opacity: 0.8 !important;
   font-family: "Lato", sans-serif;
   font-weight: normal;
   overflow-y: auto;
