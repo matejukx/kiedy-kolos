@@ -64,13 +64,13 @@ const Event = ({ event }) => {
         return styleText;
     };
 
-    const setChosenEventAdminGlobal = (event) => {
+    const setChosenEventAdminGlobal = () => {
         dispatch(setChosenEventAdmin(event.id));
         dispatch(editEnable());
     };
 
     return (
-        <li class={'extension__event ' + style()} onClick={() => setChosenEventAdminGlobal(event)}>
+        <li class={'extension__event ' + style()} onClick={() => setChosenEventAdminGlobal()}>
             <h3 className='extension__event-title'>{event.name}</h3>
             <div class='extension__event-panel'>
                 <div class='extension__event-info'>17:00</div>

@@ -8,6 +8,7 @@ import CalendarTools from './CalendarTools';
 import WeekDays from './WeekDays';
 import './../API/Api';
 import { getAllEvents } from './../API/Api';
+import MonthTitle from './MonthTitle';
 
 const Calendar = () => {
     const [events, setEvents] = useState([]);
@@ -20,20 +21,6 @@ const Calendar = () => {
     const chosenGroup = useSelector((state) => state.chosenGroup);
 
     const daysOfWeek = [7, 1, 2, 3, 4, 5, 6];
-    const monthsWords = [
-        'Styczeń',
-        'Luty',
-        'Marzec',
-        'Kwiecień',
-        'Maj',
-        'Czerwiec',
-        'Lipiec',
-        'Sierpień',
-        'Wrzesień',
-        'Październik',
-        'Listopad',
-        'Grudzień',
-    ];
 
     let today = dayjs();
 
@@ -134,15 +121,7 @@ const Calendar = () => {
         <div className='calendar'>
             <div className='calendar__header'>
                 <button className='button button--previous' onClick={() => decreaseMonth()}></button>
-                <motion.h2
-                    key={month}
-                    className='calendar__title'
-                    initial={{ x: swipeDirection * 50 }}
-                    animate={{ x: 0 }}
-                    transition={{ type: 'spring', stiffness: 600, damping: 50 }}
-                >
-                    {monthsWords[month - 1]}
-                </motion.h2>
+                <MonthTitle month={month} swipeDirection={swipeDirection} />
                 <button className='button button--next' onClick={() => increaseMonth()}></button>
             </div>
             <CalendarTools />
