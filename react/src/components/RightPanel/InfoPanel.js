@@ -13,6 +13,7 @@ const InfoPanel = () => {
     const [chosenEvent, setChosenEvent] = useState();
     const date = useSelector((state) => state.chosenDate);
     const chosenGroup = useSelector((state) => state.chosenGroup);
+    const forceRefresh = useSelector((state) => state.forceEventsRefresh);
     const monthNames = [
         'Stycznia',
         'Lutego',
@@ -31,7 +32,7 @@ const InfoPanel = () => {
     useEffect(async () => {
         setEvents([]);
         getEvents();
-    }, [date, chosenGroup]);
+    }, [date, chosenGroup, forceRefresh]);
 
     const getEvents = async () => {
         const data = await getDayEvents(0, date);

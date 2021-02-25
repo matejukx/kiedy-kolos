@@ -4,6 +4,7 @@ import chosenEventAdminReducer from './chosenEventAdmin';
 import { combineReducers } from 'redux';
 import editModeReducer from './editModeReducer';
 import addEventPopupReducer from './addEventPopup';
+import forceEventsRefreshReducer from './forceEventsRefresh';
 
 const allReducers = combineReducers({
     chosenDate: dateReducer,
@@ -11,6 +12,7 @@ const allReducers = combineReducers({
     chosenEventAdmin: chosenEventAdminReducer,
     editEnabled: editModeReducer,
     addEventPopup: addEventPopupReducer,
+    forceEventsRefresh: forceEventsRefreshReducer,
 });
 
 export default allReducers;

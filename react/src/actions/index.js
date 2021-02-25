@@ -37,3 +37,9 @@ export const setAddEventPopup = (value) => {
         payload: value,
     };
 };
+
+export const forceEventsRefresh = () => {
+    return {
+        type: 'REFRESH',
+    };
+};

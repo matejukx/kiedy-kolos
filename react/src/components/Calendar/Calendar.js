@@ -19,6 +19,7 @@ const Calendar = () => {
 
     const dispatch = useDispatch();
     const chosenGroup = useSelector((state) => state.chosenGroup);
+    const forceRefresh = useSelector((state) => state.forceEventsRefresh);
 
     const daysOfWeek = [7, 1, 2, 3, 4, 5, 6];
 
@@ -34,7 +35,7 @@ const Calendar = () => {
 
     useEffect(() => {
         getEvents();
-    }, [chosenGroup]);
+    }, [chosenGroup, forceRefresh]);
 
     const getEvents = async () => {
         const data = await getAllEvents();

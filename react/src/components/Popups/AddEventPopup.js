@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAddEventPopup, setGroup } from '../../actions';
+import { forceEventsRefresh, setAddEventPopup, setGroup } from '../../actions';
 import { getGroups, getCourses, getTypes } from '../API/Api';
 
 const AddEventPopup = () => {
     const date = useSelector((state) => state.chosenDate);
-    const chosenGroup = useSelector((state) => state.chosenGroup);
     const dispatch = useDispatch();
 
     const [courses, setCourses] = useState([]);
@@ -58,9 +57,7 @@ const AddEventPopup = () => {
         const response = await fetch(`https://aleksanderblaszkiewicz.pl/kiedykolos/add_event.php`, requestOptions);
         if (response) {
             dispatch(setAddEventPopup(false));
-            const oldGroup = chosenGroup;
-            dispatch(setGroup(0));
-            dispatch(setGroup(oldGroup));
+            dispatch(forceEventsRefresh());
         }
     };
 
