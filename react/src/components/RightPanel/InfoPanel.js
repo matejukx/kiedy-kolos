@@ -68,13 +68,13 @@ const InfoPanel = () => {
                 <h2 className='extension__header'>
                     Wydarzenia {dayWithoutZero()} {monthNames[parseInt(dayjs(date).format('MM')) - 1]}
                 </h2>
+                <AddButton />
                 <motion.ul
                     className='extension__events-list'
                     variants={containerVariants}
                     initial='hidden'
                     animate={events.length > 0 && 'show'}
                 >
-                    <AddButton />
                     {events.map((event) => (
                         <EventButton
                             key={event.id}
