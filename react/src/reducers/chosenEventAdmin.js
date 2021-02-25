@@ -1,10 +1,10 @@
 const chosenEventAdminReducer = (state = 0, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case 'SET_EVENT':
-            return action.payload
+            return action.payload;
         default:
-            return state
+            return state;
     }
-}
+};
 
 export default chosenEventAdminReducer;

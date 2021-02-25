@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setDate } from '../../actions';
+import { setAddEventPopup, setDate } from '../../actions';
 import { motion } from 'framer-motion';
 import dayjs from 'dayjs';
 

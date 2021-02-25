@@ -6,6 +6,7 @@ import EventButton from './EventButton';
 import EventDescription from './EventDescription';
 import './../API/Api';
 import { getDayEvents } from './../API/Api';
+import AddButton from './AddButton';
 
 const InfoPanel = () => {
     const [events, setEvents] = useState([]);
@@ -73,6 +74,7 @@ const InfoPanel = () => {
                     initial='hidden'
                     animate={events.length > 0 && 'show'}
                 >
+                    <AddButton />
                     {events.map((event) => (
                         <EventButton
                             key={event.id}
