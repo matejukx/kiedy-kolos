@@ -95,11 +95,18 @@ const AddEventPopup = () => {
     };
 
     return (
-        <div className='modal'>
+        <motion.div
+            className='modal'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ ease: [0.08, 0.75, 0.21, 0.98] }}
+        >
             <motion.div
                 className='event-adder'
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
                 transition={{ ease: [0.08, 0.75, 0.21, 0.98] }}
             >
                 <h2 className='event-adder__title'>Dodawanie wydarzenia {dayjs(date).format('DD/MM/YYYY')}</h2>
@@ -188,7 +195,7 @@ const AddEventPopup = () => {
                     </div>
                 </form>
             </motion.div>
-        </div>
+        </motion.div>
     );
 };
 

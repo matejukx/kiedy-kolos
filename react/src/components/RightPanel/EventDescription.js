@@ -5,7 +5,7 @@ const EventDescription = ({ event }) => {
         type: 'spring',
         stiffness: 600,
         damping: 50,
-        delay: 0.1,
+        delay: 0,
     };
     return (
         <div className='app__info'>
@@ -23,7 +23,7 @@ const EventDescription = ({ event }) => {
                     <motion.div
                         className='app__info-text'
                         style={{ whiteSpace: 'pre-line' }}
-                        initial={{ y: 50, opacity: 0 }}
+                        initial={{ y: -10, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={descriptionTransition}
                     >

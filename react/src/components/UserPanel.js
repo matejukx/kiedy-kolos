@@ -3,6 +3,7 @@ import Calendar from './Calendar/Calendar';
 import InfoPanel from './RightPanel/InfoPanel';
 import { useSelector } from 'react-redux';
 import AddEventPopup from './Popups/AddEventPopup';
+import { AnimatePresence } from 'framer-motion';
 
 const UserPanel = () => {
     const addEventPopupEnabled = useSelector((state) => state.addEventPopup);
@@ -13,7 +14,7 @@ const UserPanel = () => {
                 <Calendar />
                 <InfoPanel />
             </div>
-            {addEventPopupEnabled && <AddEventPopup />}
+            <AnimatePresence>{addEventPopupEnabled && <AddEventPopup />}</AnimatePresence>
         </div>
     );
 };
