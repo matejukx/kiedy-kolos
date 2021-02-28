@@ -94,6 +94,11 @@ const AddEventPopup = () => {
         addEvent();
     };
 
+    const handleCloseClick = (e) => {
+        e.preventDefault();
+        closePopup();
+    };
+
     return (
         <motion.div
             className='modal'
@@ -186,7 +191,7 @@ const AddEventPopup = () => {
                     </div>
 
                     <div className='event-adder__buttons'>
-                        <button className='event-adder__button--reject' onClick={closePopup}>
+                        <button className='event-adder__button--reject' onClick={handleCloseClick}>
                             Anuluj
                         </button>
                         <button className='event-adder__button--accept' onClick={handleAcceptClick}>

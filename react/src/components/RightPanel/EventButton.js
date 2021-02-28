@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion';
+import { useDispatch } from 'react-redux';
+import { setChosenEvent, setChosenEventAdmin, setDeleteEventPopup } from '../../actions';
 
-const EventButton = ({ event, setChosenEvent, chosenEvent }) => {
+const EventButton = ({ event, setChosenEventLocal, chosenEvent }) => {
+    const dispatch = useDispatch();
     const item = {
         hidden: { opacity: 0, x: 100 },
         show: {
@@ -28,6 +31,11 @@ const EventButton = ({ event, setChosenEvent, chosenEvent }) => {
         return styleText;
     };
 
+    const deleteEventClicked = () => {
+        dispatch(setDeleteEventPopup(true));
+        dispatch(setChosenEvent(event.id));
+    };
+
     return (
         <motion.li
             key={event.id}
@@ -35,12 +43,15 @@ const EventButton = ({ event, setChosenEvent, chosenEvent }) => {
             variants={item}
             whileTap={{ scale: 0.95 }}
             whileHover={{ y: -5, scale: 1.02 }}
-            onClick={() => setChosenEvent(event)}
+            onClick={() => setChosenEventLocal(event)}
         >
             <h3 className='extension__event-title'>{event.name}</h3>
             <div className='extension__event-panel'>
                 <div className='extension__event-info'>{event.time.slice(0, 5)}</div>
                 <div className='extension__event-info'>{event.type}</div>
+                <div className='extension__event-info'>
+                    <button onClick={deleteEventClicked}>USUN</button>
+                </div>
             </div>
         </motion.li>
     );

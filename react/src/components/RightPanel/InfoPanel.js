@@ -80,7 +80,7 @@ const InfoPanel = () => {
                         <EventButton
                             key={event.id}
                             event={event}
-                            setChosenEvent={setChosenEvent}
+                            setChosenEventLocal={setChosenEvent}
                             chosenEvent={chosenEvent}
                         />
                     ))}

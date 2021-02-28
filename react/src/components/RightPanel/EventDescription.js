@@ -1,11 +1,18 @@
 import { motion } from 'framer-motion';
 
 const EventDescription = ({ event }) => {
-    const descriptionTransition = {
+    const titleTransition = {
         type: 'spring',
         stiffness: 600,
         damping: 50,
         delay: 0,
+    };
+
+    const descriptionTransition = {
+        type: 'spring',
+        stiffness: 600,
+        damping: 50,
+        delay: 0.1,
     };
     return (
         <div className='app__info'>
@@ -15,7 +22,7 @@ const EventDescription = ({ event }) => {
                         className='app__event-title'
                         initial={{ y: 10, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
-                        transition={{ type: 'spring', stiffness: 600, damping: 50 }}
+                        transition={titleTransition}
                     >
                         {event.name}
                     </motion.h3>
@@ -23,7 +30,7 @@ const EventDescription = ({ event }) => {
                     <motion.div
                         className='app__info-text'
                         style={{ whiteSpace: 'pre-line' }}
-                        initial={{ y: -10, opacity: 0 }}
+                        initial={{ y: 10, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={descriptionTransition}
                     >

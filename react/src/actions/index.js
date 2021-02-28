@@ -38,8 +38,29 @@ export const setAddEventPopup = (value) => {
     };
 };
 
+export const setEditEventPopup = (value) => {
+    return {
+        type: 'SET_EDIT_EVENT_POPUP',
+        payload: value,
+    };
+};
+
+export const setDeleteEventPopup = (value) => {
+    return {
+        type: 'SET_DELETE_EVENT_POPUP',
+        payload: value,
+    };
+};
+
 export const forceEventsRefresh = () => {
     return {
         type: 'REFRESH',
+    };
+};
+
+export const setChosenEvent = (value) => {
+    return {
+        type: 'SET_CHOSEN_EVENT',
+        payload: value,
     };
 };
