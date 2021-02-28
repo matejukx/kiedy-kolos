@@ -527,11 +527,11 @@
   }
   
   .event__topbar--red {
-    background-color: var(--color-red-dark);
+    background-color: var(--color-red);
   }
   
   .event__topbar--purple {
-    background-color: var(--color-purple-dark);
+    background-color: var(--color-purple);
   }
   
   .event__topbar--blue {
