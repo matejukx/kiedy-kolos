@@ -756,6 +756,7 @@ textarea {
 
 .event-adder__button--accept {
     background-color: var(--color-primary);
+    cursor: pointer;
     border: none;
     box-shadow: var(--shadow-light);
     padding: 1.6rem;
@@ -766,6 +767,7 @@ textarea {
 
 .event-adder__button--reject {
     background-color: transparent;
+    cursor: pointer;
     font-size: 1.6rem;
     padding: 1.6rem;
     color: var(--color-font-gray);
