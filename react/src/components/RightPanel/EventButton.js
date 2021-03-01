@@ -21,9 +21,9 @@ const EventButton = ({ event, setChosenEventLocal, chosenEvent }) => {
         const styles = {
             Kolokwium: '--red',
             Projekt: '--green',
-            Egzamin: '--yellow',
+            Egzamin: '--red',
             Laboratorium: '--blue',
-            Inne: 'extension__event--other',
+            Inne: '--yellow',
         };
         styleText += styles[event.type];
 
