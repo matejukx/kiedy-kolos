@@ -8,11 +8,11 @@ const AddButton = () => {
     };
 
     return (
-        <li className='event--adder'>
+        <div className='event--adder'>
             <button className='extension__button' onClick={openAddEventPopup}>
                 Dodaj Wydarzenie
             </button>
-        </li>
+        </div>
     );
 };
 

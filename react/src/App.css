@@ -856,10 +856,6 @@ textarea {
     height: 40vh;
   }
 
-  .event--adder {
-    flex-basis: 100%;
-  }
-
   .events-list {
     display: flex;
     justify-content: space-between;

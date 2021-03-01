@@ -1,6 +1,10 @@
 import { motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
-import { setChosenEvent, setChosenEventAdmin, setDeleteEventPopup } from '../../actions';
+import {
+    setChosenEvent,
+    setChosenEventAdmin,
+    setDeleteEventPopup,
+} from '../../actions';
 
 const EventButton = ({ event, setChosenEventLocal, chosenEvent }) => {
     const dispatch = useDispatch();
@@ -48,12 +52,19 @@ const EventButton = ({ event, setChosenEventLocal, chosenEvent }) => {
             <div className='event__topbar event__topbar--red'>
                 <h3 className='event__title'>{event.name}</h3>
                 <button className='event__editor'></button>
-                <button className='event__deleter' onClick={deleteEventClicked}></button>
+                <button
+                    className='event__deleter'
+                    onClick={deleteEventClicked}
+                ></button>
             </div>
             <div className='event__panel'>
                 <div className='event__tags'>
-                    <div className='event__tag event__tag--type'>{event.type}</div>
-                    <div className='event__tag event__tag--time'>{event.time.slice(0, 5)}</div>
+                    <div className='event__tag event__tag--type'>
+                        {event.type}
+                    </div>
+                    <div className='event__tag event__tag--time'>
+                        {event.time.slice(0, 5)}
+                    </div>
                     <div className='event__tag event__tag--info'>chuj</div>
                 </div>
                 <div className='event__description'>{event.description}</div>
