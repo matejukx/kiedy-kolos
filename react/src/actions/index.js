@@ -64,3 +64,10 @@ export const setChosenEvent = (value) => {
         payload: value,
     };
 };
+
+export const setChosenTheme = (value) => {
+    return {
+        type: 'SET_CHOSEN_THEME',
+        payload: value,
+    };
+};

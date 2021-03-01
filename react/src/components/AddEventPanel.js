@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './../AdminPanel.css';
 
 const AddEventPanel = () => {
     const API_URL_GET_COURSES = 'https://aleksanderblaszkiewicz.pl/kiedykolos/get_courses.php';

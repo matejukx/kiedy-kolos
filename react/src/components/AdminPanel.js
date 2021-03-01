@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import AddEventPanel from './AddEventPanel';
 import EditEventPanel from './EditEventPanel';
 import EventList from './EventList';
-import './../AdminPanel.css';
 
 const AdminPanel = () => {
     const editEnabled = useSelector((state) => state.editEnabled);

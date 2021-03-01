@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { editDisable, editEnable, setChosenEventAdmin } from '../actions';
-import './../AdminPanel.css';
 
 const EventList = () => {
     const API_URL = `https://aleksanderblaszkiewicz.pl/kiedykolos/get_events.php`;

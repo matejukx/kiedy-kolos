@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
-import { setGroup } from '../../actions';
+import { setChosenTheme, setGroup } from '../../actions';
 
 const CalendarTools = () => {
     const [settingsVisible, SetSettingsVisible] = useState(false);
+    const chosenTheme = useSelector((state) => state.chosenTheme);
+
+    useEffect(() => {
+        document.body.dataset.theme = chosenTheme;
+    }, [chosenTheme]);
 
     const toggleVisible = () => {
         SetSettingsVisible(!settingsVisible);
@@ -31,6 +36,7 @@ export default CalendarTools;
 const Settings = () => {
     const dispatch = useDispatch();
     const chosenGroup = useSelector((state) => state.chosenGroup);
+    const chosenTheme = useSelector((state) => state.chosenTheme);
 
     const setGroupGlobal = (name) => {
         dispatch(setGroup(name));
@@ -38,6 +44,20 @@ const Settings = () => {
 
     const style = (name) => {
         if (name === chosenGroup) return ' calendar__setting-option--selected-solid ';
+    };
+
+    const changeToWhiteTheme = () => {
+        dispatch(setChosenTheme('light'));
+    };
+
+    const changeToDarkTheme = () => {
+        dispatch(setChosenTheme('dark'));
+    };
+
+    const themeButtonStyle = (buttonValue) => {
+        if (buttonValue == chosenTheme) {
+            return ' calendar__setting-option--selected';
+        } else return '';
     };
 
     const groups = [];
@@ -70,8 +90,16 @@ const Settings = () => {
             <div className='calendar__setting'>
                 <h3 className='calendar__setting-name'>Motyw</h3>
                 <ul className='calendar__setting-list'>
-                    <div className='calendar__setting-option calendar__setting-option--dark'></div>
-                    <div className='calendar__setting-option calendar__setting-option--light calendar__setting-option--selected'></div>
+                    <div
+                        className={'calendar__setting-option calendar__setting-option--dark' + themeButtonStyle('dark')}
+                        onClick={changeToDarkTheme}
+                    ></div>
+                    <div
+                        className={
+                            'calendar__setting-option calendar__setting-option--light' + themeButtonStyle('light')
+                        }
+                        onClick={changeToWhiteTheme}
+                    ></div>
                 </ul>
             </div>
         </motion.div>

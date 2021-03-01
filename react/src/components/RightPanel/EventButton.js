@@ -1,10 +1,6 @@
 import { motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
-import {
-    setChosenEvent,
-    setChosenEventAdmin,
-    setDeleteEventPopup,
-} from '../../actions';
+import { setChosenEvent, setChosenEventAdmin, setDeleteEventPopup } from '../../actions';
 
 const EventButton = ({ event, setChosenEventLocal, chosenEvent }) => {
     const dispatch = useDispatch();
@@ -21,16 +17,15 @@ const EventButton = ({ event, setChosenEventLocal, chosenEvent }) => {
         },
     };
     const style = () => {
-        let styleText = ' ';
+        let styleText = '';
         const styles = {
-            Kolokwium: 'extension__event--exam',
-            Projekt: 'extension__event--project',
-            Egzamin: 'extension__event--exam',
-            Laboratorium: 'extension__event--lab',
+            Kolokwium: '--red',
+            Projekt: '--green',
+            Egzamin: '--yellow',
+            Laboratorium: '--blue',
             Inne: 'extension__event--other',
         };
         styleText += styles[event.type];
-        if (event === chosenEvent) styleText += ' extension__event--selected ';
 
         return styleText;
     };
@@ -43,29 +38,22 @@ const EventButton = ({ event, setChosenEventLocal, chosenEvent }) => {
     return (
         <motion.li
             key={event.id}
-            className={'event' + style()}
+            className={'event'}
             variants={item}
             whileTap={{ scale: 0.98 }}
             whileHover={{ scale: 1.02 }}
             onClick={() => setChosenEventLocal(event)}
         >
-            <div className='event__topbar event__topbar--red'>
+            <div className={'event__topbar event__topbar' + style()}>
                 <h3 className='event__title'>{event.name}</h3>
                 <button className='event__editor'></button>
-                <button
-                    className='event__deleter'
-                    onClick={deleteEventClicked}
-                ></button>
+                <button className='event__deleter' onClick={deleteEventClicked}></button>
             </div>
             <div className='event__panel'>
                 <div className='event__tags'>
-                    <div className='event__tag event__tag--type'>
-                        {event.type}
-                    </div>
-                    <div className='event__tag event__tag--time'>
-                        {event.time.slice(0, 5)}
-                    </div>
-                    <div className='event__tag event__tag--info'>chuj</div>
+                    <div className='event__tag event__tag--type'>{event.type}</div>
+                    <div className='event__tag event__tag--time'>{event.time.slice(0, 5)}</div>
+                    <div className='event__tag event__tag--info'>Informacja</div>
                 </div>
                 <div className='event__description'>{event.description}</div>
             </div>

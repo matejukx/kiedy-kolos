@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import './../AdminPanel.css';
 
 const AddEventPanel = () => {
     const chosenEvent = useSelector((state) => state.chosenEventAdmin);
