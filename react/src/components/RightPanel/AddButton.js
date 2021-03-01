@@ -8,7 +8,7 @@ const AddButton = () => {
     };
 
     return (
-        <li className='extension__event--adder'>
+        <li className='event--adder'>
             <button className='extension__button' onClick={openAddEventPopup}>
                 Dodaj Wydarzenie
             </button>

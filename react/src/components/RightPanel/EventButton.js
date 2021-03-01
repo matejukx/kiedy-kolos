@@ -5,10 +5,10 @@ import { setChosenEvent, setChosenEventAdmin, setDeleteEventPopup } from '../../
 const EventButton = ({ event, setChosenEventLocal, chosenEvent }) => {
     const dispatch = useDispatch();
     const item = {
-        hidden: { opacity: 0, x: 100 },
+        hidden: { opacity: 0, y: 50 },
         show: {
             opacity: 1,
-            x: 0,
+            y: 0,
             transition: {
                 type: 'spring',
                 stiffness: 600,
@@ -39,19 +39,24 @@ const EventButton = ({ event, setChosenEventLocal, chosenEvent }) => {
     return (
         <motion.li
             key={event.id}
-            className={'extension__event' + style()}
+            className={'event' + style()}
             variants={item}
-            whileTap={{ scale: 0.95 }}
-            whileHover={{ y: -5, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            whileHover={{ scale: 1.02 }}
             onClick={() => setChosenEventLocal(event)}
         >
-            <h3 className='extension__event-title'>{event.name}</h3>
-            <div className='extension__event-panel'>
-                <div className='extension__event-info'>{event.time.slice(0, 5)}</div>
-                <div className='extension__event-info'>{event.type}</div>
-                <div className='extension__event-info'>
-                    <button onClick={deleteEventClicked}>USUN</button>
+            <div className='event__topbar event__topbar--red'>
+                <h3 className='event__title'>{event.name}</h3>
+                <button className='event__editor'></button>
+                <button className='event__deleter' onClick={deleteEventClicked}></button>
+            </div>
+            <div className='event__panel'>
+                <div className='event__tags'>
+                    <div className='event__tag event__tag--type'>{event.type}</div>
+                    <div className='event__tag event__tag--time'>{event.time.slice(0, 5)}</div>
+                    <div className='event__tag event__tag--info'>chuj</div>
                 </div>
+                <div className='event__description'>{event.description}</div>
             </div>
         </motion.li>
     );
