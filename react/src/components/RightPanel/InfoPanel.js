@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import dayjs from 'dayjs';
 import EventButton from './EventButton';
-import EventDescription from './EventDescription';
 import './../API/Api';
 import { getDayEvents } from './../API/Api';
 import AddButton from './AddButton';
@@ -71,7 +70,7 @@ const InfoPanel = () => {
                 </h2>
                 <AddButton />
                 <motion.ul
-                    className='extension__events-list'
+                    className='events--list'
                     variants={containerVariants}
                     initial='hidden'
                     animate={events.length > 0 && 'show'}
@@ -86,7 +85,6 @@ const InfoPanel = () => {
                     ))}
                 </motion.ul>
             </motion.div>
-            <EventDescription event={chosenEvent} />
         </div>
     );
 };
