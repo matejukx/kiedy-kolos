@@ -462,6 +462,7 @@ body {
 .extension__events {
   padding: 2rem;
   padding-top: 3.2rem;
+  height: 100%;
   overflow: auto;
 }
 
@@ -617,6 +618,7 @@ body {
 
 .event__description {
   padding: 1.6rem 1.6rem 1rem 1.6rem;
+  white-space: pre-line;
 }
 
 ::-webkit-scrollbar {
