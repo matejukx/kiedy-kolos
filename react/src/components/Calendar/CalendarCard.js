@@ -49,7 +49,7 @@ const CalendarCard = ({ cardDate, isInCurrentMonth, events }) => {
           ))}
         </ul>
       </div>
-      <div className="day__flag">{dayjs(cardDate).format("DD")}</div>
+      <div className="day__number">{dayjs(cardDate).format("DD")}</div>
     </motion.div>
   );
 };
