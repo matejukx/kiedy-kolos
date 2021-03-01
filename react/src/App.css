@@ -182,7 +182,7 @@ body {
     background-color: var(--color-lightest);
     top: 4.8rem;
     margin: 0 auto;
-    z-index: 5;
+    z-index: 2;
     transition: background-color 0.4s, color 0.3s;
 }
 
@@ -725,6 +725,7 @@ textarea {
     border-radius: 0.8rem;
     box-shadow: var(--shadow-strong);
     padding: 4rem 8rem;
+    z-index: 4;
 }
 
 .event-adder__title {
@@ -865,10 +866,20 @@ textarea {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
+        align-items: stretch;
     }
 
     .event {
         flex-basis: 49%;
+    }
+
+    .event:last-of-type {
+        align-self: flex-start;
+    }
+
+    .event__editor,
+    .event__deleter {
+        visibility: visible;
     }
 }
 
