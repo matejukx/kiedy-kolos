@@ -12,25 +12,6 @@ export const setGroup = (value) => {
     };
 };
 
-export const setChosenEventAdmin = (value) => {
-    return {
-        type: 'SET_EVENT',
-        payload: value,
-    };
-};
-
-export const editEnable = () => {
-    return {
-        type: 'EDIT_ENABLE',
-    };
-};
-
-export const editDisable = () => {
-    return {
-        type: 'EDIT_DISABLE',
-    };
-};
-
 export const setAddEventPopup = (value) => {
     return {
         type: 'SET_ADD_EVENT_POPUP',

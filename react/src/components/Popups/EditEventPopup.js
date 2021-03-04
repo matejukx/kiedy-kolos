@@ -2,47 +2,70 @@ import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
-import { forceEventsRefresh, setAddEventPopup, setGroup } from '../../actions';
+import { forceEventsRefresh, setEditEventPopup } from '../../actions';
 import { getGroups, getCourses, getTypes } from '../API/Api';
 
-const AddEventPopup = () => {
-    const date = useSelector((state) => state.chosenDate);
+const EditEventPopup = () => {
+    const chosenEvent = useSelector((state) => state.chosenEvent);
     const dispatch = useDispatch();
 
     const [courses, setCourses] = useState([]);
     const [groups, setGroups] = useState([]);
     const [types, setTypes] = useState([]);
 
+    const [event, setEvent] = useState();
+
     const [courseID, setCourseID] = useState(0);
     const [groupID, setGroupID] = useState(0);
     const [typeID, setTypeID] = useState(0);
+    const [date, setDate] = useState('2020-12-12');
     const [time, setTime] = useState('12:00');
     const [description, setDescription] = useState('');
     const [password, setPassword] = useState('');
 
     useEffect(async () => {
-        downloadFormData();
+        await downloadFormData();
+        await getEventInfo();
     }, []);
+
+    useEffect(() => {
+        if (event != undefined) initializeEventInfo();
+    }, [event]);
 
     const downloadFormData = async () => {
         const coursesTemp = await getCourses(0);
         setCourses(coursesTemp);
-        setCourseID(coursesTemp[0].id);
 
         const groupsTemp = await getGroups(0);
         setGroups(groupsTemp);
-        setGroupID(groupsTemp[0].id);
 
         const typesTemp = await getTypes(0);
         setTypes(typesTemp);
-        setTypeID(typesTemp[0].id);
     };
 
-    const addEvent = async () => {
+    const initializeEventInfo = () => {
+        setDescription(event.description);
+        setDate(event.date);
+        setTime(event.time);
+        setGroupID(event.group_id);
+        setTypeID(event.type_id);
+        setCourseID(event.course_id);
+    };
+
+    const getEventInfo = async () => {
+        const response = await fetch(
+            `https://aleksanderblaszkiewicz.pl/kiedykolos/get_event_details.php?id=${chosenEvent.id}`
+        );
+        const data = await response.json();
+        setEvent(data[0]);
+    };
+
+    const editEvent = async () => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
+                eventID: chosenEvent.id,
                 courseID: courseID,
                 groupID: groupID,
                 time: time,
@@ -53,15 +76,15 @@ const AddEventPopup = () => {
             }),
             mode: 'no-cors', // no-cors, cors, *same-origin
         };
-        const response = await fetch(`https://aleksanderblaszkiewicz.pl/kiedykolos/add_event.php`, requestOptions);
+        const response = await fetch(`https://aleksanderblaszkiewicz.pl/kiedykolos/edit_event.php`, requestOptions);
         if (response) {
-            dispatch(setAddEventPopup(false));
+            dispatch(setEditEventPopup(false));
             dispatch(forceEventsRefresh());
         }
     };
 
     const closePopup = () => {
-        dispatch(setAddEventPopup(false));
+        dispatch(setEditEventPopup(false));
     };
 
     const updateCourseID = (e) => {
@@ -90,7 +113,7 @@ const AddEventPopup = () => {
 
     const handleAcceptClick = (e) => {
         e.preventDefault();
-        addEvent();
+        editEvent();
     };
 
     const handleCloseClick = (e) => {
@@ -113,7 +136,7 @@ const AddEventPopup = () => {
                 exit={{ scale: 0.8, opacity: 0 }}
                 transition={{ ease: [0.08, 0.75, 0.21, 0.98] }}
             >
-                <h2 className='event-adder__title'>Dodawanie wydarzenia {dayjs(date).format('DD/MM/YYYY')}</h2>
+                <h2 className='event-adder__title'>Edytowanie wydarzenia {dayjs(date).format('DD/MM/YYYY')}</h2>
                 <form className='event-adder__form'>
                     <label className='event-adder__label' htmlFor='subject'>
                         Przedmiot
@@ -194,7 +217,7 @@ const AddEventPopup = () => {
                             Anuluj
                         </button>
                         <button className='event-adder__button--accept' onClick={handleAcceptClick}>
-                            Utwórz wydarzenie
+                            Edytuj wydarzenie
                         </button>
                     </div>
                 </form>
@@ -203,4 +226,4 @@ const AddEventPopup = () => {
     );
 };
 
-export default AddEventPopup;
+export default EditEventPopup;
