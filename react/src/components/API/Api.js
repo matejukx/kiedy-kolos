@@ -1,3 +1,6 @@
+import { useDispatch } from 'react-redux';
+import { forceEventsRefresh } from '../../actions';
+
 export const getAllEvents = async (id) => {
     const URL = `https://aleksanderblaszkiewicz.pl/kiedykolos/get_events.php`;
 
