@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
-import { forceEventsRefresh, setAddEventPopup, setGroup } from '../../actions';
+import { forceEventsRefresh, setAddEventPopup, setEditEventPopup } from '../../actions';
 import { getGroups, getCourses, getTypes } from '../API/Api';
 
 const AddEventPopup = () => {
@@ -61,7 +61,7 @@ const AddEventPopup = () => {
     };
 
     const closePopup = () => {
-        dispatch(setAddEventPopup(false));
+        dispatch(setEditEventPopup(false));
     };
 
     const updateCourseID = (e) => {
@@ -113,7 +113,7 @@ const AddEventPopup = () => {
                 exit={{ scale: 0.8, opacity: 0 }}
                 transition={{ ease: [0.08, 0.75, 0.21, 0.98] }}
             >
-                <h2 className='event-adder__title'>Dodawanie wydarzenia {dayjs(date).format('DD/MM/YYYY')}</h2>
+                <h2 className='event-adder__title'>Edytowanie wydarzenia {dayjs(date).format('DD/MM/YYYY')}</h2>
                 <form className='event-adder__form'>
                     <label className='event-adder__label' htmlFor='subject'>
                         Przedmiot

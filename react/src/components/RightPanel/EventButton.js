@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
-import { setChosenEvent, setChosenEventAdmin, setDeleteEventPopup } from '../../actions';
+import { setChosenEvent, setChosenEventAdmin, setDeleteEventPopup, setEditEventPopup } from '../../actions';
 
 const EventButton = ({ event, setChosenEventLocal, chosenEvent }) => {
     const dispatch = useDispatch();
@@ -35,18 +35,28 @@ const EventButton = ({ event, setChosenEventLocal, chosenEvent }) => {
         dispatch(setChosenEvent(event.id));
     };
 
+    const editEventClicked = () => {
+        dispatch(setEditEventPopup(true));
+        dispatch(setChosenEvent(event.id));
+    };
+
     return (
         <motion.li
             key={event.id}
-            className={'event'}
+            className='event'
             variants={item}
             whileTap={{ scale: 0.98 }}
             whileHover={{ scale: 1.02 }}
             onClick={() => setChosenEventLocal(event)}
+            drag
+            dragConstraints={{ top: 0, right: 0, bottom: 0, left: 0 }}
+            dragElastic={1}
+            dragTransition={{ bounceStiffness: 600, bounceDamping: 30 }}
+            onDragEnd={(eventt, info) => console.log(eventt.target.closest('.day'))}
         >
             <div className={'event__topbar event__topbar' + style()}>
                 <h3 className='event__title'>{event.name}</h3>
-                <button className='event__editor'></button>
+                <button className='event__editor' onClick={editEventClicked}></button>
                 <button className='event__deleter' onClick={deleteEventClicked}></button>
             </div>
             <div className='event__panel'>
