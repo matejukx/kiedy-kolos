@@ -7,6 +7,7 @@ import deleteEventPopupReducer from './deleteEventPopup';
 import chosenEventReducer from './chosenEvent';
 import chosenThemeReducer from './chosenTheme';
 import editEventPopupReducer from './editEventPopup';
+import optionsPopupReducer from './optionsPopup';
 
 const allReducers = combineReducers({
     chosenDate: dateReducer,
@@ -17,6 +18,7 @@ const allReducers = combineReducers({
     forceEventsRefresh: forceEventsRefreshReducer,
     chosenEvent: chosenEventReducer,
     chosenTheme: chosenThemeReducer,
+    optionsPopup: optionsPopupReducer,
 });
 
 export default allReducers;

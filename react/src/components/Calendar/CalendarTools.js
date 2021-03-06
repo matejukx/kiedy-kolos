@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
-import { setChosenTheme, setGroup } from '../../actions';
+import { setChosenTheme, setGroup, setOptionsPopup } from '../../actions';
 
 const CalendarTools = () => {
-    const [settingsVisible, SetSettingsVisible] = useState(false);
+    const dispatch = useDispatch();
+    const optionsVisible = useSelector((state) => state.optionsPopup);
     const chosenTheme = useSelector((state) => state.chosenTheme);
 
     useEffect(() => {
@@ -12,7 +13,7 @@ const CalendarTools = () => {
     }, [chosenTheme]);
 
     const toggleVisible = () => {
-        SetSettingsVisible(!settingsVisible);
+        dispatch(setOptionsPopup(!optionsVisible));
     };
 
     return (
@@ -26,7 +27,7 @@ const CalendarTools = () => {
                 whileTap={{ scale: 0.9 }}
                 whileHover={{ scale: 1.1 }}
             />
-            <AnimatePresence>{settingsVisible && <Settings />}</AnimatePresence>
+            <AnimatePresence>{optionsVisible && <Settings />}</AnimatePresence>
         </div>
     );
 };

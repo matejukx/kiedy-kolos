@@ -12,6 +12,13 @@ export const setGroup = (value) => {
     };
 };
 
+export const setOptionsPopup = (value) => {
+    return {
+        type: 'SET_OPTIONS_POPUP',
+        payload: value,
+    };
+};
+
 export const setAddEventPopup = (value) => {
     return {
         type: 'SET_ADD_EVENT_POPUP',

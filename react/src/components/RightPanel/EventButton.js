@@ -1,7 +1,13 @@
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
-import { forceEventsRefresh, setChosenEvent, setDeleteEventPopup, setEditEventPopup } from '../../actions';
+import {
+    forceEventsRefresh,
+    setChosenEvent,
+    setDeleteEventPopup,
+    setEditEventPopup,
+    setOptionsPopup,
+} from '../../actions';
 
 const EventButton = ({ event, setChosenEventLocal, chosenEvent }) => {
     const dispatch = useDispatch();
@@ -62,11 +68,13 @@ const EventButton = ({ event, setChosenEventLocal, chosenEvent }) => {
     };
 
     const deleteEventClicked = () => {
+        dispatch(setOptionsPopup(false));
         dispatch(setDeleteEventPopup(true));
         dispatch(setChosenEvent(event.id));
     };
 
     const editEventClicked = () => {
+        dispatch(setOptionsPopup(false));
         dispatch(setEditEventPopup(true));
         dispatch(setChosenEvent(event));
     };

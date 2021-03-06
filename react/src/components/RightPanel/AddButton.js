@@ -1,10 +1,11 @@
 import { useDispatch } from 'react-redux';
-import { setAddEventPopup } from '../../actions';
+import { setAddEventPopup, setOptionsPopup } from '../../actions';
 import { motion } from 'framer-motion';
 
 const AddButton = () => {
     const dispatch = useDispatch();
     const openAddEventPopup = () => {
+        dispatch(setOptionsPopup(false));
         dispatch(setAddEventPopup(true));
     };
 
