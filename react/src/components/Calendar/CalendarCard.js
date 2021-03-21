@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setDate } from '../../actions';
+import { setAddEventPopup, setDate } from '../../actions';
 import { motion } from 'framer-motion';
 import dayjs from 'dayjs';
 
@@ -37,13 +37,14 @@ const CalendarCard = ({ cardDate, isInCurrentMonth, events }) => {
     return (
         <motion.div
             className={'day ' + style()}
+            data-date={dayjs(cardDate).format('DD-MM-YYYY')}
             tabindex='0'
             onClick={onCallendarCardClicked}
             whileHover={{ y: -2, scale: 1.05 }}
             whileTap={{ y: 0, scale: 0.95 }}
         >
-            <div className='day__events'>
-                <ul className='day__events-list'>
+            <div className='day__flags'>
+                <ul className='day__flags-list'>
                     {events.map((event, index) => (
                         <Event key={index} event={event} />
                     ))}
@@ -58,15 +59,15 @@ export default CalendarCard;
 
 const Event = ({ event }) => {
     const styles = {
-        Kolokwium: 'day__event--exam',
-        Projekt: 'day__event--project',
-        Egzamin: 'day__event--exam',
-        Laboratorium: 'day__event--lab',
-        Inne: 'day__event--other',
+        Kolokwium: 'day__flag--exam',
+        Projekt: 'day__flag--project',
+        Egzamin: 'day__flag--exam',
+        Laboratorium: 'day__flag--lab',
+        Inne: 'day__flag--other',
     };
 
     return (
-        <li className={'day__event ' + styles[event.type]} key={event.id}>
+        <li className={'day__flag ' + styles[event.type]} key={event.id}>
             {event.short_name.toUpperCase()}
         </li>
     );

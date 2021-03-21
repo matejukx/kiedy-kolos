@@ -1,14 +1,24 @@
 import dateReducer from './chosenDate';
 import groupReducer from './chosenGroup';
-import chosenEventAdminReducer from "./chosenEventAdmin";
-import {combineReducers} from 'redux';
-import editModeReducer from './editModeReducer';
+import { combineReducers } from 'redux';
+import addEventPopupReducer from './addEventPopup';
+import forceEventsRefreshReducer from './forceEventsRefresh';
+import deleteEventPopupReducer from './deleteEventPopup';
+import chosenEventReducer from './chosenEvent';
+import chosenThemeReducer from './chosenTheme';
+import editEventPopupReducer from './editEventPopup';
+import optionsPopupReducer from './optionsPopup';
 
 const allReducers = combineReducers({
     chosenDate: dateReducer,
     chosenGroup: groupReducer,
-    chosenEventAdmin: chosenEventAdminReducer,
-    editEnabled: editModeReducer
+    addEventPopup: addEventPopupReducer,
+    deleteEventPopup: deleteEventPopupReducer,
+    editEventPopup: editEventPopupReducer,
+    forceEventsRefresh: forceEventsRefreshReducer,
+    chosenEvent: chosenEventReducer,
+    chosenTheme: chosenThemeReducer,
+    optionsPopup: optionsPopupReducer,
 });
 
 export default allReducers;

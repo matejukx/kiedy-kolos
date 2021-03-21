@@ -3,15 +3,16 @@ import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import dayjs from 'dayjs';
 import EventButton from './EventButton';
-import EventDescription from './EventDescription';
 import './../API/Api';
 import { getDayEvents } from './../API/Api';
+import AddButton from './AddButton';
 
 const InfoPanel = () => {
     const [events, setEvents] = useState([]);
     const [chosenEvent, setChosenEvent] = useState();
     const date = useSelector((state) => state.chosenDate);
     const chosenGroup = useSelector((state) => state.chosenGroup);
+    const forceRefresh = useSelector((state) => state.forceEventsRefresh);
     const monthNames = [
         'Stycznia',
         'Lutego',
@@ -30,7 +31,7 @@ const InfoPanel = () => {
     useEffect(async () => {
         setEvents([]);
         getEvents();
-    }, [date, chosenGroup]);
+    }, [date, chosenGroup, forceRefresh]);
 
     const getEvents = async () => {
         const data = await getDayEvents(0, date);
@@ -40,7 +41,9 @@ const InfoPanel = () => {
     };
 
     const shouldBeDisplayed = (event) => {
-        return event.group_name == 'Wszystkie' || event.group_name == chosenGroup;
+        return (
+            event.group_name == 'Wszystkie' || event.group_name == chosenGroup
+        );
     };
 
     const dayWithoutZero = () => {
@@ -65,10 +68,12 @@ const InfoPanel = () => {
         <div className='extension'>
             <motion.div className='extension__events'>
                 <h2 className='extension__header'>
-                    Wydarzenia {dayWithoutZero()} {monthNames[parseInt(dayjs(date).format('MM')) - 1]}
+                    Wydarzenia {dayWithoutZero()}{' '}
+                    {monthNames[parseInt(dayjs(date).format('MM')) - 1]}
                 </h2>
+                <AddButton />
                 <motion.ul
-                    className='extension__events-list'
+                    className='events-list'
                     variants={containerVariants}
                     initial='hidden'
                     animate={events.length > 0 && 'show'}
@@ -77,13 +82,12 @@ const InfoPanel = () => {
                         <EventButton
                             key={event.id}
                             event={event}
-                            setChosenEvent={setChosenEvent}
+                            setChosenEventLocal={setChosenEvent}
                             chosenEvent={chosenEvent}
                         />
                     ))}
                 </motion.ul>
             </motion.div>
-            <EventDescription event={chosenEvent} />
         </div>
     );
 };
