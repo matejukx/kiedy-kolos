@@ -29,11 +29,11 @@
 
 [data-theme='light'] {
     --color-background: #b6b6b6;
-    --color-darkest: #c5c9cb;
+    --color-darkest: #cbc9c5;
     --color-dark: #bebebe;
-    --color-medium: #dbdbdb;
-    --color-light: #e5e5e5;
-    --color-light-2: #cecece;
+    --color-medium: #e3e3e1;
+    --color-light: #f2f2f2;
+    --color-light-2: #f2efe6;
     --color-lightest: #ffffff;
     --color-font: #3f3f3f;
     --color-font-gray: #888887;
@@ -104,6 +104,7 @@ body {
     padding: 8rem;
     padding-top: 3.2rem;
     position: relative;
+    box-shadow: var(--shadow-light);
 }
 
 .calendar__options {
@@ -184,6 +185,7 @@ body {
     margin: 0 auto;
     z-index: 2;
     transition: background-color 0.4s, color 0.3s;
+    transform-origin: top right;
 }
 
 .calendar__setting {
@@ -388,7 +390,7 @@ body {
     align-items: center;
     padding-left: 0.4rem;
     height: 25%;
-    width: 50%;
+    width: 60%;
     position: relative;
     box-shadow: var(--shadow-light);
     transition: width 0.2s;
@@ -457,6 +459,7 @@ body {
     justify-content: stretch;
     position: relative;
     background-color: var(--color-darkest);
+    box-shadow: -0.1rem 0 1rem rgba(0, 0, 0, 0.1);
     overflow: none;
     transition: background-color 0.4s, color 0.3s;
 }
@@ -465,7 +468,6 @@ body {
     padding: 2rem;
     padding-top: 3.2rem;
     height: 100%;
-    overflow: auto;
 }
 
 .extension__header {
@@ -480,19 +482,20 @@ body {
 /* EXTENSION LIST */
 
 .event--adder {
-    border: 0.2rem dashed currentColor;
     border-radius: 0.4rem;
     height: 6rem;
     opacity: 0.5;
 }
 
 .extension__button {
+    border: 0.2rem dashed currentColor;
     width: 100%;
     height: 100%;
     font-size: 1.6rem;
     color: var(--color-font);
+    font-weight: bold;
+    letter-spacing: 0.1rem;
     transition: color 0.3s;
-    border: none;
     background-color: transparent;
     cursor: pointer;
     position: relative;
@@ -511,7 +514,7 @@ body {
 .event {
     display: flex;
     flex-direction: column;
-    border-radius: 0.2rem;
+    border-radius: 0.4rem;
     overflow: hidden;
     box-shadow: var(--shadow-light);
 }
@@ -592,7 +595,7 @@ body {
 }
 
 .event__tags {
-    opacity: 0.7; /* Color Change */
+    opacity: 0.8; /* Color Change */
     padding: 1.6rem 1.6rem 1rem 1.6rem;
 }
 
@@ -621,6 +624,7 @@ body {
 
 .event__description {
     padding: 1.6rem 1.6rem 1rem 1.6rem;
+    opacity: 0.9;
     white-space: pre-line;
 }
 

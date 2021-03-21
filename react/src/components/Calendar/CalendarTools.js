@@ -79,9 +79,9 @@ const Settings = () => {
     return (
         <motion.div
             className='calendar__settings'
-            initial={{ opacity: 0, y: -100, scale: 0 }}
+            initial={{ opacity: 0, y: 0, scale: 0 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -100, scale: 0 }}
+            exit={{ opacity: 0, y: 0, scale: 0 }}
             transition={{ type: 'spring', stiffness: 600, damping: 50 }}
         >
             <div className='calendar__setting'>
