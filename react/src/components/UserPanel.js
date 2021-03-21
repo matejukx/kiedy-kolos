@@ -6,6 +6,7 @@ import AddEventPopup from './Popups/AddEventPopup';
 import { AnimatePresence } from 'framer-motion';
 import DeleteEventPopup from './Popups/DeleteEventPopup';
 import EditEventPopup from './Popups/EditEventPopup';
+import ApiCalls from './API/ApiCalls';
 
 const UserPanel = () => {
     const addEventPopupEnabled = useSelector((state) => state.addEventPopup);
@@ -14,6 +15,7 @@ const UserPanel = () => {
 
     return (
         <div className='container'>
+            <ApiCalls />
             <div className='app'>
                 <Calendar />
                 <InfoPanel />

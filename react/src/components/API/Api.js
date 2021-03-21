@@ -1,8 +1,5 @@
-import { useDispatch } from 'react-redux';
-import { forceEventsRefresh } from '../../actions';
-
 export const getAllEvents = async (id) => {
-    const URL = `https://aleksanderblaszkiewicz.pl/kiedykolos/get_events.php`;
+    const URL = `http://kiedy-kolos-backend.azurewebsites.net/Events`;
 
     const response = await fetch(URL);
     const data = await response.json();

@@ -9,6 +9,7 @@ import WeekDays from './WeekDays';
 import './../API/Api';
 import { getAllEvents } from './../API/Api';
 import MonthTitle from './MonthTitle';
+import { useParams } from 'react-router';
 
 const Calendar = () => {
     const [events, setEvents] = useState([]);
@@ -24,6 +25,7 @@ const Calendar = () => {
     const daysOfWeek = [7, 1, 2, 3, 4, 5, 6];
 
     let today = dayjs();
+    let { id } = useParams();
 
     useEffect(() => {
         setMonth(parseInt(today.format('MM')));
@@ -38,9 +40,10 @@ const Calendar = () => {
     }, [chosenGroup, forceRefresh]);
 
     const getEvents = async () => {
-        const data = await getAllEvents();
-        const filteredData = data.filter(shouldBeDisplayed);
-        setEvents(filteredData);
+        //const data = await getAllEvents();
+        //console.log(data);
+        //const filteredData = data.filter(shouldBeDisplayed);
+        //setEvents(filteredData);
     };
 
     const increaseMonth = () => {
