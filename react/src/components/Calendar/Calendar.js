@@ -12,7 +12,7 @@ import MonthTitle from './MonthTitle';
 import { useParams } from 'react-router';
 
 const Calendar = () => {
-    const [events, setEvents] = useState([]);
+    const events = useSelector((state) => state.events);
     const [days, setDays] = useState([]);
     const [month, setMonth] = useState();
     const [monthOffset, setMonthOffset] = useState(0);
@@ -25,26 +25,17 @@ const Calendar = () => {
     const daysOfWeek = [7, 1, 2, 3, 4, 5, 6];
 
     let today = dayjs();
-    let { id } = useParams();
 
     useEffect(() => {
         setMonth(parseInt(today.format('MM')));
         dispatch(setDate(today.format('YYYY-MM-DD')));
 
         initializeMonthDays(0);
-        getEvents();
     }, []);
 
-    useEffect(() => {
-        getEvents();
-    }, [chosenGroup, forceRefresh]);
-
-    const getEvents = async () => {
-        //const data = await getAllEvents();
-        //console.log(data);
-        //const filteredData = data.filter(shouldBeDisplayed);
-        //setEvents(filteredData);
-    };
+    // useEffect(() => {
+    //     getEvents();
+    // }, [chosenGroup, forceRefresh]);
 
     const increaseMonth = () => {
         setSwipeDirection(1);

@@ -68,7 +68,7 @@ const Event = ({ event }) => {
 
     return (
         <li className={'day__flag ' + styles[event.type]} key={event.id}>
-            {event.short_name.toUpperCase()}
+            {event.subjectShortName.toUpperCase()}
         </li>
     );
 };
