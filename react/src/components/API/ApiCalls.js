@@ -52,7 +52,7 @@ const ApiCalls = () => {
             eventsConnected.push(eventData);
         }
 
-        console.log(eventsConnected + '');
+        console.log(eventsConnected);
         dispatch(setEvents(eventsConnected));
     };
 
