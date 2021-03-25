@@ -49,9 +49,9 @@ const ApiCalls = () => {
         for (let event of events) {
             let eventData = {
                 date: dayjs(event.date).format('YYYY-MM-DD'),
-                subjectLongName: getPropertyFromObjectByID(subjects, event.id, 'name'),
-                subjectShortName: getPropertyFromObjectByID(subjects, event.id, 'shortName'),
-                type: getPropertyFromObjectByID(types, event.id, 'name'),
+                subjectLongName: getPropertyFromObjectByID(subjects, event.subjectId, 'name'),
+                subjectShortName: getPropertyFromObjectByID(subjects, event.subjectId, 'shortName'),
+                type: getPropertyFromObjectByID(types, event.eventTypeId, 'name'),
             };
             eventsConnected.push(eventData);
         }
