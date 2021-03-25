@@ -22,7 +22,7 @@ const ApiCalls = () => {
     };
 
     const getEvents = async () => {
-        const events = await getResource('events');
+        const events = await getResource(`yearCourses/${id}/events`);
         return events;
     };
 
@@ -32,7 +32,7 @@ const ApiCalls = () => {
     };
 
     const getTypes = async () => {
-        const types = await getResource(`EventTypes`);
+        const types = await getResource(`eventTypes`);
         return types;
     };
 
@@ -40,6 +40,10 @@ const ApiCalls = () => {
         let events = await getEvents();
         let subjects = await getSubjects();
         let types = await getTypes();
+
+        console.log(events);
+        console.log(subjects);
+        console.log(types);
 
         let eventsConnected = [];
         for (let event of events) {
@@ -52,9 +56,11 @@ const ApiCalls = () => {
             eventsConnected.push(eventData);
         }
 
-        console.log(eventsConnected + 'ed');
+        console.log(eventsConnected);
         dispatch(setEvents(eventsConnected));
     };
+
+    const buildDayEvents = async () => {};
 
     const getPropertyFromObjectByID = (array, searchedID, searchedProperty) => {
         for (let object of array) {
