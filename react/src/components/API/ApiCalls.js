@@ -1,17 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import { setEvents } from '../../actions';
+import { setAllEvents, setDayEvents } from '../../actions';
 import dayjs from 'dayjs';
 
 const ApiCalls = () => {
     const baseURL = 'http://kiedy-kolos-backend.azurewebsites.net/';
+
     const dispatch = useDispatch();
+    const chosenDate = useSelector((state) => state.chosenDate);
+
+    const [dataDownloaded, setDataDownloaded] = useState(false);
+    const [events, setEvents] = useState([]);
+    const [subjects, setSubjects] = useState([]);
+    const [types, setTypes] = useState([]);
+
     const { id } = useParams();
 
     useEffect(() => {
-        buildEvents();
+        downloadData();
     }, []);
+
+    useEffect(() => {
+        buildEvents();
+        buildDayEvents(chosenDate);
+    }, [dataDownloaded]);
+
+    useEffect(() => {
+        buildDayEvents(chosenDate);
+    }, [chosenDate]);
 
     const getResource = async (extensionURL) => {
         const URL = baseURL + extensionURL;
@@ -36,15 +53,14 @@ const ApiCalls = () => {
         return types;
     };
 
+    const downloadData = async () => {
+        setEvents(await getEvents());
+        setSubjects(await getSubjects());
+        setTypes(await getTypes());
+        setDataDownloaded(true);
+    };
+
     const buildEvents = async () => {
-        let events = await getEvents();
-        let subjects = await getSubjects();
-        let types = await getTypes();
-
-        console.log(events);
-        console.log(subjects);
-        console.log(types);
-
         let eventsConnected = [];
         for (let event of events) {
             let eventData = {
@@ -55,12 +71,26 @@ const ApiCalls = () => {
             };
             eventsConnected.push(eventData);
         }
-
-        console.log(eventsConnected);
-        dispatch(setEvents(eventsConnected));
+        dispatch(setAllEvents(eventsConnected));
     };
 
-    const buildDayEvents = async () => {};
+    const buildDayEvents = async (date) => {
+        console.log('Building events for ' + date);
+        let dayEvents = [];
+        for (let event of events) {
+            if (dayjs(event.date).format('YYYY-MM-DD') != date) {
+                continue;
+            }
+            let eventData = {
+                date: dayjs(event.date).format('YYYY-MM-DD'),
+                description: event.description,
+                type: getPropertyFromObjectByID(types, event.eventTypeId, 'name'),
+            };
+            dayEvents.push(eventData);
+        }
+        console.log(dayEvents);
+        dispatch(setDayEvents(dayEvents));
+    };
 
     const getPropertyFromObjectByID = (array, searchedID, searchedProperty) => {
         for (let object of array) {

@@ -7,12 +7,10 @@ import CalendarCard from './CalendarCard';
 import CalendarTools from './CalendarTools';
 import WeekDays from './WeekDays';
 import './../API/Api';
-import { getAllEvents } from './../API/Api';
 import MonthTitle from './MonthTitle';
-import { useParams } from 'react-router';
 
 const Calendar = () => {
-    const events = useSelector((state) => state.events);
+    const events = useSelector((state) => state.allEvents);
     const [days, setDays] = useState([]);
     const [month, setMonth] = useState();
     const [monthOffset, setMonthOffset] = useState(0);

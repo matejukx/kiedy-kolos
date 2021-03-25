@@ -60,14 +60,14 @@ export const setChosenTheme = (value) => {
     };
 };
 
-export const setEvents = (value) => {
+export const setAllEvents = (value) => {
     return {
-        type: 'SET_EVENTS',
+        type: 'SET_ALL_EVENTS',
         payload: value,
     };
 };
 
-export const dayEvents = (value) => {
+export const setDayEvents = (value) => {
     return {
         type: 'SET_DAY_EVENTS',
         payload: value,

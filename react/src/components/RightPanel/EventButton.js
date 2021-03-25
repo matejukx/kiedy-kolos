@@ -66,7 +66,7 @@ const EventButton = ({ event }) => {
             <div className='event__panel'>
                 <div className='event__tags'>
                     <div className='event__tag event__tag--type'>{event.type}</div>
-                    <div className='event__tag event__tag--time'>{event.time.slice(0, 5)}</div>
+                    {/* <div className='event__tag event__tag--time'>{event.time.slice(0, 5)}</div> */}
                     <div className='event__tag event__tag--info'>Informacja</div>
                 </div>
                 <div className='event__description'>{event.description}</div>

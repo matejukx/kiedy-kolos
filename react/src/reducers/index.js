@@ -7,11 +7,11 @@ import deleteEventPopupReducer from './deleteEventPopup';
 import chosenEventReducer from './chosenEvent';
 import chosenThemeReducer from './chosenTheme';
 import editEventPopupReducer from './editEventPopup';
-import eventsReducer from './eventsReducer';
+import allEventsReducer from './allEventsReducer';
 import dayEventsReducer from './dayEventsReducer';
 
 const allReducers = combineReducers({
-    events: eventsReducer,
+    allEvents: allEventsReducer,
     dayEvents: dayEventsReducer,
     chosenDate: dateReducer,
     chosenGroup: groupReducer,
