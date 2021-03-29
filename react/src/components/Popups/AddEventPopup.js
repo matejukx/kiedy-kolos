@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
+import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { forceEventsRefresh, setAddEventPopup, setGroup } from '../../actions';
-import { getGroups, getCourses, getTypes } from '../API/Api';
+import { getGroups, getCourses, getTypes, addEvent } from '../API/Api';
 
 const AddEventPopup = () => {
     const dispatch = useDispatch();
@@ -11,8 +12,9 @@ const AddEventPopup = () => {
     const types = useSelector((state) => state.eventTypes);
     const subjects = useSelector((state) => state.subjects);
 
-    const [groups, setGroups] = useState([]);
+    const { id } = useParams();
 
+    const [groups, setGroups] = useState([]);
     const [subjectID, setSubjectID] = useState(0);
     const [groupID, setGroupID] = useState(0);
     const [typeID, setTypeID] = useState(0);
@@ -32,26 +34,19 @@ const AddEventPopup = () => {
         setGroupID(groupsTemp[0].id);
     };
 
-    const addEvent = async () => {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                courseID: subjectID,
-                groupID: groupID,
-                time: time,
-                date: date,
-                description: description,
-                typeID: typeID,
-                password: password,
-            }),
-            mode: 'no-cors', // no-cors, cors, *same-origin
-        };
-        const response = await fetch(`https://aleksanderblaszkiewicz.pl/kiedykolos/add_event.php`, requestOptions);
-        if (response) {
+    const addEventPressed = async () => {
+        const response = await addEvent(subjectID, id, 'nazwa', date, description, typeID, password);
+        if (response.ok) {
             dispatch(setAddEventPopup(false));
             dispatch(forceEventsRefresh());
+        } else {
+            catchError(response.status);
         }
+    };
+
+    const catchError = (responseStatus) => {
+        console.log('CAUGHT AN ERROR!');
+        console.log(responseStatus);
     };
 
     const closePopup = () => {
@@ -84,7 +79,7 @@ const AddEventPopup = () => {
 
     const handleAcceptClick = (e) => {
         e.preventDefault();
-        addEvent();
+        addEventPressed();
     };
 
     const handleCloseClick = (e) => {

@@ -13,6 +13,7 @@ const InfoPanel = () => {
     const date = useSelector((state) => state.chosenDate);
     const chosenGroup = useSelector((state) => state.chosenGroup);
     const forceRefresh = useSelector((state) => state.forceEventsRefresh);
+    const [eventsToShow, setEventsToShow] = useState([]);
     const monthNames = [
         'Stycznia',
         'Lutego',
@@ -31,6 +32,11 @@ const InfoPanel = () => {
     useEffect(async () => {
         console.log();
     }, [date, chosenGroup, forceRefresh]);
+
+    useEffect(async () => {
+        setEventsToShow([]);
+        setTimeout(() => setEventsToShow(events), 0);
+    }, [events]);
 
     const dayWithoutZero = () => {
         let dayString = dayjs(date).format('DD');
@@ -61,9 +67,9 @@ const InfoPanel = () => {
                     className='events-list'
                     variants={containerVariants}
                     initial='hidden'
-                    animate={events.length > 0 && 'show'}
+                    animate={eventsToShow.length > 0 && 'show'}
                 >
-                    {events.map((event) => (
+                    {eventsToShow.map((event) => (
                         <EventButton
                             key={event.id}
                             event={event}

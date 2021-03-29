@@ -42,3 +42,29 @@ export const getTypes = async (id) => {
 
     return data;
 };
+
+export const addEvent = async (subjectID, yearCourseID, groupIDs, date, description, eventTypeID, password) => {
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Api-Key': password,
+        },
+        body: JSON.stringify({
+            subjectID: subjectID,
+            yearCourseId: yearCourseID,
+            name: 'temporary name',
+            groupIds: [0],
+            date: date,
+            description: description,
+            eventTypeId: eventTypeID,
+            password: password,
+        }),
+        mode: 'cors',
+    };
+    const response = await fetch(
+        `http://kiedy-kolos-backend.azurewebsites.net/yearCourses/${yearCourseID}/Events`,
+        requestOptions
+    );
+    return response;
+};

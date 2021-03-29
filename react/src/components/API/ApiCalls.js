@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 
 const ApiCalls = () => {
     const baseURL = 'http://kiedy-kolos-backend.azurewebsites.net/';
-
+    const forceEventsRefresh = useSelector((state) => state.forceEventsRefresh);
     const dispatch = useDispatch();
     const chosenDate = useSelector((state) => state.chosenDate);
 
@@ -19,12 +19,14 @@ const ApiCalls = () => {
 
     useEffect(() => {
         downloadData();
-    }, []);
+        console.log('Downloading data');
+    }, [forceEventsRefresh]);
 
     useEffect(() => {
         buildEvents();
         buildDayEvents(chosenDate);
         buildEventTypes();
+        console.log('Building data');
     }, [dataDownloaded]);
 
     useEffect(() => {
@@ -64,7 +66,7 @@ const ApiCalls = () => {
         setTypes(typesTemp);
         dispatch(setEventTypes(typesTemp));
 
-        setDataDownloaded(true);
+        setDataDownloaded(!dataDownloaded);
     };
 
     const buildEvents = async () => {
@@ -82,8 +84,8 @@ const ApiCalls = () => {
     };
 
     const buildDayEvents = async (date) => {
-        console.log('Building events for ' + date);
         let dayEvents = [];
+        dispatch(setDayEvents([]));
         for (let event of events) {
             if (dayjs(event.date).format('YYYY-MM-DD') != date) {
                 continue;
@@ -96,7 +98,6 @@ const ApiCalls = () => {
             };
             dayEvents.push(eventData);
         }
-        console.log(dayEvents);
         dispatch(setDayEvents(dayEvents));
     };
 
