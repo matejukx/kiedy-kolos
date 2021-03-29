@@ -6,14 +6,14 @@ import { forceEventsRefresh, setAddEventPopup, setGroup } from '../../actions';
 import { getGroups, getCourses, getTypes } from '../API/Api';
 
 const AddEventPopup = () => {
-    const date = useSelector((state) => state.chosenDate);
     const dispatch = useDispatch();
+    const date = useSelector((state) => state.chosenDate);
+    const types = useSelector((state) => state.eventTypes);
+    const subjects = useSelector((state) => state.subjects);
 
-    const [courses, setCourses] = useState([]);
     const [groups, setGroups] = useState([]);
-    const [types, setTypes] = useState([]);
 
-    const [courseID, setCourseID] = useState(0);
+    const [subjectID, setSubjectID] = useState(0);
     const [groupID, setGroupID] = useState(0);
     const [typeID, setTypeID] = useState(0);
     const [time, setTime] = useState('12:00');
@@ -22,20 +22,14 @@ const AddEventPopup = () => {
 
     useEffect(async () => {
         downloadFormData();
+        setTypeID(types[0].id);
+        setSubjectID(subjects[0].id);
     }, []);
 
     const downloadFormData = async () => {
-        const coursesTemp = await getCourses(0);
-        setCourses(coursesTemp);
-        setCourseID(coursesTemp[0].id);
-
         const groupsTemp = await getGroups(0);
         setGroups(groupsTemp);
         setGroupID(groupsTemp[0].id);
-
-        const typesTemp = await getTypes(0);
-        setTypes(typesTemp);
-        setTypeID(typesTemp[0].id);
     };
 
     const addEvent = async () => {
@@ -43,7 +37,7 @@ const AddEventPopup = () => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                courseID: courseID,
+                courseID: subjectID,
                 groupID: groupID,
                 time: time,
                 date: date,
@@ -64,8 +58,8 @@ const AddEventPopup = () => {
         dispatch(setAddEventPopup(false));
     };
 
-    const updateCourseID = (e) => {
-        setCourseID(e.target.value);
+    const updateSubjectID = (e) => {
+        setSubjectID(e.target.value);
     };
 
     const updateGroupID = (e) => {
@@ -118,10 +112,10 @@ const AddEventPopup = () => {
                     <label className='event-adder__label' htmlFor='subject'>
                         Przedmiot
                     </label>
-                    <select className='event-adder__input' id='subject' value={courseID} onChange={updateCourseID}>
-                        {courses.map((course) => (
-                            <option key={course.id} value={course.id}>
-                                {course.name}
+                    <select className='event-adder__input' id='subject' value={subjectID} onChange={updateSubjectID}>
+                        {subjects.map((subject) => (
+                            <option key={subject.id} value={subject.id}>
+                                {subject.name}
                             </option>
                         ))}
                     </select>

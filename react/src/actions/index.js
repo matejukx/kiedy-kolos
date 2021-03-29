@@ -73,3 +73,17 @@ export const setDayEvents = (value) => {
         payload: value,
     };
 };
+
+export const setEventTypes = (value) => {
+    return {
+        type: 'SET_EVENT_TYPES',
+        payload: value,
+    };
+};
+
+export const setSubjects = (value) => {
+    return {
+        type: 'SET_SUBJECTS',
+        payload: value,
+    };
+};

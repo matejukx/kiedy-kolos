@@ -9,10 +9,14 @@ import chosenThemeReducer from './chosenTheme';
 import editEventPopupReducer from './editEventPopup';
 import allEventsReducer from './allEventsReducer';
 import dayEventsReducer from './dayEventsReducer';
+import eventTypesReducer from './eventTypesReducer';
+import subjectsReducer from './subjectsReducer';
 
 const allReducers = combineReducers({
     allEvents: allEventsReducer,
     dayEvents: dayEventsReducer,
+    eventTypes: eventTypesReducer,
+    subjects: subjectsReducer,
     chosenDate: dateReducer,
     chosenGroup: groupReducer,
     addEventPopup: addEventPopupReducer,

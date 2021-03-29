@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import { setAllEvents, setDayEvents } from '../../actions';
+import { setAllEvents, setDayEvents, setEventTypes, setSubjects } from '../../actions';
 import dayjs from 'dayjs';
 
 const ApiCalls = () => {
@@ -12,7 +12,7 @@ const ApiCalls = () => {
 
     const [dataDownloaded, setDataDownloaded] = useState(false);
     const [events, setEvents] = useState([]);
-    const [subjects, setSubjects] = useState([]);
+    const subjects = useSelector((state) => state.subjects);
     const [types, setTypes] = useState([]);
 
     const { id } = useParams();
@@ -24,6 +24,7 @@ const ApiCalls = () => {
     useEffect(() => {
         buildEvents();
         buildDayEvents(chosenDate);
+        buildEventTypes();
     }, [dataDownloaded]);
 
     useEffect(() => {
@@ -55,8 +56,14 @@ const ApiCalls = () => {
 
     const downloadData = async () => {
         setEvents(await getEvents());
-        setSubjects(await getSubjects());
-        setTypes(await getTypes());
+
+        const subjectsTemp = await getSubjects();
+        dispatch(setSubjects(subjectsTemp));
+
+        const typesTemp = await getTypes();
+        setTypes(typesTemp);
+        dispatch(setEventTypes(typesTemp));
+
         setDataDownloaded(true);
     };
 
@@ -82,6 +89,7 @@ const ApiCalls = () => {
                 continue;
             }
             let eventData = {
+                id: event.id,
                 date: dayjs(event.date).format('YYYY-MM-DD'),
                 description: event.description,
                 type: getPropertyFromObjectByID(types, event.eventTypeId, 'name'),
@@ -99,6 +107,8 @@ const ApiCalls = () => {
             }
         }
     };
+
+    const buildEventTypes = () => {};
 
     return null;
 };
