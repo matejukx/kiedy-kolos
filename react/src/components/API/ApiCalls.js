@@ -85,7 +85,6 @@ const ApiCalls = () => {
 
     const buildDayEvents = async (date) => {
         let dayEvents = [];
-        dispatch(setDayEvents([]));
         for (let event of events) {
             if (dayjs(event.date).format('YYYY-MM-DD') != date) {
                 continue;
@@ -94,6 +93,7 @@ const ApiCalls = () => {
                 id: event.id,
                 date: dayjs(event.date).format('YYYY-MM-DD'),
                 description: event.description,
+                subjectLongName: getPropertyFromObjectByID(subjects, event.subjectId, 'name'),
                 type: getPropertyFromObjectByID(types, event.eventTypeId, 'name'),
             };
             dayEvents.push(eventData);

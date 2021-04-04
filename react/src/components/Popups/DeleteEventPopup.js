@@ -1,28 +1,34 @@
 import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
+import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { forceEventsRefresh, setAddEventPopup, setDeleteEventPopup, setGroup } from '../../actions';
-import { getGroups, getCourses, getTypes } from '../API/Api';
+import { forceEventsRefresh, setAddEventPopup, setDeleteEventPopup, setEditEventPopup, setGroup } from '../../actions';
+import { getGroups, getCourses, getTypes, deleteEvent } from '../API/Api';
 
 const DeleteEventPopup = () => {
-    const chosenEventID = useSelector((state) => state.chosenEvent);
     const dispatch = useDispatch();
+    const chosenEventID = useSelector((state) => state.chosenEvent);
+
+    const { id } = useParams();
 
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
-    const deleteEvent = async () => {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ eventID: chosenEventID, password: password }),
-            mode: 'no-cors', // no-cors, cors, *same-origin
-        };
-        const response = await fetch(`https://aleksanderblaszkiewicz.pl/kiedykolos/delete_event.php`, requestOptions);
-        if (response) {
+    const deleteEventPressed = async () => {
+        const response = await deleteEvent(id, chosenEventID, password);
+        if (response.ok) {
             dispatch(setDeleteEventPopup(false));
             dispatch(forceEventsRefresh());
+        } else {
+            catchError(response.status);
         }
+    };
+
+    const catchError = (responseStatus) => {
+        setErrorMessage('Niepoprawne hasło!');
+        console.log('CAUGHT AN ERROR!');
+        console.log(responseStatus);
     };
 
     const updatePassword = (e) => {
@@ -40,7 +46,7 @@ const DeleteEventPopup = () => {
 
     const handleDeleteClick = (e) => {
         e.preventDefault();
-        deleteEvent();
+        deleteEventPressed();
     };
 
     return (
@@ -69,7 +75,7 @@ const DeleteEventPopup = () => {
                             onChange={updatePassword}
                         ></input>
                     </div>
-
+                    <h1>{errorMessage}</h1>
                     <div className='event-adder__buttons'>
                         <button className='event-adder__button--reject' onClick={handleCloseClick}>
                             Anuluj

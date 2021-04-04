@@ -7,6 +7,10 @@ import { setChosenEvent, setDeleteEventPopup, setEditEventPopup, setOptionsPopup
 const EventButton = ({ event }) => {
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        console.log(event);
+    });
+
     const item = {
         hidden: { opacity: 0, y: 50 },
         show: {
@@ -54,7 +58,7 @@ const EventButton = ({ event }) => {
             whileHover={{ scale: 1.02 }}
         >
             <div className={'event__topbar event__topbar' + style()}>
-                <h3 className='event__title'>{event.name}</h3>
+                <h3 className='event__title'>{event.subjectLongName}</h3>
                 <button className='event__editor' onClick={editEventClicked}></button>
                 <button className='event__deleter' onClick={deleteEventClicked}></button>
             </div>

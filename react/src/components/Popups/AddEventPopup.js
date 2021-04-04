@@ -21,6 +21,7 @@ const AddEventPopup = () => {
     const [time, setTime] = useState('12:00');
     const [description, setDescription] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(async () => {
         downloadFormData();
@@ -45,6 +46,7 @@ const AddEventPopup = () => {
     };
 
     const catchError = (responseStatus) => {
+        setErrorMessage('Niepoprawne hasło!');
         console.log('CAUGHT AN ERROR!');
         console.log(responseStatus);
     };
@@ -177,7 +179,7 @@ const AddEventPopup = () => {
                             onChange={updatePassword}
                         ></input>
                     </div>
-
+                    <h1>{errorMessage}</h1>
                     <div className='event-adder__buttons'>
                         <button className='event-adder__button--reject' onClick={handleCloseClick}>
                             Anuluj

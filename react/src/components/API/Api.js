@@ -68,3 +68,19 @@ export const addEvent = async (subjectID, yearCourseID, groupIDs, date, descript
     );
     return response;
 };
+
+export const deleteEvent = async (yearCourseID, eventID, password) => {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Api-Key': password,
+        },
+        mode: 'cors',
+    };
+    const response = await fetch(
+        `http://kiedy-kolos-backend.azurewebsites.net/yearCourses/${yearCourseID}/Events/${eventID}`,
+        requestOptions
+    );
+    return response;
+};
