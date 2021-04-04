@@ -7,10 +7,6 @@ import { setChosenEvent, setDeleteEventPopup, setEditEventPopup, setOptionsPopup
 const EventButton = ({ event }) => {
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        console.log(event);
-    });
-
     const item = {
         hidden: { opacity: 0, y: 50 },
         show: {
@@ -65,7 +61,7 @@ const EventButton = ({ event }) => {
             <div className='event__panel'>
                 <div className='event__tags'>
                     <div className='event__tag event__tag--type'>{event.type}</div>
-                    {/* <div className='event__tag event__tag--time'>{event.time.slice(0, 5)}</div> */}
+                    <div className='event__tag event__tag--time'>{event.time}</div>
                     <div className='event__tag event__tag--info'>Informacja</div>
                 </div>
                 <div className='event__description'>{event.description}</div>

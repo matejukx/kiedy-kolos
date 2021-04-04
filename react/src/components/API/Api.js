@@ -43,7 +43,7 @@ export const getTypes = async (id) => {
     return data;
 };
 
-export const addEvent = async (subjectID, yearCourseID, groupIDs, date, description, eventTypeID, password) => {
+export const addEvent = async (subjectID, yearCourseID, groupIDs, date, time, description, eventTypeID, password) => {
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -55,7 +55,7 @@ export const addEvent = async (subjectID, yearCourseID, groupIDs, date, descript
             yearCourseId: yearCourseID,
             name: 'temporary name',
             groupIds: [0],
-            date: date,
+            date: date + 'T' + time,
             description: description,
             eventTypeId: eventTypeID,
             password: password,

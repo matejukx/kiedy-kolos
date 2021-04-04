@@ -11,6 +11,7 @@ import allEventsReducer from './allEventsReducer';
 import dayEventsReducer from './dayEventsReducer';
 import eventTypesReducer from './eventTypesReducer';
 import subjectsReducer from './subjectsReducer';
+import optionsPopupReducer from './optionsPopup';
 
 const allReducers = combineReducers({
     allEvents: allEventsReducer,
@@ -25,6 +26,7 @@ const allReducers = combineReducers({
     forceEventsRefresh: forceEventsRefreshReducer,
     chosenEvent: chosenEventReducer,
     chosenTheme: chosenThemeReducer,
+    optionsPopup: optionsPopupReducer,
 });
 
 export default allReducers;

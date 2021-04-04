@@ -42,18 +42,18 @@ const ApiCalls = () => {
     };
 
     const getEvents = async () => {
-        const events = await getResource(`yearCourses/${id}/events`);
-        return events;
+        const data = await getResource(`yearCourses/${id}/events`);
+        return data;
     };
 
     const getSubjects = async () => {
-        const subjects = await getResource(`yearCourses/${id}/subjects`);
-        return subjects;
+        const data = await getResource(`yearCourses/${id}/subjects`);
+        return data;
     };
 
     const getTypes = async () => {
-        const types = await getResource(`eventTypes`);
-        return types;
+        const data = await getResource(`eventTypes`);
+        return data;
     };
 
     const downloadData = async () => {
@@ -95,7 +95,10 @@ const ApiCalls = () => {
                 description: event.description,
                 subjectLongName: getPropertyFromObjectByID(subjects, event.subjectId, 'name'),
                 type: getPropertyFromObjectByID(types, event.eventTypeId, 'name'),
+                time: dayjs(event.date).format('HH:mm'),
             };
+            console.log('found event with date: ' + event.date);
+            console.log('set time for this event: ' + eventData.time);
             dayEvents.push(eventData);
         }
         dispatch(setDayEvents(dayEvents));

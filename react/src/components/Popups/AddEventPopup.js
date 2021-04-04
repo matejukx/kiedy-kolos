@@ -36,7 +36,7 @@ const AddEventPopup = () => {
     };
 
     const addEventPressed = async () => {
-        const response = await addEvent(subjectID, id, 'nazwa', date, description, typeID, password);
+        const response = await addEvent(subjectID, id, 'nazwa', date, time, description, typeID, password);
         if (response.ok) {
             dispatch(setAddEventPopup(false));
             dispatch(forceEventsRefresh());
