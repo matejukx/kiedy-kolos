@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/kiedy-kolos/static/css/main.88571cd2.chunk.css",
-    "main.js": "/kiedy-kolos/static/js/main.917e9e00.chunk.js",
-    "main.js.map": "/kiedy-kolos/static/js/main.917e9e00.chunk.js.map",
+    "main.js": "/kiedy-kolos/static/js/main.a9ae7844.chunk.js",
+    "main.js.map": "/kiedy-kolos/static/js/main.a9ae7844.chunk.js.map",
     "runtime-main.js": "/kiedy-kolos/static/js/runtime-main.c8da44c3.js",
     "runtime-main.js.map": "/kiedy-kolos/static/js/runtime-main.c8da44c3.js.map",
     "static/js/2.ef015563.chunk.js": "/kiedy-kolos/static/js/2.ef015563.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.c8da44c3.js",
     "static/js/2.ef015563.chunk.js",
     "static/css/main.88571cd2.chunk.css",
-    "static/js/main.917e9e00.chunk.js"
+    "static/js/main.a9ae7844.chunk.js"
   ]
 }
