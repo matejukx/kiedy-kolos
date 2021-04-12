@@ -54,7 +54,7 @@ export const addEvent = async (subjectID, yearCourseID, groupIDs, date, time, de
             subjectID: subjectID,
             yearCourseId: yearCourseID,
             name: 'temporary name',
-            groupIds: [0],
+            groupIds: groupIDs,
             date: date + 'T' + time,
             description: description,
             eventTypeId: eventTypeID,
@@ -63,7 +63,7 @@ export const addEvent = async (subjectID, yearCourseID, groupIDs, date, time, de
         mode: 'cors',
     };
     const response = await fetch(
-        `http://kiedy-kolos-backend.azurewebsites.net/yearCourses/${yearCourseID}/Events`,
+        `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${yearCourseID}/Events`,
         requestOptions
     );
     return response;
@@ -79,8 +79,56 @@ export const deleteEvent = async (yearCourseID, eventID, password) => {
         mode: 'cors',
     };
     const response = await fetch(
-        `http://kiedy-kolos-backend.azurewebsites.net/yearCourses/${yearCourseID}/Events/${eventID}`,
+        `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${yearCourseID}/Events/${eventID}`,
         requestOptions
     );
     return response;
+};
+
+export const editEvent = async (
+    eventID,
+    subjectID,
+    yearCourseID,
+    groupIDs,
+    date,
+    time,
+    description,
+    eventTypeID,
+    password
+) => {
+    const requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Api-Key': password },
+        body: JSON.stringify({
+            subjectID: subjectID,
+            yearCourseId: yearCourseID,
+            id: eventID,
+            name: 'temporary name',
+            groupIds: groupIDs,
+            date: date + 'T' + time,
+            description: description,
+            eventTypeId: eventTypeID,
+            password: password,
+        }),
+        mode: 'cors',
+    };
+    const response = await fetch(
+        `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${yearCourseID}/Events/${eventID}`,
+        requestOptions
+    );
+    return response;
+};
+
+export const getEventInfo = async (yearCourseID, eventID) => {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        mode: 'cors',
+    };
+    const response = await fetch(
+        `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${yearCourseID}/Events/${eventID}`,
+        requestOptions
+    );
+    const data = await response.json();
+    return data.result;
 };

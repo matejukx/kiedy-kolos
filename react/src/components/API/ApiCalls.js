@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import { setAllEvents, setDayEvents, setEventTypes, setSubjects } from '../../actions';
+import { setAllEvents, setDayEvents, setEventTypes, setGroup, setGroups, setSubjects } from '../../actions';
 import dayjs from 'dayjs';
 
 const ApiCalls = () => {
-    const baseURL = 'http://kiedy-kolos-backend.azurewebsites.net/';
-    const forceEventsRefresh = useSelector((state) => state.forceEventsRefresh);
     const dispatch = useDispatch();
+    const baseURL = 'https://kiedy-kolos-backend.azurewebsites.net/';
+
+    const forceEventsRefresh = useSelector((state) => state.forceEventsRefresh);
     const chosenDate = useSelector((state) => state.chosenDate);
+    const subjects = useSelector((state) => state.subjects);
+    const chosenGroup = useSelector((state) => state.chosenGroup);
 
     const [dataDownloaded, setDataDownloaded] = useState(false);
     const [events, setEvents] = useState([]);
-    const subjects = useSelector((state) => state.subjects);
     const [types, setTypes] = useState([]);
 
     const { id } = useParams();
@@ -20,7 +22,7 @@ const ApiCalls = () => {
     useEffect(() => {
         downloadData();
         console.log('Downloading data');
-    }, [forceEventsRefresh]);
+    }, [forceEventsRefresh, chosenGroup]);
 
     useEffect(() => {
         buildEvents();
@@ -42,7 +44,8 @@ const ApiCalls = () => {
     };
 
     const getEvents = async () => {
-        const data = await getResource(`yearCourses/${id}/events`);
+        const data = await getResource(`yearCourses/${id}/groups/${chosenGroup}/events`);
+        console.log(data);
         return data;
     };
 
@@ -56,7 +59,18 @@ const ApiCalls = () => {
         return data;
     };
 
+    const getGroups = async () => {
+        const data = await getResource(`yearCourses/${id}/groups`);
+        return data;
+    };
+
     const downloadData = async () => {
+        const groups = await getGroups();
+        if (chosenGroup.length > 2) {
+            dispatch(setGroup(groups[0].id));
+        }
+        dispatch(setGroups(groups));
+
         setEvents(await getEvents());
 
         const subjectsTemp = await getSubjects();
@@ -97,8 +111,6 @@ const ApiCalls = () => {
                 type: getPropertyFromObjectByID(types, event.eventTypeId, 'name'),
                 time: dayjs(event.date).format('HH:mm'),
             };
-            console.log('found event with date: ' + event.date);
-            console.log('set time for this event: ' + eventData.time);
             dayEvents.push(eventData);
         }
         dispatch(setDayEvents(dayEvents));

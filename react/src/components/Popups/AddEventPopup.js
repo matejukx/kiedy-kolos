@@ -11,10 +11,10 @@ const AddEventPopup = () => {
     const date = useSelector((state) => state.chosenDate);
     const types = useSelector((state) => state.eventTypes);
     const subjects = useSelector((state) => state.subjects);
+    const groups = useSelector((state) => state.groups);
 
     const { id } = useParams();
 
-    const [groups, setGroups] = useState([]);
     const [subjectID, setSubjectID] = useState(0);
     const [groupID, setGroupID] = useState(0);
     const [typeID, setTypeID] = useState(0);
@@ -27,16 +27,34 @@ const AddEventPopup = () => {
         downloadFormData();
         setTypeID(types[0].id);
         setSubjectID(subjects[0].id);
+
+        let allGroup = {
+            id: 0,
+            groupNumber: 'Wszystkie',
+            groupName: '',
+        };
+        if (!groups.some((x) => x.id == 0)) {
+            groups.push(allGroup);
+        }
+
+        setGroupID(groups[groups.length - 1].id);
     }, []);
 
-    const downloadFormData = async () => {
-        const groupsTemp = await getGroups(0);
-        setGroups(groupsTemp);
-        setGroupID(groupsTemp[0].id);
-    };
+    const downloadFormData = async () => {};
 
     const addEventPressed = async () => {
-        const response = await addEvent(subjectID, id, 'nazwa', date, time, description, typeID, password);
+        const selectedGroups = [];
+        if (groupID == 0) {
+            groups.forEach((group) => {
+                if (group.id != 0) {
+                    selectedGroups.push(group.id);
+                }
+            });
+        } else {
+            selectedGroups.push(groupID);
+        }
+
+        const response = await addEvent(subjectID, id, selectedGroups, date, time, description, typeID, password);
         if (response.ok) {
             dispatch(setAddEventPopup(false));
             dispatch(forceEventsRefresh());
@@ -123,7 +141,7 @@ const AddEventPopup = () => {
                     <select className='event-adder__input' id='group' value={groupID} onChange={updateGroupID}>
                         {groups.map((group) => (
                             <option key={group.id} value={group.id}>
-                                {group.name}
+                                {group.groupNumber}
                             </option>
                         ))}
                     </select>

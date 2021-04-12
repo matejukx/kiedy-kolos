@@ -87,3 +87,10 @@ export const setSubjects = (value) => {
         payload: value,
     };
 };
+
+export const setGroups = (value) => {
+    return {
+        type: 'SET_GROUPS',
+        payload: value,
+    };
+};

@@ -38,6 +38,7 @@ const Settings = () => {
     const dispatch = useDispatch();
     const chosenGroup = useSelector((state) => state.chosenGroup);
     const chosenTheme = useSelector((state) => state.chosenTheme);
+    const groups = useSelector((state) => state.groups);
 
     const setGroupGlobal = (name) => {
         dispatch(setGroup(name));
@@ -61,21 +62,6 @@ const Settings = () => {
         } else return '';
     };
 
-    const groups = [];
-    for (let i = 1; i < 7; i++) {
-        groups.push(
-            <motion.li
-                key={i}
-                className={'calendar__setting-option ' + style(`Grupa ${i}`)}
-                whileTap={{ scale: 0.9, y: 0 }}
-                whileHover={{ scale: 1.1, y: -5 }}
-                onClick={() => setGroupGlobal(`Grupa ${i}`)}
-            >
-                {i}
-            </motion.li>
-        );
-    }
-
     return (
         <motion.div
             className='calendar__settings'
@@ -86,7 +72,19 @@ const Settings = () => {
         >
             <div className='calendar__setting'>
                 <h3 className='calendar__setting-name'>Grupa</h3>
-                <ul className='calendar__setting-list'>{groups}</ul>
+                <ul className='calendar__setting-list'>
+                    {groups.map((group) => (
+                        <motion.li
+                            key={group.id}
+                            className={'calendar__setting-option ' + style(group.id)}
+                            whileTap={{ scale: 0.9, y: 0 }}
+                            whileHover={{ scale: 1.1, y: -5 }}
+                            onClick={() => setGroupGlobal(group.id)}
+                        >
+                            {group.groupNumber}
+                        </motion.li>
+                    ))}
+                </ul>
             </div>
             <div className='calendar__setting'>
                 <h3 className='calendar__setting-name'>Motyw</h3>

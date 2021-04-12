@@ -18,7 +18,6 @@ const Calendar = () => {
 
     const dispatch = useDispatch();
     const chosenGroup = useSelector((state) => state.chosenGroup);
-    const forceRefresh = useSelector((state) => state.forceEventsRefresh);
 
     const daysOfWeek = [7, 1, 2, 3, 4, 5, 6];
 
@@ -30,10 +29,6 @@ const Calendar = () => {
 
         initializeMonthDays(0);
     }, []);
-
-    // useEffect(() => {
-    //     getEvents();
-    // }, [chosenGroup, forceRefresh]);
 
     const increaseMonth = () => {
         setSwipeDirection(1);
@@ -51,10 +46,6 @@ const Calendar = () => {
         initializeMonthDays(offset);
     };
 
-    const shouldBeDisplayed = (event) => {
-        return event.group_name === 'Wszystkie' || event.group_name === chosenGroup;
-    };
-
     const initializeMonthDays = (offset) => {
         const desiredDay = today.add(offset, 'month');
         const daysTemp = new Array(42);
@@ -68,7 +59,8 @@ const Calendar = () => {
     };
 
     const getEventsForDay = (day) => {
-        return events.filter((eventDay) => eventDay.date === day);
+        let eventsToReturn = events.filter((eventDay) => eventDay.date === day);
+        return eventsToReturn;
     };
 
     const isDayInCurrentMonth = (day) => {
