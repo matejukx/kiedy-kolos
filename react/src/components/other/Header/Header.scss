@@ -1,0 +1,18 @@
+.header {
+  background-color: var(--color-light);
+  box-shadow: var(--shadow-light);
+  display: flex;
+  justify-content: center;
+  position: relative;
+  padding: 2.4rem;
+  border-radius: inherit;
+  grid-area: header;
+
+  @media only screen and (max-width: 55rem) {
+    padding: 1.2rem;
+  }
+
+  @media only screen and (max-width: 35rem) {
+    flex-wrap: wrap;
+  }
+}

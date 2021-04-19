@@ -1,0 +1,27 @@
+.itemBar {
+  box-shadow: var(--shadow-light);
+  background-color: var(--color-light);
+  padding: 1.6rem;
+  font-size: 1.8rem;
+  border-radius: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  & > *:first-child {
+    margin-right: 4rem;
+  }
+
+  &__buttons {
+    display: flex;
+    transition: all 0.2s;
+
+    & > * {
+      opacity: 0;
+    }
+  }
+
+  &:hover .itemBar__buttons > * {
+    opacity: 1;
+  }
+}
