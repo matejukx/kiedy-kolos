@@ -59,3 +59,38 @@ export const setChosenTheme = (value) => {
         payload: value,
     };
 };
+
+export const setAllEvents = (value) => {
+    return {
+        type: 'SET_ALL_EVENTS',
+        payload: value,
+    };
+};
+
+export const setDayEvents = (value) => {
+    return {
+        type: 'SET_DAY_EVENTS',
+        payload: value,
+    };
+};
+
+export const setEventTypes = (value) => {
+    return {
+        type: 'SET_EVENT_TYPES',
+        payload: value,
+    };
+};
+
+export const setSubjects = (value) => {
+    return {
+        type: 'SET_SUBJECTS',
+        payload: value,
+    };
+};
+
+export const setGroups = (value) => {
+    return {
+        type: 'SET_GROUPS',
+        payload: value,
+    };
+};

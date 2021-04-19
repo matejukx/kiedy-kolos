@@ -7,11 +7,10 @@ import CalendarCard from './CalendarCard';
 import CalendarTools from './CalendarTools';
 import WeekDays from './WeekDays';
 import './../API/Api';
-import { getAllEvents } from './../API/Api';
 import MonthTitle from './MonthTitle';
 
 const Calendar = () => {
-    const [events, setEvents] = useState([]);
+    const events = useSelector((state) => state.allEvents);
     const [days, setDays] = useState([]);
     const [month, setMonth] = useState();
     const [monthOffset, setMonthOffset] = useState(0);
@@ -19,7 +18,6 @@ const Calendar = () => {
 
     const dispatch = useDispatch();
     const chosenGroup = useSelector((state) => state.chosenGroup);
-    const forceRefresh = useSelector((state) => state.forceEventsRefresh);
 
     const daysOfWeek = [7, 1, 2, 3, 4, 5, 6];
 
@@ -30,18 +28,7 @@ const Calendar = () => {
         dispatch(setDate(today.format('YYYY-MM-DD')));
 
         initializeMonthDays(0);
-        getEvents();
     }, []);
-
-    useEffect(() => {
-        getEvents();
-    }, [chosenGroup, forceRefresh]);
-
-    const getEvents = async () => {
-        const data = await getAllEvents();
-        const filteredData = data.filter(shouldBeDisplayed);
-        setEvents(filteredData);
-    };
 
     const increaseMonth = () => {
         setSwipeDirection(1);
@@ -59,10 +46,6 @@ const Calendar = () => {
         initializeMonthDays(offset);
     };
 
-    const shouldBeDisplayed = (event) => {
-        return event.group_name === 'Wszystkie' || event.group_name === chosenGroup;
-    };
-
     const initializeMonthDays = (offset) => {
         const desiredDay = today.add(offset, 'month');
         const daysTemp = new Array(42);
@@ -76,7 +59,8 @@ const Calendar = () => {
     };
 
     const getEventsForDay = (day) => {
-        return events.filter((eventDay) => eventDay.date === day);
+        let eventsToReturn = events.filter((eventDay) => eventDay.date === day);
+        return eventsToReturn;
     };
 
     const isDayInCurrentMonth = (day) => {

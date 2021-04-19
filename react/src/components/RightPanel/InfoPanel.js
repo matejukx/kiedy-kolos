@@ -8,11 +8,10 @@ import { getDayEvents } from './../API/Api';
 import AddButton from './AddButton';
 
 const InfoPanel = () => {
-    const [events, setEvents] = useState([]);
+    const events = useSelector((state) => state.dayEvents);
     const [chosenEvent, setChosenEvent] = useState();
     const date = useSelector((state) => state.chosenDate);
-    const chosenGroup = useSelector((state) => state.chosenGroup);
-    const forceRefresh = useSelector((state) => state.forceEventsRefresh);
+    const [eventsToShow, setEventsToShow] = useState([]);
     const monthNames = [
         'Stycznia',
         'Lutego',
@@ -29,22 +28,9 @@ const InfoPanel = () => {
     ];
 
     useEffect(async () => {
-        setEvents([]);
-        getEvents();
-    }, [date, chosenGroup, forceRefresh]);
-
-    const getEvents = async () => {
-        const data = await getDayEvents(0, date);
-        const filteredData = data.filter(shouldBeDisplayed);
-        setEvents(filteredData);
-        setChosenEvent(filteredData[0]);
-    };
-
-    const shouldBeDisplayed = (event) => {
-        return (
-            event.group_name == 'Wszystkie' || event.group_name == chosenGroup
-        );
-    };
+        setEventsToShow([]);
+        setTimeout(() => setEventsToShow(events), 0);
+    }, [events]);
 
     const dayWithoutZero = () => {
         let dayString = dayjs(date).format('DD');
@@ -68,17 +54,16 @@ const InfoPanel = () => {
         <div className='extension'>
             <motion.div className='extension__events'>
                 <h2 className='extension__header'>
-                    Wydarzenia {dayWithoutZero()}{' '}
-                    {monthNames[parseInt(dayjs(date).format('MM')) - 1]}
+                    Wydarzenia {dayWithoutZero()} {monthNames[parseInt(dayjs(date).format('MM')) - 1]}
                 </h2>
                 <AddButton />
                 <motion.ul
                     className='events-list'
                     variants={containerVariants}
                     initial='hidden'
-                    animate={events.length > 0 && 'show'}
+                    animate={eventsToShow.length > 0 && 'show'}
                 >
-                    {events.map((event) => (
+                    {eventsToShow.map((event) => (
                         <EventButton
                             key={event.id}
                             event={event}

@@ -1,10 +1,10 @@
-const groupReducer = (state = 1, action) => {
+const subjectsReducer = (state = [], action) => {
     switch (action.type) {
-        case 'SET_GROUP':
+        case 'SET_SUBJECTS':
             return action.payload;
         default:
             return state;
     }
 };
 
-export default groupReducer;
+export default subjectsReducer;

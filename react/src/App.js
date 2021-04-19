@@ -6,7 +6,7 @@ import { Route, Switch } from 'react-router';
 const App = () => {
     return (
         <Switch>
-            <Route path='/' exact component={UserPanel} />
+            <Route path='/:id' component={UserPanel} />
         </Switch>
     );
 };

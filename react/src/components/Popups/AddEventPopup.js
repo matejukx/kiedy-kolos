@@ -1,71 +1,80 @@
 import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
+import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { forceEventsRefresh, setAddEventPopup, setGroup } from '../../actions';
-import { getGroups, getCourses, getTypes } from '../API/Api';
+import { getGroups, getCourses, getTypes, addEvent } from '../API/Api';
 
 const AddEventPopup = () => {
-    const date = useSelector((state) => state.chosenDate);
     const dispatch = useDispatch();
+    const date = useSelector((state) => state.chosenDate);
+    const types = useSelector((state) => state.eventTypes);
+    const subjects = useSelector((state) => state.subjects);
+    const groups = useSelector((state) => state.groups);
 
-    const [courses, setCourses] = useState([]);
-    const [groups, setGroups] = useState([]);
-    const [types, setTypes] = useState([]);
+    const { id } = useParams();
 
-    const [courseID, setCourseID] = useState(0);
+    const [subjectID, setSubjectID] = useState(0);
     const [groupID, setGroupID] = useState(0);
     const [typeID, setTypeID] = useState(0);
     const [time, setTime] = useState('12:00');
     const [description, setDescription] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(async () => {
         downloadFormData();
+        setTypeID(types[0].id);
+        setSubjectID(subjects[0].id);
+
+        let allGroup = {
+            id: 0,
+            groupNumber: 'Wszystkie',
+            groupName: '',
+        };
+        if (!groups.some((x) => x.id == 0)) {
+            groups.push(allGroup);
+        }
+
+        setGroupID(groups[groups.length - 1].id);
     }, []);
 
-    const downloadFormData = async () => {
-        const coursesTemp = await getCourses(0);
-        setCourses(coursesTemp);
-        setCourseID(coursesTemp[0].id);
+    const downloadFormData = async () => {};
 
-        const groupsTemp = await getGroups(0);
-        setGroups(groupsTemp);
-        setGroupID(groupsTemp[0].id);
+    const addEventPressed = async () => {
+        const selectedGroups = [];
+        if (groupID == 0) {
+            groups.forEach((group) => {
+                if (group.id != 0) {
+                    selectedGroups.push(group.id);
+                }
+            });
+        } else {
+            selectedGroups.push(groupID);
+        }
 
-        const typesTemp = await getTypes(0);
-        setTypes(typesTemp);
-        setTypeID(typesTemp[0].id);
-    };
-
-    const addEvent = async () => {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                courseID: courseID,
-                groupID: groupID,
-                time: time,
-                date: date,
-                description: description,
-                typeID: typeID,
-                password: password,
-            }),
-            mode: 'no-cors', // no-cors, cors, *same-origin
-        };
-        const response = await fetch(`https://aleksanderblaszkiewicz.pl/kiedykolos/add_event.php`, requestOptions);
-        if (response) {
+        const response = await addEvent(subjectID, id, selectedGroups, date, time, description, typeID, password);
+        if (response.ok) {
             dispatch(setAddEventPopup(false));
             dispatch(forceEventsRefresh());
+        } else {
+            catchError(response.status);
         }
+    };
+
+    const catchError = (responseStatus) => {
+        setErrorMessage('Niepoprawne hasło!');
+        console.log('CAUGHT AN ERROR!');
+        console.log(responseStatus);
     };
 
     const closePopup = () => {
         dispatch(setAddEventPopup(false));
     };
 
-    const updateCourseID = (e) => {
-        setCourseID(e.target.value);
+    const updateSubjectID = (e) => {
+        setSubjectID(e.target.value);
     };
 
     const updateGroupID = (e) => {
@@ -90,7 +99,7 @@ const AddEventPopup = () => {
 
     const handleAcceptClick = (e) => {
         e.preventDefault();
-        addEvent();
+        addEventPressed();
     };
 
     const handleCloseClick = (e) => {
@@ -118,10 +127,10 @@ const AddEventPopup = () => {
                     <label className='event-adder__label' htmlFor='subject'>
                         Przedmiot
                     </label>
-                    <select className='event-adder__input' id='subject' value={courseID} onChange={updateCourseID}>
-                        {courses.map((course) => (
-                            <option key={course.id} value={course.id}>
-                                {course.name}
+                    <select className='event-adder__input' id='subject' value={subjectID} onChange={updateSubjectID}>
+                        {subjects.map((subject) => (
+                            <option key={subject.id} value={subject.id}>
+                                {subject.name}
                             </option>
                         ))}
                     </select>
@@ -132,7 +141,7 @@ const AddEventPopup = () => {
                     <select className='event-adder__input' id='group' value={groupID} onChange={updateGroupID}>
                         {groups.map((group) => (
                             <option key={group.id} value={group.id}>
-                                {group.name}
+                                {group.groupNumber}
                             </option>
                         ))}
                     </select>
@@ -188,7 +197,7 @@ const AddEventPopup = () => {
                             onChange={updatePassword}
                         ></input>
                     </div>
-
+                    <h1>{errorMessage}</h1>
                     <div className='event-adder__buttons'>
                         <button className='event-adder__button--reject' onClick={handleCloseClick}>
                             Anuluj

@@ -1,94 +1,92 @@
 import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
+import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { forceEventsRefresh, setEditEventPopup } from '../../actions';
-import { getGroups, getCourses, getTypes } from '../API/Api';
+import { getGroups, getCourses, getTypes, editEvent, getEventInfo } from '../API/Api';
 
 const EditEventPopup = () => {
-    const chosenEvent = useSelector((state) => state.chosenEvent);
     const dispatch = useDispatch();
+    const chosenEvent = useSelector((state) => state.chosenEvent);
+    const types = useSelector((state) => state.eventTypes);
+    const subjects = useSelector((state) => state.subjects);
+    const groups = useSelector((state) => state.groups);
 
-    const [courses, setCourses] = useState([]);
-    const [groups, setGroups] = useState([]);
-    const [types, setTypes] = useState([]);
+    const { id } = useParams();
 
-    const [event, setEvent] = useState();
-
-    const [courseID, setCourseID] = useState(0);
+    const [subjectID, setSubjectID] = useState(0);
     const [groupID, setGroupID] = useState(0);
     const [typeID, setTypeID] = useState(0);
-    const [date, setDate] = useState('2020-12-12');
-    const [time, setTime] = useState('12:00');
+    const [date, setDate] = useState('');
+    const [time, setTime] = useState('');
     const [description, setDescription] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(async () => {
-        await downloadFormData();
-        await getEventInfo();
+        let event = await getEventInfo(id, chosenEvent.id);
+        setTypeID(event.eventTypeId);
+        setSubjectID(event.subjectId);
+        setDescription(event.description);
+        setDate(dayjs(event.date).format('YYYY-MM-DD'));
+        setTime(dayjs(event.date).format('hh:mm'));
+
+        let allGroup = {
+            id: 0,
+            groupNumber: 'Wszystkie',
+            groupName: '',
+        };
+        if (!groups.some((x) => x.id == 0)) {
+            groups.push(allGroup);
+        }
+
+        setGroupID(groups[groups.length - 1].id);
     }, []);
 
-    useEffect(() => {
-        if (event != undefined) initializeEventInfo();
-    }, [event]);
+    const editEventPressed = async () => {
+        const selectedGroups = [];
+        if (groupID == 0) {
+            groups.forEach((group) => {
+                if (group.id != 0) {
+                    selectedGroups.push(group.id);
+                }
+            });
+        } else {
+            selectedGroups.push(groupID);
+        }
 
-    const downloadFormData = async () => {
-        const coursesTemp = await getCourses(0);
-        setCourses(coursesTemp);
-
-        const groupsTemp = await getGroups(0);
-        setGroups(groupsTemp);
-
-        const typesTemp = await getTypes(0);
-        setTypes(typesTemp);
-    };
-
-    const initializeEventInfo = () => {
-        setDescription(event.description);
-        setDate(event.date);
-        setTime(event.time);
-        setGroupID(event.group_id);
-        setTypeID(event.type_id);
-        setCourseID(event.course_id);
-    };
-
-    const getEventInfo = async () => {
-        const response = await fetch(
-            `https://aleksanderblaszkiewicz.pl/kiedykolos/get_event_details.php?id=${chosenEvent.id}`
+        const response = await editEvent(
+            chosenEvent.id,
+            subjectID,
+            id,
+            selectedGroups,
+            date,
+            time,
+            description,
+            typeID,
+            password
         );
-        const data = await response.json();
-        setEvent(data[0]);
-    };
-
-    const editEvent = async () => {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                eventID: chosenEvent.id,
-                courseID: courseID,
-                groupID: groupID,
-                time: time,
-                date: date,
-                description: description,
-                typeID: typeID,
-                password: password,
-            }),
-            mode: 'no-cors', // no-cors, cors, *same-origin
-        };
-        const response = await fetch(`https://aleksanderblaszkiewicz.pl/kiedykolos/edit_event.php`, requestOptions);
-        if (response) {
+        if (response.ok) {
             dispatch(setEditEventPopup(false));
             dispatch(forceEventsRefresh());
+        } else {
+            catchError(response.status);
         }
+    };
+
+    const catchError = (responseStatus) => {
+        setErrorMessage('Niepoprawne hasło!');
+        console.log('CAUGHT AN ERROR!');
+        console.log(responseStatus);
     };
 
     const closePopup = () => {
         dispatch(setEditEventPopup(false));
     };
 
-    const updateCourseID = (e) => {
-        setCourseID(e.target.value);
+    const updateSubjectID = (e) => {
+        setSubjectID(e.target.value);
     };
 
     const updateGroupID = (e) => {
@@ -97,6 +95,10 @@ const EditEventPopup = () => {
 
     const updateTime = (e) => {
         setTime(e.target.value);
+    };
+
+    const updateDate = (e) => {
+        setDate(e.target.value);
     };
 
     const updateDescription = (e) => {
@@ -113,7 +115,7 @@ const EditEventPopup = () => {
 
     const handleAcceptClick = (e) => {
         e.preventDefault();
-        editEvent();
+        editEventPressed();
     };
 
     const handleCloseClick = (e) => {
@@ -141,10 +143,10 @@ const EditEventPopup = () => {
                     <label className='event-adder__label' htmlFor='subject'>
                         Przedmiot
                     </label>
-                    <select className='event-adder__input' id='subject' value={courseID} onChange={updateCourseID}>
-                        {courses.map((course) => (
-                            <option key={course.id} value={course.id}>
-                                {course.name}
+                    <select className='event-adder__input' id='subject' value={subjectID} onChange={updateSubjectID}>
+                        {subjects.map((subject) => (
+                            <option key={subject.id} value={subject.id}>
+                                {subject.name}
                             </option>
                         ))}
                     </select>
@@ -155,7 +157,7 @@ const EditEventPopup = () => {
                     <select className='event-adder__input' id='group' value={groupID} onChange={updateGroupID}>
                         {groups.map((group) => (
                             <option key={group.id} value={group.id}>
-                                {group.name}
+                                {group.groupNumber}
                             </option>
                         ))}
                     </select>
@@ -202,6 +204,13 @@ const EditEventPopup = () => {
                         ></textarea>
                     </div>
 
+                    <div className='edition__setting'>
+                        <label className='edition__label' htmlFor='date'>
+                            Data
+                        </label>
+                        <input type='date' id='date' name='date' value={date} onChange={updateDate}></input>
+                    </div>
+
                     <div className='edition__setting submit'>
                         <input
                             type='password'
@@ -212,6 +221,7 @@ const EditEventPopup = () => {
                         ></input>
                     </div>
 
+                    <h1>{errorMessage}</h1>
                     <div className='event-adder__buttons'>
                         <button className='event-adder__button--reject' onClick={handleCloseClick}>
                             Anuluj
