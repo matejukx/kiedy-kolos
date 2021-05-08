@@ -9,27 +9,29 @@ import AdminPanel from '../../admin/AdminPanel/AdminPanel';
 import { Switch, Route } from 'react-router-dom';
 
 import './Panel.scss';
+import ApiCalls from '../../API/ApiCalls';
 
 const Panel = () => (
-  <div className='panel'>
-    <Switch>
-      <Route exact path='/'>
-        <Header>
-          <MonthPagination />
-          <Toolbar />
-        </Header>
-        <Calendar />
-        <DailyEvents />
-      </Route>
-      <Route exact path='/admin'>
-        <Header>
-          <Title>Panel Administratora</Title>
-          <Toolbar />
-        </Header>
-        <AdminPanel />
-      </Route>
-    </Switch>
-  </div>
+    <div className='panel'>
+        <Switch>
+            <Route exact path='/:id'>
+                <ApiCalls />
+                <Header>
+                    <MonthPagination />
+                    <Toolbar />
+                </Header>
+                <Calendar />
+                <DailyEvents />
+            </Route>
+            <Route path='/:id/admin'>
+                <Header>
+                    <Title>Panel Administratora</Title>
+                    <Toolbar />
+                </Header>
+                <AdminPanel />
+            </Route>
+        </Switch>
+    </div>
 );
 
 export default Panel;

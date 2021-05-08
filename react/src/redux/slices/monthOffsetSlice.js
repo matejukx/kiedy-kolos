@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import dayjs from 'dayjs';
 
 export const monthOffsetSlice = createSlice({
     name: 'monthOffset',

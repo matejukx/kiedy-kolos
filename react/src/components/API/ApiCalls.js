@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import { setAllEvents, setDayEvents, setEventTypes, setGroup, setGroups, setSubjects } from '../../actions';
+import { setAllEvents, setDayEvents, setEventTypes, setGroup, setGroups } from '../../actions';
 import dayjs from 'dayjs';
 
 const ApiCalls = () => {
@@ -9,26 +9,25 @@ const ApiCalls = () => {
     const baseURL = 'https://kiedy-kolos-backend.azurewebsites.net/';
 
     const forceEventsRefresh = useSelector((state) => state.forceEventsRefresh);
-    const chosenDate = useSelector((state) => state.chosenDate);
-    const subjects = useSelector((state) => state.subjects);
-    const chosenGroup = useSelector((state) => state.chosenGroup);
+    const chosenDate = useSelector((state) => state.chosenDate.value);
+    const chosenGroup = 5;
 
     const [dataDownloaded, setDataDownloaded] = useState(false);
     const [events, setEvents] = useState([]);
     const [types, setTypes] = useState([]);
+    const [subjects, setSubjects] = useState([]);
 
     const { id } = useParams();
 
     useEffect(() => {
-        downloadData();
         console.log('Downloading data');
+
+        downloadData();
     }, [forceEventsRefresh, chosenGroup]);
 
     useEffect(() => {
         buildEvents();
         buildDayEvents(chosenDate);
-        buildEventTypes();
-        console.log('Building data');
     }, [dataDownloaded]);
 
     useEffect(() => {
@@ -45,7 +44,6 @@ const ApiCalls = () => {
 
     const getEvents = async () => {
         const data = await getResource(`yearCourses/${id}/groups/${chosenGroup}/events`);
-        console.log(data);
         return data;
     };
 
@@ -59,31 +57,19 @@ const ApiCalls = () => {
         return data;
     };
 
-    const getGroups = async () => {
-        const data = await getResource(`yearCourses/${id}/groups`);
-        return data;
-    };
-
     const downloadData = async () => {
-        const groups = await getGroups();
-        if (chosenGroup.length > 2) {
-            dispatch(setGroup(groups[0].id));
-        }
-        dispatch(setGroups(groups));
-
         setEvents(await getEvents());
-
-        const subjectsTemp = await getSubjects();
-        dispatch(setSubjects(subjectsTemp));
-
-        const typesTemp = await getTypes();
-        setTypes(typesTemp);
-        dispatch(setEventTypes(typesTemp));
+        setSubjects(await getSubjects());
+        setTypes(await getTypes());
 
         setDataDownloaded(!dataDownloaded);
     };
 
     const buildEvents = async () => {
+        if (events.length == 0) {
+            return;
+        }
+
         let eventsConnected = [];
         for (let event of events) {
             let eventData = {
@@ -98,6 +84,7 @@ const ApiCalls = () => {
     };
 
     const buildDayEvents = async (date) => {
+        console.log(date);
         let dayEvents = [];
         for (let event of events) {
             if (dayjs(event.date).format('YYYY-MM-DD') != date) {
@@ -123,8 +110,6 @@ const ApiCalls = () => {
             }
         }
     };
-
-    const buildEventTypes = () => {};
 
     return null;
 };
