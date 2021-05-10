@@ -13,9 +13,9 @@ const Day = ({ date, active }) => {
 
     const [otherCount, setOtherCount] = useState(0);
     const [selected, setSelected] = useState(false);
-    const [events, setEvents] = useState([]);
 
     const choosenDate = useSelector((state) => state.chosenDate.value);
+    const allEvents = useSelector((state) => state.allEvents.value);
 
     useEffect(() => {
         if (choosenDate == date) {
@@ -35,9 +35,13 @@ const Day = ({ date, active }) => {
         dispatch(set(date));
     };
 
+    const eventsForThisDay = () => {
+        return allEvents.filter((event) => event.date == date);
+    };
+
     return (
         <div onClick={handleClick} ref={ref} className={`day ${classModifier()} ${selected ? 'day--selected' : ''}`}>
-            <DayFlags events={events} handleResize={setOtherCount} />
+            <DayFlags events={eventsForThisDay()} handleResize={setOtherCount} />
             <DayFooter otherCount={otherCount} day={dayjs(date).format('DD')} />
         </div>
     );

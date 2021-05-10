@@ -1,11 +1,12 @@
 import Button from '../../other/Button/Button';
 import './EventCard.scss';
 
-const EventCard = ({ children }) => {
+const EventCard = ({ event }) => {
+    console.log(event);
     return (
         <div className='eventCard'>
             <div className='eventCard__topbar eventCard__topbar--blue'>
-                <h3 className='eventCard__title'>{children}</h3>
+                <h3 className='eventCard__title'>{event.subjectLongName}</h3>
                 <div className='eventCard__buttons'>
                     <Button
                         modifier='button--transparent button--edit button--small'
@@ -33,10 +34,7 @@ const EventCard = ({ children }) => {
                         <span className='material-icons'>info</span>Poprawa
                     </div>
                 </div>
-                <div className='eventCard__description'>
-                    Egzamin potwierdzony, wszystkie informacje znajdują się na eNauczaniu. Godzina potwierdzona. Termin
-                    poprawkowy, wyniki za 3 dni.
-                </div>
+                <div className='eventCard__description'>{event.description}</div>
             </div>
         </div>
     );

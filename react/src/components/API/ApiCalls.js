@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import { setAllEvents, setDayEvents, setEventTypes, setGroup, setGroups } from '../../actions';
 import dayjs from 'dayjs';
+import { set as setDailyEvents } from '../../redux/slices/dailyEvents';
+import { set as setAllEvents } from '../../redux/slices/allEvents';
 
 const ApiCalls = () => {
     const dispatch = useDispatch();
@@ -84,7 +85,6 @@ const ApiCalls = () => {
     };
 
     const buildDayEvents = async (date) => {
-        console.log(date);
         let dayEvents = [];
         for (let event of events) {
             if (dayjs(event.date).format('YYYY-MM-DD') != date) {
@@ -100,7 +100,7 @@ const ApiCalls = () => {
             };
             dayEvents.push(eventData);
         }
-        dispatch(setDayEvents(dayEvents));
+        dispatch(setDailyEvents(dayEvents));
     };
 
     const getPropertyFromObjectByID = (array, searchedID, searchedProperty) => {
