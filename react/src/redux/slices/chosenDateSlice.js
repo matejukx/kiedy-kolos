@@ -7,12 +7,12 @@ export const chosenDateSlice = createSlice({
         value: dayjs().format('YYYY-MM-DD'),
     },
     reducers: {
-        set: (state, action) => {
+        setChoosenDate: (state, action) => {
             state.value = action.payload;
         },
     },
 });
 
-export const { set } = chosenDateSlice.actions;
+export const { setChoosenDate: setChoosenDate } = chosenDateSlice.actions;
 
 export default chosenDateSlice.reducer;

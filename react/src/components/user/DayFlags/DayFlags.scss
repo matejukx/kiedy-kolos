@@ -1,63 +1,62 @@
 @mixin color($color) {
-  &::before {
-    background-color: var($color);
-  }
+    &::before {
+        background-color: var($color);
+    }
 }
 
 .day {
-  &__flags {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    align-items: stretch;
-    flex: 1;
-    overflow: scroll;
-  }
-
-  &__flag {
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    font-size: 1.4rem;
-    position: relative;
-
-    &::before {
-      content: '';
-      margin-right: 0.6rem;
-      margin-bottom: -1px;
-      width: 2.4rem;
-      height: 100%;
-      background-color: var(--color-yellow);
-      clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+    &__flags {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        align-items: stretch;
+        flex: 1;
+        overflow: scroll;
     }
-  }
 
-  &__flag--exam {
-    @include color(--color-red);
-  }
-
-  &__flag--project {
-    @include color(--color-green);
-  }
-
-  &__flag--lab {
-    @include color(--color-blue);
-  }
-
-  &__flag--other {
-    @include color(--color-yellow);
-  }
-
-  @media only screen and (max-width: 65rem) {
     &__flag {
-      font-size: 1.2rem;
-      letter-spacing: -0.5px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        font-size: 1.4rem;
+        position: relative;
+        &::before {
+            content: '';
+            margin-right: 0.6rem;
+            margin-bottom: -1px;
+            width: 2.4rem;
+            height: 100%;
+            background-color: var(--color-yellow);
+            clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+        }
     }
-  }
 
-  @media only screen and (max-width: 22rem) {
-    &__flag {
-      color: transparent;
+    &__flag--exam {
+        @include color(--color-red);
     }
-  }
+
+    &__flag--project {
+        @include color(--color-green);
+    }
+
+    &__flag--lab {
+        @include color(--color-blue);
+    }
+
+    &__flag--other {
+        @include color(--color-yellow);
+    }
+
+    @media only screen and (max-width: 65rem) {
+        &__flag {
+            font-size: 1.2rem;
+            letter-spacing: -0.5px;
+        }
+    }
+
+    @media only screen and (max-width: 22rem) {
+        &__flag {
+            color: transparent;
+        }
+    }
 }

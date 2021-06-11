@@ -5,7 +5,7 @@ import DayFlags from '../DayFlags/DayFlags';
 import DayFooter from '../DayFooter/DayFooter';
 import './Day.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { set } from '../../../redux/slices/chosenDateSlice';
+import { setChoosenDate } from '../../../redux/slices/chosenDateSlice';
 
 const Day = ({ date, active }) => {
     const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const Day = ({ date, active }) => {
     };
 
     const handleClick = () => {
-        dispatch(set(date));
+        dispatch(setChoosenDate(date));
     };
 
     const eventsForThisDay = () => {
