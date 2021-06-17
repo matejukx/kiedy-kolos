@@ -1,24 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export const monthOffsetSlice = createSlice({
-    name: 'monthOffset',
-    initialState: {
-        value: 0,
+  name: 'monthOffset',
+  initialState: {
+    value: 0,
+  },
+  reducers: {
+    incrementMonthOffset: (state) => {
+      state.value += 1;
     },
-    reducers: {
-        increment: (state) => {
-            state.value += 1;
-        },
-        decrement: (state) => {
-            state.value -= 1;
-        },
-        set: (state, action) => {
-            state.value = action.payload;
-        },
+    decrementMonthOffset: (state) => {
+      state.value -= 1;
     },
+    setMonthOffset: (state, action) => {
+      state.value = action.payload;
+    },
+  },
 });
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, set } = monthOffsetSlice.actions;
+export const {
+  incrementMonthOffset: incrementMonthOffset,
+  decrementMonthOffset: decrementMonthOffset,
+  setMonthOffset: setMonthOffset,
+} = monthOffsetSlice.actions;
 
 export default monthOffsetSlice.reducer;

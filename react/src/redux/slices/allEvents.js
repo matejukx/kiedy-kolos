@@ -1,17 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export const allEvents = createSlice({
-    name: 'allEvents',
-    initialState: {
-        value: [],
+  name: 'allEvents',
+  initialState: {
+    value: [],
+  },
+  reducers: {
+    setAllEvents: (state, action) => {
+      state.value = action.payload;
     },
-    reducers: {
-        set: (state, action) => {
-            state.value = action.payload;
-        },
-    },
+  },
 });
 
-export const { set } = allEvents.actions;
+export const { setAllEvents: setAllEvents } = allEvents.actions;
 
 export default allEvents.reducer;
