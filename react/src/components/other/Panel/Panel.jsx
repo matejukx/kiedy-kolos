@@ -6,6 +6,7 @@ import DailyEvents from '../../user/DailyEvents/DailyEvents';
 import Title from '../Title/Title';
 import AdminPanel from '../../admin/AdminPanel/AdminPanel';
 import AddEventModal from '../../user/Modals/AddEventModal';
+import { useSelector } from 'react-redux';
 
 import { Switch, Route } from 'react-router-dom';
 
@@ -13,7 +14,7 @@ import './Panel.scss';
 import ApiCalls from '../../API/ApiCalls';
 
 const Panel = () => {
-  const chuj = true;
+  const addEventsPopup = useSelector((state) => state.addEventPopup.value);
 
   return (
     <div className='panel'>
@@ -26,7 +27,7 @@ const Panel = () => {
           </Header>
           <Calendar />
           <DailyEvents />
-          {chuj && <AddEventModal />}
+          {addEventsPopup && <AddEventModal />}
         </Route>
         <Route path='/:id/admin'>
           <Header>

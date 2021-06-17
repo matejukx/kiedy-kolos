@@ -4,19 +4,22 @@ import { useParams } from 'react-router';
 import dayjs from 'dayjs';
 import { setDailyEvents } from '../../redux/slices/dailyEvents';
 import { setAllEvents } from '../../redux/slices/allEvents';
+import { setSubjects } from '../../redux/slices/subjects';
+import { setGroups } from '../../redux/slices/groups';
+import { setTypes } from '../../redux/slices/types';
 
 const ApiCalls = () => {
   const dispatch = useDispatch();
   const baseURL = 'https://kiedy-kolos-backend.azurewebsites.net/';
 
-  const forceEventsRefresh = useSelector((state) => state.forceEventsRefresh);
+  const forceEventsRefresh = useSelector((state) => state.forceEventsRefresh.value);
   const chosenDate = useSelector((state) => state.chosenDate.value);
   const chosenGroup = 5;
 
   const [dataDownloaded, setDataDownloaded] = useState(false);
-  const [events, setEvents] = useState([]);
-  const [types, setTypes] = useState([]);
-  const [subjects, setSubjects] = useState([]);
+  const [eventsLocal, setEventsLocal] = useState([]);
+  const [typesLocal, setTypesLocal] = useState([]);
+  const [subjectsLocal, setSubjectsLocal] = useState([]);
 
   const { id } = useParams();
 
@@ -48,34 +51,42 @@ const ApiCalls = () => {
 
   const getSubjects = async () => {
     const data = await getResource(`yearCourses/${id}/subjects`);
+    dispatch(setSubjects(data));
     return data;
   };
 
   const getTypes = async () => {
     const data = await getResource(`eventTypes`);
+    dispatch(setTypes(data));
     return data;
   };
 
+  const getGroups = async () => {
+    const data = await getResource(`yearCourses/${id}/groups`);
+    dispatch(setGroups(data));
+  };
+
   const downloadData = async () => {
-    setEvents(await getEvents());
-    setSubjects(await getSubjects());
-    setTypes(await getTypes());
+    setEventsLocal(await getEvents());
+    setSubjectsLocal(await getSubjects());
+    setTypesLocal(await getTypes());
+    await getGroups();
 
     setDataDownloaded(!dataDownloaded);
   };
 
   const buildEvents = async () => {
-    if (events.length == 0) {
+    if (eventsLocal.length == 0) {
       return;
     }
 
     let eventsConnected = [];
-    for (let event of events) {
+    for (let event of eventsLocal) {
       let eventData = {
         date: dayjs(event.date).format('YYYY-MM-DD'),
-        subjectLongName: getPropertyFromObjectByID(subjects, event.subjectId, 'name'),
-        subjectShortName: getPropertyFromObjectByID(subjects, event.subjectId, 'shortName'),
-        type: getPropertyFromObjectByID(types, event.eventTypeId, 'name'),
+        subjectLongName: getPropertyFromObjectByID(subjectsLocal, event.subjectId, 'name'),
+        subjectShortName: getPropertyFromObjectByID(subjectsLocal, event.subjectId, 'shortName'),
+        type: getPropertyFromObjectByID(typesLocal, event.eventTypeId, 'name'),
       };
       eventsConnected.push(eventData);
     }
@@ -84,7 +95,7 @@ const ApiCalls = () => {
 
   const buildDayEvents = async (date) => {
     let dayEvents = [];
-    for (let event of events) {
+    for (let event of eventsLocal) {
       if (dayjs(event.date).format('YYYY-MM-DD') != date) {
         continue;
       }
@@ -92,8 +103,8 @@ const ApiCalls = () => {
         id: event.id,
         date: dayjs(event.date).format('YYYY-MM-DD'),
         description: event.description,
-        subjectLongName: getPropertyFromObjectByID(subjects, event.subjectId, 'name'),
-        type: getPropertyFromObjectByID(types, event.eventTypeId, 'name'),
+        subjectLongName: getPropertyFromObjectByID(subjectsLocal, event.subjectId, 'name'),
+        type: getPropertyFromObjectByID(typesLocal, event.eventTypeId, 'name'),
         time: dayjs(event.date).format('HH:mm'),
       };
       dayEvents.push(eventData);

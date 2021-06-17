@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const allEvents = createSlice({
+export const allEventsSlice = createSlice({
   name: 'allEvents',
   initialState: {
     value: [],
@@ -12,6 +12,6 @@ export const allEvents = createSlice({
   },
 });
 
-export const { setAllEvents: setAllEvents } = allEvents.actions;
+export const { setAllEvents: setAllEvents } = allEventsSlice.actions;
 
-export default allEvents.reducer;
+export default allEventsSlice.reducer;
