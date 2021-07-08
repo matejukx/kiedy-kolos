@@ -23,7 +23,7 @@ const AdminPanel = () => {
     { name: 'Grupa 11' },
   ];
 
-  const renderBar = (name) => <ItemBar key={name}>{name}</ItemBar>;
+  const renderBar = ({ name }) => <ItemBar key={name}>{name}</ItemBar>;
 
   return (
     <div className='adminPanel'>
