@@ -3,11 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 export const forceEventsRefreshSlice = createSlice({
   name: 'forceEventsRefresh',
   initialState: {
-    value: [],
+    value: false,
   },
   reducers: {
     forceEventsRefresh: (state, action) => {
-      state.value = action.payload;
+      state.value = !state.value;
     },
   },
 });

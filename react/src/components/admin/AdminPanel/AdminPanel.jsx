@@ -28,11 +28,7 @@ const AdminPanel = () => {
   return (
     <div className='adminPanel'>
       <div className='scrollable'>
-        <ItemList
-          renderComponent={renderBar}
-          items={subjects}
-          name='Przedmiot'
-        />
+        <ItemList renderComponent={renderBar} items={subjects} name='Przedmiot' />
       </div>
       <div className='scrollable'>
         <ItemList renderComponent={renderBar} items={groups} name='Grupę' />

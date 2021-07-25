@@ -1,16 +1,18 @@
+import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { setAddEventPopup } from '../../../redux/slices/addEventPopup';
+import { setEditEventPopup } from '../../../redux/slices/editEventPopup';
 import { forceEventsRefresh } from '../../../redux/slices/forceEventsRefresh';
 import Modal from '../../user/Modal/Modal';
 
-const AddEventModal = () => {
+const EditEventModal = () => {
   const dispatch = useDispatch();
   const subjects = useSelector((state) => state.subjects.value);
   const groups = useSelector((state) => state.groups.value);
   const types = useSelector((state) => state.types.value);
-  const date = useSelector((state) => state.chosenDate.value);
+  const chosenEventID = useSelector((state) => state.chosenEvent.value);
 
   const { id } = useParams();
   const [subjectID, setSubjectID] = useState(0);
@@ -18,15 +20,51 @@ const AddEventModal = () => {
   const [groupIDs, setGroupIDs] = useState([]);
   const [typeID, setTypeID] = useState(0);
   const [time, setTime] = useState('12:00');
+  const [date, setDate] = useState(0);
   const [description, setDescription] = useState('');
   const [password, setPassword] = useState('');
 
   useEffect(() => {
-    setTypeID(types[0].id);
-    setSubjectID(subjects[0].id);
-    setGroupID(groups[0].id);
-    setGroupIDs([groups[0].id]);
+    setInitialEventData();
   }, []);
+
+  const setInitialEventData = async () => {
+    const response = await fetch(
+      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Events/${chosenEventID}`
+    );
+    const json = await response.json();
+    const eventData = await json.result;
+
+    setTypeID(eventData.eventTypeId);
+    setSubjectID(eventData.subjectId);
+    setGroupID(eventData.groupIds[0]);
+    setGroupIDs([eventData.groupIds[0]]);
+
+    setDescription(eventData.description);
+    console.log(dayjs(eventData.date).format());
+    setTime(dayjs(eventData.date).format('HH:mm'));
+    setDate(dayjs(eventData.date).format('YYYY-MM-DD'));
+  };
+
+  const removeEvent = async () => {
+    const requestOptions = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Api-Key': password,
+      },
+      mode: 'cors',
+    };
+    const response = await fetch(
+      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Events/${chosenEventID}`,
+      requestOptions
+    );
+
+    if (response.ok) {
+      dispatch(setEditEventPopup(false));
+      dispatch(forceEventsRefresh());
+    }
+  };
 
   const addEvent = async () => {
     const requestOptions = {
@@ -53,7 +91,7 @@ const AddEventModal = () => {
     );
 
     if (response.ok) {
-      dispatch(setAddEventPopup(false));
+      dispatch(setEditEventPopup(false));
       dispatch(forceEventsRefresh());
     }
   };
@@ -75,6 +113,10 @@ const AddEventModal = () => {
     setTime(e.target.value);
   };
 
+  const updateDate = (e) => {
+    setDate(e.target.value);
+  };
+
   const updateDescription = (e) => {
     setDescription(e.target.value);
   };
@@ -83,19 +125,20 @@ const AddEventModal = () => {
     setPassword(e.target.value);
   };
 
-  const handleAcceptClick = (e) => {
+  const acceptClicked = (e) => {
     e.preventDefault();
+    removeEvent();
     addEvent();
   };
 
-  const handleCloseClick = (e) => {
+  const closeClicked = (e) => {
     e.preventDefault();
-    dispatch(setAddEventPopup(false));
+    dispatch(setEditEventPopup(false));
   };
 
   return (
     <Modal>
-      <h2>Dodawanie wydarzenia</h2>
+      <h2>Edytowanie wydarzenia {chosenEventID}</h2>
 
       <label htmlFor='subject'>Przedmiot</label>
       <select className='event-adder__input' id='subject' value={subjectID} onChange={updateSubjectID}>
@@ -146,6 +189,21 @@ const AddEventModal = () => {
       ></input>
       <br />
 
+      <label className='edition__label' htmlFor='date'>
+        Godzina
+      </label>
+      <input
+        type='date'
+        id='date'
+        name='date'
+        min='07:00'
+        value='16:00:00'
+        max='21:00'
+        value={date}
+        onChange={updateDate}
+      ></input>
+      <br />
+
       <label className='edition__label' htmlFor='description'>
         Opis
       </label>
@@ -162,14 +220,14 @@ const AddEventModal = () => {
 
       <input type='password' id='password' name='password' placeholder='Hasło' onChange={updatePassword}></input>
 
-      <button className='event-adder__button--reject' onClick={handleCloseClick}>
+      <button className='event-adder__button--reject' onClick={closeClicked}>
         Anuluj
       </button>
-      <button className='event-adder__button--accept' onClick={handleAcceptClick}>
-        Utwórz wydarzenie
+      <button className='event-adder__button--accept' onClick={acceptClicked}>
+        Edytuj wydarzenie
       </button>
     </Modal>
   );
 };
 
-export default AddEventModal;
+export default EditEventModal;

@@ -8,7 +8,7 @@ import { setSubjects } from '../../redux/slices/subjects';
 import { setGroups } from '../../redux/slices/groups';
 import { setTypes } from '../../redux/slices/types';
 
-const ApiCalls = () => {
+const UserBackgroundAPI = () => {
   const dispatch = useDispatch();
   const baseURL = 'https://kiedy-kolos-backend.azurewebsites.net/';
 
@@ -25,6 +25,7 @@ const ApiCalls = () => {
 
   useEffect(() => {
     downloadData();
+    console.log('Downloading data...');
   }, [forceEventsRefresh, chosenGroup]);
 
   useEffect(() => {
@@ -123,4 +124,4 @@ const ApiCalls = () => {
   return null;
 };
 
-export default ApiCalls;
+export default UserBackgroundAPI;
