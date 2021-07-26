@@ -43,7 +43,7 @@ const RemoveEventModal = () => {
 
   return (
     <Modal>
-      <h2>Usuwanie wydarzenia</h2>
+      <h2>Usuwanie wydarzenia {chosenEventID}</h2>
       <input type='password' id='password' name='password' placeholder='Hasło' onChange={updatePassword}></input>
       <button className='event-adder__button--reject' onClick={cancelPressed}>
         Anuluj

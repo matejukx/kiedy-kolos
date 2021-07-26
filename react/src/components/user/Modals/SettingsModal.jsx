@@ -7,8 +7,13 @@ import Modal from '../Modal/Modal';
 const SettingsModal = () => {
   const dispatch = useDispatch();
   const groups = useSelector((state) => state.groups.value);
+  const choosenGroupID = useSelector((state) => state.chosenGroupID.value);
 
   const [groupID, setGroupID] = useState(0);
+
+  useEffect(() => {
+    setGroupID(choosenGroupID);
+  }, [choosenGroupID]);
 
   const updateGroupID = (e) => {
     setGroupID(e.target.value);

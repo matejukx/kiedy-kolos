@@ -1,4 +1,16 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import {
+  persistReducer,
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'reduxjs-toolkit-persist';
+import storage from 'reduxjs-toolkit-persist/lib/storage';
+import autoMergeLevel1 from 'reduxjs-toolkit-persist/lib/stateReconciler/autoMergeLevel1';
 
 import monthOffsetReducer from './slices/monthOffsetSlice';
 import chosenDateReducer from './slices/chosenDateSlice';
@@ -15,23 +27,42 @@ import typesReducer from './slices/types';
 import forceEventsRefreshReducer from './slices/forceEventsRefresh';
 import chosenEventReducer from './slices/chosenEvent';
 
-export default configureStore({
-  reducer: {
-    monthOffset: monthOffsetReducer,
-    chosenDate: chosenDateReducer,
-    chosenGroupID: chosenGroupIDReducer,
-    dailyEvents: dailyEventsReducer,
-    allEvents: allEventsReducer,
+const persistConfig = {
+  key: 'root',
+  storage: storage,
+  stateReconciler: autoMergeLevel1,
+};
 
-    addEventPopup: addEventPopupReducer,
-    removeEventPopup: removeEventPopupReducer,
-    editEventPopup: editEventPopupReducer,
-    settingsPopup: settingsPopupReducer,
+const reducers = combineReducers({
+  monthOffset: monthOffsetReducer,
+  chosenDate: chosenDateReducer,
+  chosenGroupID: chosenGroupIDReducer,
+  dailyEvents: dailyEventsReducer,
+  allEvents: allEventsReducer,
 
-    subjects: subjectsReducer,
-    groups: groupsReducer,
-    types: typesReducer,
-    forceEventsRefresh: forceEventsRefreshReducer,
-    chosenEvent: chosenEventReducer,
-  },
+  addEventPopup: addEventPopupReducer,
+  removeEventPopup: removeEventPopupReducer,
+  editEventPopup: editEventPopupReducer,
+  settingsPopup: settingsPopupReducer,
+
+  subjects: subjectsReducer,
+  groups: groupsReducer,
+  types: typesReducer,
+  forceEventsRefresh: forceEventsRefreshReducer,
+  chosenEvent: chosenEventReducer,
 });
+const _persistedReducer = persistReducer(persistConfig, reducers);
+
+const store = configureStore({
+  reducer: _persistedReducer,
+  middleware: getDefaultMiddleware({
+    serializableCheck: {
+      /* ignore persistance actions */
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
+});
+
+const persistor = persistStore(store);
+
+export { store, persistor };

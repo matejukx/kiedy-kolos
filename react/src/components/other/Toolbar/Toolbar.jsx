@@ -9,7 +9,6 @@ const Toolbar = () => {
 
   const settingsClicked = () => {
     dispatch(setSettingsPopup(true));
-    console.log('Settings clicked!');
   };
 
   return (
