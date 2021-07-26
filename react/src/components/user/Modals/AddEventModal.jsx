@@ -60,13 +60,27 @@ const AddEventModal = () => {
     }
   };
 
+  const formAllGroupArray = () => {
+    let groupsTemp = [];
+    for (let group of groups) {
+      groupsTemp.push(group.id);
+    }
+
+    return groupsTemp;
+  };
+
   const updateSubjectID = (e) => {
     setSubjectID(e.target.value);
   };
 
   const updateGroupID = (e) => {
     setGroupID(e.target.value);
-    setGroupIDs([e.target.value]);
+
+    if (e.target.value == -1) {
+      setGroupIDs(formAllGroupArray());
+    } else {
+      setGroupIDs([e.target.value]);
+    }
   };
 
   const updateTypeID = (e) => {
@@ -98,8 +112,8 @@ const AddEventModal = () => {
   return (
     <Modal>
       <h2>Dodawanie wydarzenia</h2>
-
       <label htmlFor='subject'>Przedmiot</label>
+      <br />
       <select className='event-adder__input' id='subject' value={subjectID} onChange={updateSubjectID}>
         {subjects.map((subject) => (
           <option key={subject.id} value={subject.id}>
@@ -108,11 +122,14 @@ const AddEventModal = () => {
         ))}
       </select>
       <br />
-
       <label className='event-adder__label' htmlFor='group'>
         Grupa
       </label>
+      <br />
       <select className='event-adder__input' id='group' value={groupID} onChange={updateGroupID}>
+        <option key={0} value={-1}>
+          Wszystkie
+        </option>
         {groups.map((group) => (
           <option key={group.id} value={group.id}>
             {group.groupNumber}
@@ -120,10 +137,10 @@ const AddEventModal = () => {
         ))}
       </select>
       <br />
-
       <label className='event-adder__label' htmlFor='type'>
         Typ
       </label>
+      <br />
       <select className='event-adder__input' id='type' value={typeID} onChange={updateTypeID}>
         {types.map((type) => (
           <option key={type.id} value={type.id}>
@@ -132,10 +149,10 @@ const AddEventModal = () => {
         ))}
       </select>
       <br />
-
       <label className='edition__label' htmlFor='time'>
         Godzina
       </label>
+      <br />
       <input
         type='time'
         id='time'
@@ -147,10 +164,10 @@ const AddEventModal = () => {
         onChange={updateTime}
       ></input>
       <br />
-
       <label className='edition__label' htmlFor='description'>
         Opis
       </label>
+      <br />
       <textarea
         id='description'
         name='description'
@@ -161,12 +178,17 @@ const AddEventModal = () => {
         onChange={updateDescription}
       ></textarea>
       <br />
-
+      <label className='edition__label' htmlFor='password'>
+        Hasło
+      </label>
+      <br />
       <input type='password' id='password' name='password' placeholder='Hasło' onChange={updatePassword}></input>
-
+      <br />
+      <br />
       <button className='event-adder__button--reject' onClick={handleCloseClick}>
         Anuluj
       </button>
+      .......................
       <button className='event-adder__button--accept' onClick={handleAcceptClick}>
         Utwórz wydarzenie
       </button>
