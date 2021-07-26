@@ -30,6 +30,7 @@ const SettingsModal = () => {
       <label className='event-adder__label' htmlFor='group'>
         Grupa
       </label>
+      <br />
       <select className='event-adder__input' id='group' value={groupID} onChange={updateGroupID}>
         {groups.map((group) => (
           <option key={group.id} value={group.id}>
@@ -37,6 +38,7 @@ const SettingsModal = () => {
           </option>
         ))}
       </select>
+      <br />
       <button onClick={() => acceptClicked()}>Akceptuj</button>
     </Modal>
   );
