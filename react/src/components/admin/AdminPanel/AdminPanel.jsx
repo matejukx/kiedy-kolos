@@ -23,15 +23,25 @@ const AdminPanel = () => {
     { name: 'Grupa 11' },
   ];
 
-  const renderBar = ({ name }) => <ItemBar key={name}>{name}</ItemBar>;
+  const renderBarCourses = ({ name }) => (
+    <ItemBar key={name} handleEdit={() => console.log('edit course')} handleDelete={() => console.log('delete course')}>
+      {name}
+    </ItemBar>
+  );
+
+  const renderBarGroups = ({ name }) => (
+    <ItemBar key={name} handleEdit={() => console.log('edit group')} handleDelete={() => console.log('delete group')}>
+      {name}
+    </ItemBar>
+  );
 
   return (
     <div className='adminPanel'>
       <div className='scrollable'>
-        <ItemList renderComponent={renderBar} items={subjects} name='Przedmiot' />
+        <ItemList renderComponent={renderBarCourses} items={subjects} name='Przedmiot' />
       </div>
       <div className='scrollable'>
-        <ItemList renderComponent={renderBar} items={groups} name='Grupę' />
+        <ItemList renderComponent={renderBarGroups} items={groups} name='Grupę' />
       </div>
       <CourseInfo course='Informatyka' university='Politechnika Gdańska' />
     </div>

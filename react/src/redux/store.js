@@ -31,6 +31,7 @@ const persistConfig = {
   key: 'root',
   storage: storage,
   stateReconciler: autoMergeLevel1,
+  whitelist: ['chosenGroupID'],
 };
 
 const reducers = combineReducers({
