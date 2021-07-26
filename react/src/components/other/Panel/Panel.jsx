@@ -14,11 +14,13 @@ import { Switch, Route } from 'react-router-dom';
 import './Panel.scss';
 import UserBackgroundAPI from '../../API/UserBackgroundAPI';
 import EditEventModal from '../../user/Modals/EditEventModal';
+import SettingsModal from '../../user/Modals/SettingsModal';
 
 const Panel = () => {
   const addEventsPopup = useSelector((state) => state.addEventPopup.value);
   const removeEventsPopup = useSelector((state) => state.removeEventPopup.value);
   const editEventPopup = useSelector((state) => state.editEventPopup.value);
+  const settingsPopup = useSelector((state) => state.settingsPopup.value);
 
   return (
     <div className='panel'>
@@ -34,6 +36,7 @@ const Panel = () => {
           {addEventsPopup && <AddEventModal />}
           {removeEventsPopup && <RemoveEventModal />}
           {editEventPopup && <EditEventModal />}
+          {settingsPopup && <SettingsModal />}
         </Route>
         <Route path='/:id/admin'>
           <Header>

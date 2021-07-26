@@ -7,6 +7,7 @@ import { setAllEvents } from '../../redux/slices/allEvents';
 import { setSubjects } from '../../redux/slices/subjects';
 import { setGroups } from '../../redux/slices/groups';
 import { setTypes } from '../../redux/slices/types';
+import { setChosenGroupID } from '../../redux/slices/chosenGroupIDSlice';
 
 const UserBackgroundAPI = () => {
   const dispatch = useDispatch();
@@ -14,18 +15,20 @@ const UserBackgroundAPI = () => {
 
   const forceEventsRefresh = useSelector((state) => state.forceEventsRefresh.value);
   const chosenDate = useSelector((state) => state.chosenDate.value);
-  const chosenGroup = 5;
+  const chosenGroup = useSelector((state) => state.chosenGroupID.value);
 
   const [dataDownloaded, setDataDownloaded] = useState(false);
   const [eventsLocal, setEventsLocal] = useState([]);
   const [typesLocal, setTypesLocal] = useState([]);
   const [subjectsLocal, setSubjectsLocal] = useState([]);
+  const [groupsLocal, setGroupsLocal] = useState([]);
 
   const { id } = useParams();
 
   useEffect(() => {
-    downloadData();
     console.log('Downloading data...');
+
+    downloadData();
   }, [forceEventsRefresh, chosenGroup]);
 
   useEffect(() => {
@@ -65,15 +68,27 @@ const UserBackgroundAPI = () => {
   const getGroups = async () => {
     const data = await getResource(`yearCourses/${id}/groups`);
     dispatch(setGroups(data));
+    return data;
   };
 
   const downloadData = async () => {
     setEventsLocal(await getEvents());
     setSubjectsLocal(await getSubjects());
     setTypesLocal(await getTypes());
-    await getGroups();
 
-    setDataDownloaded(!dataDownloaded);
+    checkGroupCorectness(await getGroups());
+  };
+
+  const checkGroupCorectness = (groups) => {
+    for (let group of groups) {
+      if (chosenGroup == group.id) {
+        setDataDownloaded(!dataDownloaded);
+        return;
+      }
+    }
+
+    dispatch(setChosenGroupID(groups[0].id));
+    console.log('Unknown group ID. Changing to default...');
   };
 
   const buildEvents = async () => {

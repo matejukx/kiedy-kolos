@@ -1,11 +1,20 @@
+import { useDispatch } from 'react-redux';
+import { setSettingsPopup } from '../../../redux/slices/settingsPopup';
 import Button from '../Button/Button';
 import LoginButton from '../LoginButton/LoginButton';
 import './Toolbar.scss';
 
 const Toolbar = () => {
+  const dispatch = useDispatch();
+
+  const settingsClicked = () => {
+    dispatch(setSettingsPopup(true));
+    console.log('Settings clicked!');
+  };
+
   return (
     <div className='toolbar'>
-      <Button>
+      <Button handleClick={() => settingsClicked()}>
         <span title='Ustawienia' className='material-icons'>
           settings
         </span>

@@ -3,10 +3,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import monthOffsetReducer from './slices/monthOffsetSlice';
 import chosenDateReducer from './slices/chosenDateSlice';
 import dailyEventsReducer from './slices/dailyEvents';
-import choosenGroupReducer from './slices/chosenGroupSlice';
+import chosenGroupIDReducer from './slices/chosenGroupIDSlice';
 import allEventsReducer from './slices/allEvents';
 import addEventPopupReducer from './slices/addEventPopup';
 import editEventPopupReducer from './slices/editEventPopup';
+import settingsPopupReducer from './slices/settingsPopup';
 import removeEventPopupReducer from './slices/removeEventPopup';
 import subjectsReducer from './slices/subjects';
 import groupsReducer from './slices/groups';
@@ -18,13 +19,14 @@ export default configureStore({
   reducer: {
     monthOffset: monthOffsetReducer,
     chosenDate: chosenDateReducer,
-    choosenGroup: choosenGroupReducer,
+    chosenGroupID: chosenGroupIDReducer,
     dailyEvents: dailyEventsReducer,
     allEvents: allEventsReducer,
 
     addEventPopup: addEventPopupReducer,
     removeEventPopup: removeEventPopupReducer,
     editEventPopup: editEventPopupReducer,
+    settingsPopup: settingsPopupReducer,
 
     subjects: subjectsReducer,
     groups: groupsReducer,
