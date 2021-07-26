@@ -7,6 +7,8 @@ import Modal from '../../user/Modal/Modal';
 
 const AddEventModal = () => {
   const dispatch = useDispatch();
+
+  const currentlyChosenGroup = useSelector((state) => state.chosenGroupID.value);
   const subjects = useSelector((state) => state.subjects.value);
   const groups = useSelector((state) => state.groups.value);
   const types = useSelector((state) => state.types.value);
@@ -24,8 +26,8 @@ const AddEventModal = () => {
   useEffect(() => {
     setTypeID(types[0].id);
     setSubjectID(subjects[0].id);
-    setGroupID(groups[0].id);
-    setGroupIDs([groups[0].id]);
+    setGroupID(currentlyChosenGroup);
+    setGroupIDs([currentlyChosenGroup]);
   }, []);
 
   const addEvent = async () => {

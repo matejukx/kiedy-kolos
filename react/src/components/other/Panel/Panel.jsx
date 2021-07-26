@@ -15,6 +15,7 @@ import './Panel.scss';
 import UserBackgroundAPI from '../../API/UserBackgroundAPI';
 import EditEventModal from '../../user/Modals/EditEventModal';
 import SettingsModal from '../../user/Modals/SettingsModal';
+import AdminBackgroundAPI from '../../API/AdminBackgroundAPI';
 
 const Panel = () => {
   const addEventsPopup = useSelector((state) => state.addEventPopup.value);
@@ -39,6 +40,7 @@ const Panel = () => {
           {settingsPopup && <SettingsModal />}
         </Route>
         <Route path='/:id/admin'>
+          <AdminBackgroundAPI />
           <Header>
             <Title>Panel Administratora</Title>
             <Toolbar />
