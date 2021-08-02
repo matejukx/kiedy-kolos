@@ -13,6 +13,8 @@ const AdminBackgroundAPI = () => {
   const dispatch = useDispatch();
   const baseURL = 'https://kiedy-kolos-backend.azurewebsites.net/';
 
+  const forceAdminRefresh = useSelector((state) => state.forceAdminRefresh.value);
+
   const [dataDownloaded, setDataDownloaded] = useState(false);
   const [subjectsLocal, setSubjectsLocal] = useState([]);
   const [groupsLocal, setGroupsLocal] = useState([]);
@@ -21,7 +23,7 @@ const AdminBackgroundAPI = () => {
 
   useEffect(() => {
     downloadData();
-  }, []);
+  }, [forceAdminRefresh]);
 
   useEffect(() => {
     dispatch(setSubjects(subjectsLocal));

@@ -26,6 +26,11 @@ import groupsReducer from './slices/groups';
 import typesReducer from './slices/types';
 import forceEventsRefreshReducer from './slices/forceEventsRefresh';
 import chosenEventReducer from './slices/chosenEvent';
+import addSubjectPopupReducer from './slices/addSubjectPopup';
+import chosenSubjectReducer from './slices/chosenSubject';
+import removeSubjectPopupReducer from './slices/removeSubjectPopup';
+import forceAdminRefreshReducer from './slices/forceAdminRefresh';
+import editSubjectPopupReducer from './slices/editSubjectPopup';
 
 const persistConfig = {
   key: 'root',
@@ -40,11 +45,17 @@ const reducers = combineReducers({
   chosenGroupID: chosenGroupIDReducer,
   dailyEvents: dailyEventsReducer,
   allEvents: allEventsReducer,
+  chosenSubject: chosenSubjectReducer,
 
   addEventPopup: addEventPopupReducer,
   removeEventPopup: removeEventPopupReducer,
   editEventPopup: editEventPopupReducer,
+
   settingsPopup: settingsPopupReducer,
+  addSubjectPopup: addSubjectPopupReducer,
+  removeSubjectPopup: removeSubjectPopupReducer,
+  editSubjectPopup: editSubjectPopupReducer,
+  forceAdminRefresh: forceAdminRefreshReducer,
 
   subjects: subjectsReducer,
   groups: groupsReducer,

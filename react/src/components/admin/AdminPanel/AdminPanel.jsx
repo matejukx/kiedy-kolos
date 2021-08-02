@@ -2,23 +2,38 @@ import ItemList from '../../other/ItemList/ItemList';
 import CourseInfo from '../CourseInfo/CourseInfo';
 import ItemBar from '../../other/ItemBar/ItemBar';
 import './AdminPanel.scss';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setRemoveSubjectPopup } from '../../../redux/slices/removeSubjectPopup';
+import { setChosenSubject } from '../../../redux/slices/chosenSubject';
+import { setEditSubjectPopup } from '../../../redux/slices/editSubjectPopup';
+import { setAddSubjectPopup } from '../../../redux/slices/addSubjectPopup';
 
 const AdminPanel = () => {
+  const dispatch = useDispatch();
   const subjects = useSelector((state) => state.subjects.value);
   const groups = useSelector((state) => state.groups.value);
 
-  const renderBarCourses = ({ name, shortName }) => (
-    <ItemBar key={name} handleEdit={() => console.log('edit course')} handleDelete={() => console.log('delete course')}>
+  const renderBarCourses = ({ id, name, shortName }) => (
+    <ItemBar
+      key={name}
+      handleEdit={() => {
+        dispatch(setChosenSubject(id));
+        dispatch(setEditSubjectPopup(true));
+      }}
+      handleDelete={() => {
+        dispatch(setChosenSubject(id));
+        dispatch(setRemoveSubjectPopup(true));
+      }}
+    >
       {name} ({shortName})
     </ItemBar>
   );
 
-  const renderBarGroups = ({ groupName }) => (
+  const renderBarGroups = ({ id, groupName }) => (
     <ItemBar
       key={groupName}
-      handleEdit={() => console.log('edit group')}
-      handleDelete={() => console.log('delete group')}
+      handleEdit={() => console.log('edit group' + id)}
+      handleDelete={() => console.log('delete group' + id)}
     >
       {groupName}
     </ItemBar>
@@ -27,7 +42,12 @@ const AdminPanel = () => {
   return (
     <div className='adminPanel'>
       <div className='scrollable'>
-        <ItemList renderComponent={renderBarCourses} items={subjects} name='Przedmiot' />
+        <ItemList
+          renderComponent={renderBarCourses}
+          items={subjects}
+          name='Przedmiot'
+          addFunction={() => dispatch(setAddSubjectPopup(true))}
+        />
       </div>
       <div className='scrollable'>
         <ItemList renderComponent={renderBarGroups} items={groups} name='Grupę' />

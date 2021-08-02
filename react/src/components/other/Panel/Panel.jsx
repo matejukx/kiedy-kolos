@@ -16,12 +16,19 @@ import UserBackgroundAPI from '../../API/UserBackgroundAPI';
 import EditEventModal from '../../user/Modals/EditEventModal';
 import SettingsModal from '../../user/Modals/SettingsModal';
 import AdminBackgroundAPI from '../../API/AdminBackgroundAPI';
+import AddSubjectModal from '../../user/Modals/AddSubjectModal';
+import RemoveSubjectModal from '../../user/Modals/RemoveSubjectModal';
+import EditSubjectModal from '../../user/Modals/EditSubjectModal';
 
 const Panel = () => {
   const addEventsPopup = useSelector((state) => state.addEventPopup.value);
   const removeEventsPopup = useSelector((state) => state.removeEventPopup.value);
   const editEventPopup = useSelector((state) => state.editEventPopup.value);
   const settingsPopup = useSelector((state) => state.settingsPopup.value);
+
+  const addSubjectPopup = useSelector((state) => state.addSubjectPopup.value);
+  const removeSubjectPopup = useSelector((state) => state.removeSubjectPopup.value);
+  const editSubjectPopup = useSelector((state) => state.editSubjectPopup.value);
 
   return (
     <div className='panel'>
@@ -46,6 +53,9 @@ const Panel = () => {
             <Toolbar />
           </Header>
           <AdminPanel />
+          {addSubjectPopup && <AddSubjectModal />}
+          {removeSubjectPopup && <RemoveSubjectModal />}
+          {editSubjectPopup && <EditSubjectModal />}
         </Route>
       </Switch>
     </div>
