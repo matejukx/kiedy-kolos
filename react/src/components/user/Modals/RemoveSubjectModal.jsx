@@ -8,7 +8,7 @@ import { setRemoveEventPopup } from '../../../redux/slices/removeEventPopup';
 import { setRemoveSubjectPopup } from '../../../redux/slices/removeSubjectPopup';
 import Modal from '../Modal/Modal';
 
-const RemoveSubjectModal = () => {
+const RemoveSubjectModal = ({ isVisible }) => {
   const dispatch = useDispatch();
   const chosenSubjectID = useSelector((state) => state.chosenSubject.value);
 
@@ -44,7 +44,7 @@ const RemoveSubjectModal = () => {
   };
 
   return (
-    <Modal>
+    <Modal isVisible={isVisible}>
       <h2>Usuwanie przedmiotu {chosenSubjectID}</h2>
       <br />
       <label className='edition__label' htmlFor='password'>

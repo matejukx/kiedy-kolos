@@ -6,7 +6,7 @@ import { forceEventsRefresh } from '../../../redux/slices/forceEventsRefresh';
 import { setRemoveEventPopup } from '../../../redux/slices/removeEventPopup';
 import Modal from '../../user/Modal/Modal';
 
-const RemoveEventModal = () => {
+const RemoveEventModal = ({ isVisible }) => {
   const dispatch = useDispatch();
   const chosenEventID = useSelector((state) => state.chosenEvent.value);
 
@@ -42,7 +42,7 @@ const RemoveEventModal = () => {
   };
 
   return (
-    <Modal>
+    <Modal isVisible={isVisible}>
       <h2>Usuwanie wydarzenia {chosenEventID}</h2>
       <br />
       <label className='edition__label' htmlFor='password'>

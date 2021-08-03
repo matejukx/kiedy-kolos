@@ -52,10 +52,10 @@ const Panel = () => {
           </Header>
           <Calendar />
           <DailyEvents />
-          {addEventsPopup && <AddEventModal />}
-          {removeEventsPopup && <RemoveEventModal />}
-          {editEventPopup && <EditEventModal />}
-          {settingsPopup && <SettingsModal />}
+          <AddEventModal isVisible={addEventsPopup} />
+          <RemoveEventModal isVisible={removeEventsPopup} />
+          <EditEventModal isVisible={editEventPopup} />
+          <SettingsModal isVisible={settingsPopup} />
         </Route>
         <Route path='/:id/admin'>
           <AdminBackgroundAPI />
@@ -64,13 +64,13 @@ const Panel = () => {
             <Toolbar />
           </Header>
           <AdminPanel />
-          {addSubjectPopup && <AddSubjectModal />}
-          {removeSubjectPopup && <RemoveSubjectModal />}
-          {editSubjectPopup && <EditSubjectModal />}
+          <AddSubjectModal isVisible={addSubjectPopup} />
+          <RemoveSubjectModal isVisible={removeSubjectPopup} />
+          <EditSubjectModal isVisible={editSubjectPopup} />
 
-          {addGroupPopup && <AddGroupModal />}
-          {removeGroupPopup && <RemoveGroupModal />}
-          {editGroupPopup && <EditGroupModal />}
+          <AddGroupModal isVisible={addGroupPopup} />
+          <RemoveGroupModal isVisible={removeGroupPopup} />
+          <EditGroupModal isVisible={editGroupPopup} />
         </Route>
       </Switch>
     </div>

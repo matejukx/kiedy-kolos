@@ -5,7 +5,7 @@ import { setAddEventPopup } from '../../../redux/slices/addEventPopup';
 import { forceEventsRefresh } from '../../../redux/slices/forceEventsRefresh';
 import Modal from '../../user/Modal/Modal';
 
-const AddEventModal = () => {
+const AddEventModal = ({ isVisible }) => {
   const dispatch = useDispatch();
 
   const currentlyChosenGroup = useSelector((state) => state.chosenGroupID.value);
@@ -24,11 +24,12 @@ const AddEventModal = () => {
   const [password, setPassword] = useState('');
 
   useEffect(() => {
+    if (!isVisible) return;
     setTypeID(types[0].id);
     setSubjectID(subjects[0].id);
     setGroupID(currentlyChosenGroup);
     setGroupIDs([currentlyChosenGroup]);
-  }, []);
+  }, [isVisible]);
 
   const addEvent = async () => {
     const requestOptions = {
@@ -110,7 +111,7 @@ const AddEventModal = () => {
   };
 
   return (
-    <Modal>
+    <Modal isVisible={isVisible}>
       <h2>Dodawanie wydarzenia</h2>
       <label htmlFor='subject'>Przedmiot</label>
       <br />

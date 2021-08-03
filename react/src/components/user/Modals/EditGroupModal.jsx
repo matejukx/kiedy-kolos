@@ -9,7 +9,7 @@ import { forceAdminRefresh } from '../../../redux/slices/forceAdminRefresh';
 import { forceEventsRefresh } from '../../../redux/slices/forceEventsRefresh';
 import Modal from '../Modal/Modal';
 
-const EditGroupModal = () => {
+const EditGroupModal = ({ isVisible }) => {
   const dispatch = useDispatch();
   const chosenGroup = useSelector((state) => state.chosenGroupAdmin.value);
 
@@ -20,8 +20,9 @@ const EditGroupModal = () => {
   const [password, setPassword] = useState('');
 
   useEffect(() => {
+    if (!isVisible) return;
     setInitialGroupData();
-  }, []);
+  }, [isVisible]);
 
   const setInitialGroupData = async () => {
     const response = await fetch(
@@ -84,7 +85,7 @@ const EditGroupModal = () => {
   };
 
   return (
-    <Modal>
+    <Modal isVisible={isVisible}>
       <h2>Edytowanie groupy {chosenGroup} </h2>
       <label htmlFor='shortName'>Nazwa</label>
       <br />

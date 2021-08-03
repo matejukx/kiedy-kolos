@@ -9,7 +9,7 @@ import { setRemoveGroupPopup } from '../../../redux/slices/removeGroupPopup';
 import { setRemoveSubjectPopup } from '../../../redux/slices/removeSubjectPopup';
 import Modal from '../Modal/Modal';
 
-const RemoveGroupModal = () => {
+const RemoveGroupModal = ({ isVisible }) => {
   const dispatch = useDispatch();
   const chosenGroup = useSelector((state) => state.chosenGroupAdmin.value);
 
@@ -45,7 +45,7 @@ const RemoveGroupModal = () => {
   };
 
   return (
-    <Modal>
+    <Modal isVisible={isVisible}>
       <h2>Usuwanie grupy {chosenGroup}</h2>
       <br />
       <label className='edition__label' htmlFor='password'>

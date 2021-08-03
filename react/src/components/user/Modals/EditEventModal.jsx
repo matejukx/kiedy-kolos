@@ -7,7 +7,7 @@ import { setEditEventPopup } from '../../../redux/slices/editEventPopup';
 import { forceEventsRefresh } from '../../../redux/slices/forceEventsRefresh';
 import Modal from '../../user/Modal/Modal';
 
-const EditEventModal = () => {
+const EditEventModal = ({ isVisible }) => {
   const dispatch = useDispatch();
   const subjects = useSelector((state) => state.subjects.value);
   const groups = useSelector((state) => state.groups.value);
@@ -25,9 +25,10 @@ const EditEventModal = () => {
   const [password, setPassword] = useState('');
 
   useEffect(() => {
+    if (!isVisible) return;
     setInitialEventData();
     formAllGroupArray();
-  }, []);
+  }, [isVisible]);
 
   const setInitialEventData = async () => {
     const response = await fetch(
@@ -151,7 +152,7 @@ const EditEventModal = () => {
   };
 
   return (
-    <Modal>
+    <Modal isVisible={isVisible}>
       <h2>Edytowanie wydarzenia {chosenEventID}</h2>
       <label htmlFor='subject'>Przedmiot</label>
       <br />

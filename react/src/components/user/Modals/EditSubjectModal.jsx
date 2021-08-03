@@ -8,7 +8,7 @@ import { forceAdminRefresh } from '../../../redux/slices/forceAdminRefresh';
 import { forceEventsRefresh } from '../../../redux/slices/forceEventsRefresh';
 import Modal from '../Modal/Modal';
 
-const EditSubjectModal = () => {
+const EditSubjectModal = ({ isVisible }) => {
   const dispatch = useDispatch();
   const chosenSubjectID = useSelector((state) => state.chosenSubject.value);
 
@@ -19,8 +19,9 @@ const EditSubjectModal = () => {
   const [password, setPassword] = useState('');
 
   useEffect(() => {
+    if (!isVisible) return;
     setInitialSubjectData();
-  }, []);
+  }, [isVisible]);
 
   const setInitialSubjectData = async () => {
     const response = await fetch(
@@ -83,7 +84,7 @@ const EditSubjectModal = () => {
   };
 
   return (
-    <Modal>
+    <Modal isVisible={isVisible}>
       <h2>Edytowanie przedmiotu {chosenSubjectID} </h2>
       <label htmlFor='shortName'>Pełna nazwa</label>
       <br />
