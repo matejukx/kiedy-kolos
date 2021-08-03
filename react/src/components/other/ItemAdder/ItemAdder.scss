@@ -1,0 +1,25 @@
+.itemAdder {
+  border: 0.2rem dashed currentColor;
+  border-radius: 0.8rem;
+  background-color: var(--color-medium);
+  box-shadow: var(--shadow-light);
+  font-size: 1.6rem;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.6rem;
+  color: var(--color-font);
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 1.6rem;
+
+  &:hover {
+    transform: translateY(-0.2rem) scale(1.02);
+  }
+
+  &__text {
+    margin-left: 0.4rem;
+  }
+}

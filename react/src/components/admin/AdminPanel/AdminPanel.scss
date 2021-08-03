@@ -1,0 +1,6 @@
+.adminPanel {
+  display: grid;
+  overflow: hidden;
+  grid-column-start: span 2;
+  grid-template-columns: repeat(auto-fit, minmax(0, max-content));
+}

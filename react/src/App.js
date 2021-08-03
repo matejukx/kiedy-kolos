@@ -1,14 +1,9 @@
-import './App.css';
-import UserPanel from './components/UserPanel';
-
 import { Route, Switch } from 'react-router';
 
+import Panel from './components/other/Panel/Panel';
+
 const App = () => {
-    return (
-        <Switch>
-            <Route path='/:id' component={UserPanel} />
-        </Switch>
-    );
+    return <Panel />;
 };
 
 export default App;

@@ -4,11 +4,12 @@
   "private": true,
   "homepage": "https://ablaszkiewicz.github.io/kiedy-kolos",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.5.1",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.2.2",
     "dayjs": "^1.9.6",
-    "framer-motion": "^2.9.4",
+    "framer-motion": "^2.9.5",
     "react": "^17.0.1",
     "react-dayjs": "^0.2.1",
     "react-dom": "^17.0.1",
@@ -17,6 +18,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "redux": "^4.0.5",
+    "reduxjs-toolkit-persist": "^7.0.5",
+    "sass": "^1.32.10",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

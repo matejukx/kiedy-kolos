@@ -1,0 +1,48 @@
+.day {
+  background-color: var(--color-light);
+  box-shadow: var(--shadow-light);
+  cursor: pointer;
+  border-radius: 0.4rem;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+
+  &:hover {
+    transform: scale(1.05);
+    filter: brightness(105%);
+  }
+
+  &--weekend {
+    background-color: var(--color-light-2);
+  }
+
+  &--inactive {
+    background-color: var(--color-medium);
+    opacity: 0.6;
+    box-shadow: none;
+  }
+
+  &--current {
+    background-color: var(--color-primary);
+    color: var(--color-font-light);
+    transform: translateY(-0.6rem);
+    box-shadow: 0 1.6rem 2.4rem -0.8rem rgba(0, 0, 0, 0.1);
+  }
+
+  &--selected {
+    box-shadow: inset 0 0 0 0.4rem var(--color-primary);
+
+    &.day--current {
+      box-shadow: inset 0 0 0 0.4rem var(--color-primary),
+        inset 0 0 0 0.6rem var(--color-medium);
+    }
+  }
+
+  @media only screen and (max-width: 35rem) {
+    border-radius: 0;
+    box-shadow: none;
+    border: 1px solid var(--color-medium);
+  }
+}
