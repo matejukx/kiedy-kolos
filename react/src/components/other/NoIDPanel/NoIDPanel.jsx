@@ -3,7 +3,7 @@ import './NoIDPanel.scss';
 const NoIDPanel = () => {
   return (
     <>
-      <div className='noIdText'>Nie podałeś w linku żadnego ID</div>
+      <div className='noIdText'>Podaj w linku ID (kiedy-kolos/#/{'{id}'})</div>
     </>
   );
 };
