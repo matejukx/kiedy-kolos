@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/kiedy-kolos/static/css/main.1227b19f.chunk.css",
-    "main.js": "/kiedy-kolos/static/js/main.7e88a946.chunk.js",
-    "main.js.map": "/kiedy-kolos/static/js/main.7e88a946.chunk.js.map",
+    "main.css": "/kiedy-kolos/static/css/main.d9134361.chunk.css",
+    "main.js": "/kiedy-kolos/static/js/main.b551dd26.chunk.js",
+    "main.js.map": "/kiedy-kolos/static/js/main.b551dd26.chunk.js.map",
     "runtime-main.js": "/kiedy-kolos/static/js/runtime-main.10255127.js",
     "runtime-main.js.map": "/kiedy-kolos/static/js/runtime-main.10255127.js.map",
-    "static/js/2.9e1b00e9.chunk.js": "/kiedy-kolos/static/js/2.9e1b00e9.chunk.js",
-    "static/js/2.9e1b00e9.chunk.js.map": "/kiedy-kolos/static/js/2.9e1b00e9.chunk.js.map",
+    "static/js/2.19adb416.chunk.js": "/kiedy-kolos/static/js/2.19adb416.chunk.js",
+    "static/js/2.19adb416.chunk.js.map": "/kiedy-kolos/static/js/2.19adb416.chunk.js.map",
     "index.html": "/kiedy-kolos/index.html",
-    "static/css/main.1227b19f.chunk.css.map": "/kiedy-kolos/static/css/main.1227b19f.chunk.css.map",
-    "static/js/2.9e1b00e9.chunk.js.LICENSE.txt": "/kiedy-kolos/static/js/2.9e1b00e9.chunk.js.LICENSE.txt"
+    "static/css/main.d9134361.chunk.css.map": "/kiedy-kolos/static/css/main.d9134361.chunk.css.map",
+    "static/js/2.19adb416.chunk.js.LICENSE.txt": "/kiedy-kolos/static/js/2.19adb416.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.10255127.js",
-    "static/js/2.9e1b00e9.chunk.js",
-    "static/css/main.1227b19f.chunk.css",
-    "static/js/main.7e88a946.chunk.js"
+    "static/js/2.19adb416.chunk.js",
+    "static/css/main.d9134361.chunk.css",
+    "static/js/main.b551dd26.chunk.js"
   ]
 }
