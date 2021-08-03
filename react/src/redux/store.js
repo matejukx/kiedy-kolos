@@ -31,6 +31,10 @@ import chosenSubjectReducer from './slices/chosenSubject';
 import removeSubjectPopupReducer from './slices/removeSubjectPopup';
 import forceAdminRefreshReducer from './slices/forceAdminRefresh';
 import editSubjectPopupReducer from './slices/editSubjectPopup';
+import addGroupPopupReducer from './slices/addGroupPopup';
+import editGroupPopupReducer from './slices/editGroupPopup';
+import removeGroupPopupReducer from './slices/removeGroupPopup';
+import chosenGroupAdminReducer from './slices/chosenGroupAdmin';
 
 const persistConfig = {
   key: 'root',
@@ -56,6 +60,11 @@ const reducers = combineReducers({
   removeSubjectPopup: removeSubjectPopupReducer,
   editSubjectPopup: editSubjectPopupReducer,
   forceAdminRefresh: forceAdminRefreshReducer,
+
+  addGroupPopup: addGroupPopupReducer,
+  editGroupPopup: editGroupPopupReducer,
+  removeGroupPopup: removeGroupPopupReducer,
+  chosenGroupAdmin: chosenGroupAdminReducer,
 
   subjects: subjectsReducer,
   groups: groupsReducer,

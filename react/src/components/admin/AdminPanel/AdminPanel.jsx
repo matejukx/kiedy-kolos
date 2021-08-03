@@ -7,6 +7,10 @@ import { setRemoveSubjectPopup } from '../../../redux/slices/removeSubjectPopup'
 import { setChosenSubject } from '../../../redux/slices/chosenSubject';
 import { setEditSubjectPopup } from '../../../redux/slices/editSubjectPopup';
 import { setAddSubjectPopup } from '../../../redux/slices/addSubjectPopup';
+import { setEditGroupPopup } from '../../../redux/slices/editGroupPopup';
+import { setRemoveGroupPopup } from '../../../redux/slices/removeGroupPopup';
+import { setAddGroupPopup } from '../../../redux/slices/addGroupPopup';
+import { setChosenGroupAdmin } from '../../../redux/slices/chosenGroupAdmin';
 
 const AdminPanel = () => {
   const dispatch = useDispatch();
@@ -32,8 +36,14 @@ const AdminPanel = () => {
   const renderBarGroups = ({ id, groupName }) => (
     <ItemBar
       key={groupName}
-      handleEdit={() => console.log('edit group' + id)}
-      handleDelete={() => console.log('delete group' + id)}
+      handleEdit={() => {
+        dispatch(setChosenGroupAdmin(id));
+        dispatch(setEditGroupPopup(true));
+      }}
+      handleDelete={() => {
+        dispatch(setChosenGroupAdmin(id));
+        dispatch(setRemoveGroupPopup(true));
+      }}
     >
       {groupName}
     </ItemBar>
@@ -45,12 +55,17 @@ const AdminPanel = () => {
         <ItemList
           renderComponent={renderBarCourses}
           items={subjects}
-          name='Przedmiot'
+          name='przedmiot'
           addFunction={() => dispatch(setAddSubjectPopup(true))}
         />
       </div>
       <div className='scrollable'>
-        <ItemList renderComponent={renderBarGroups} items={groups} name='Grupę' />
+        <ItemList
+          renderComponent={renderBarGroups}
+          items={groups}
+          name='grupę'
+          addFunction={() => dispatch(setAddGroupPopup(true))}
+        />
       </div>
       <CourseInfo course='Informatyka' university='Politechnika Gdańska' />
     </div>

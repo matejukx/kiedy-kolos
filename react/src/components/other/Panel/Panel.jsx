@@ -19,6 +19,10 @@ import AdminBackgroundAPI from '../../API/AdminBackgroundAPI';
 import AddSubjectModal from '../../user/Modals/AddSubjectModal';
 import RemoveSubjectModal from '../../user/Modals/RemoveSubjectModal';
 import EditSubjectModal from '../../user/Modals/EditSubjectModal';
+import AddGroupModal from '../../user/Modals/AddGroupModal';
+import RemoveGroupModal from '../../user/Modals/RemoveGroupModal';
+import EditGroupModal from '../../user/Modals/EditGroupModal';
+import NoIDPanel from '../NoIDPanel/NoIDPanel';
 
 const Panel = () => {
   const addEventsPopup = useSelector((state) => state.addEventPopup.value);
@@ -30,9 +34,16 @@ const Panel = () => {
   const removeSubjectPopup = useSelector((state) => state.removeSubjectPopup.value);
   const editSubjectPopup = useSelector((state) => state.editSubjectPopup.value);
 
+  const addGroupPopup = useSelector((state) => state.addGroupPopup.value);
+  const removeGroupPopup = useSelector((state) => state.removeGroupPopup.value);
+  const editGroupPopup = useSelector((state) => state.editGroupPopup.value);
+
   return (
     <div className='panel'>
       <Switch>
+        <Route exact path='/'>
+          <NoIDPanel />
+        </Route>
         <Route exact path='/:id'>
           <UserBackgroundAPI />
           <Header>
@@ -56,6 +67,10 @@ const Panel = () => {
           {addSubjectPopup && <AddSubjectModal />}
           {removeSubjectPopup && <RemoveSubjectModal />}
           {editSubjectPopup && <EditSubjectModal />}
+
+          {addGroupPopup && <AddGroupModal />}
+          {removeGroupPopup && <RemoveGroupModal />}
+          {editGroupPopup && <EditGroupModal />}
         </Route>
       </Switch>
     </div>
