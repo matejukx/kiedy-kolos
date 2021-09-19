@@ -31,10 +31,7 @@ const AddGroupModal = ({ isVisible }) => {
       }),
       mode: 'cors',
     };
-    const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Groups`,
-      requestOptions
-    );
+    const response = await fetch(`https://kiedykolos.bieda.it/yearCourses/${id}/Groups`, requestOptions);
 
     if (response.ok) {
       dispatch(setAddGroupPopup(false));
@@ -69,12 +66,12 @@ const AddGroupModal = ({ isVisible }) => {
       <h2>Dodawanie grupy</h2>
       <label htmlFor='shortName'>Nazwa</label>
       <br />
-      <input type='text' id='shortName' value={name} onChange={updateName} />
+      <input type='text' id='groupName' value={name} onChange={updateName} />
       <br />
       <br />
       <label htmlFor='shortName'>Numer grupy</label>
       <br />
-      <input type='text' id='shortName' value={number} onChange={updateNumber} />
+      <input type='text' id='groupNumber' value={number} onChange={updateNumber} />
       <br />
       <br />
       <label className='edition__label' htmlFor='password'>

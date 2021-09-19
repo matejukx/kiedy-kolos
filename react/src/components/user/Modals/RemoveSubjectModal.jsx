@@ -26,7 +26,7 @@ const RemoveSubjectModal = ({ isVisible }) => {
       mode: 'cors',
     };
     const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Subjects/${chosenSubjectID}`,
+      `https://kiedykolos.bieda.it/yearCourses/${id}/Subjects/${chosenSubjectID}`,
       requestOptions
     );
 

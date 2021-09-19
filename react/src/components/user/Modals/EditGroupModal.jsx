@@ -25,9 +25,7 @@ const EditGroupModal = ({ isVisible }) => {
   }, [isVisible]);
 
   const setInitialGroupData = async () => {
-    const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Groups/${chosenGroup}`
-    );
+    const response = await fetch(`https://kiedykolos.bieda.it/yearCourses/${id}/Groups/${chosenGroup}`);
 
     const json = await response.json();
     const groupData = await json.result;
@@ -51,10 +49,7 @@ const EditGroupModal = ({ isVisible }) => {
       }),
       mode: 'cors',
     };
-    const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Groups`,
-      requestOptions
-    );
+    const response = await fetch(`https://kiedykolos.bieda.it/yearCourses/${id}/Groups`, requestOptions);
 
     if (response.ok) {
       dispatch(setEditGroupPopup(false));

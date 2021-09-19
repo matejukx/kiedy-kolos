@@ -24,7 +24,7 @@ const RemoveEventModal = ({ isVisible }) => {
       mode: 'cors',
     };
     const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Events/${chosenEventID}`,
+      `https://kiedykolos.bieda.it/yearCourses/${id}/Events/${chosenEventID}`,
       requestOptions
     );
 

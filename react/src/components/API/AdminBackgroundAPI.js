@@ -11,7 +11,7 @@ import { setChosenGroupID } from '../../redux/slices/chosenGroupIDSlice';
 
 const AdminBackgroundAPI = () => {
   const dispatch = useDispatch();
-  const baseURL = 'https://kiedy-kolos-backend.azurewebsites.net/';
+  const baseURL = 'https://kiedykolos.bieda.it/';
 
   const forceAdminRefresh = useSelector((state) => state.forceAdminRefresh.value);
 

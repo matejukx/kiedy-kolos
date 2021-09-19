@@ -24,9 +24,7 @@ const EditSubjectModal = ({ isVisible }) => {
   }, [isVisible]);
 
   const setInitialSubjectData = async () => {
-    const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Subjects/${chosenSubjectID}`
-    );
+    const response = await fetch(`https://kiedykolos.bieda.it/yearCourses/${id}/Subjects/${chosenSubjectID}`);
 
     const json = await response.json();
     const subjectData = await json.result;
@@ -50,10 +48,7 @@ const EditSubjectModal = ({ isVisible }) => {
       }),
       mode: 'cors',
     };
-    const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Subjects`,
-      requestOptions
-    );
+    const response = await fetch(`https://kiedykolos.bieda.it/yearCourses/${id}/Subjects`, requestOptions);
 
     if (response.ok) {
       dispatch(setEditSubjectPopup(false));

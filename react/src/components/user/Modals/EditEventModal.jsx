@@ -31,9 +31,7 @@ const EditEventModal = ({ isVisible }) => {
   }, [isVisible]);
 
   const setInitialEventData = async () => {
-    const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Events/${chosenEventID}`
-    );
+    const response = await fetch(`https://kiedykolos.bieda.it/yearCourses/${id}/Events/${chosenEventID}`);
     const json = await response.json();
     const eventData = await json.result;
 
@@ -66,7 +64,7 @@ const EditEventModal = ({ isVisible }) => {
       mode: 'cors',
     };
     const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Events/${chosenEventID}`,
+      `https://kiedykolos.bieda.it/yearCourses/${id}/Events/${chosenEventID}`,
       requestOptions
     );
 
@@ -95,10 +93,7 @@ const EditEventModal = ({ isVisible }) => {
       }),
       mode: 'cors',
     };
-    const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Events`,
-      requestOptions
-    );
+    const response = await fetch(`https://kiedykolos.bieda.it/yearCourses/${id}/Events`, requestOptions);
 
     if (response.ok) {
       dispatch(setEditEventPopup(false));
