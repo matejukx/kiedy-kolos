@@ -7,7 +7,7 @@ import { forceAdminRefresh } from '../../../redux/slices/forceAdminRefresh';
 import { forceEventsRefresh } from '../../../redux/slices/forceEventsRefresh';
 import Modal from '../../user/Modal/Modal';
 
-const AddSubjectModal = ({ isVisible }) => {
+const AddSubjectModal = () => {
   const dispatch = useDispatch();
 
   const { id } = useParams();
@@ -61,7 +61,7 @@ const AddSubjectModal = ({ isVisible }) => {
   };
 
   return (
-    <Modal isVisible={isVisible}>
+    <Modal>
       <h2>Dodawanie przedmiotu</h2>
       <label htmlFor='shortName'>Pełna nazwa</label>
       <br />

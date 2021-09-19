@@ -8,7 +8,7 @@ import { forceAdminRefresh } from '../../../redux/slices/forceAdminRefresh';
 import { forceEventsRefresh } from '../../../redux/slices/forceEventsRefresh';
 import Modal from '../Modal/Modal';
 
-const AddGroupModal = ({ isVisible }) => {
+const AddGroupModal = () => {
   const dispatch = useDispatch();
 
   const { id } = useParams();
@@ -62,7 +62,7 @@ const AddGroupModal = ({ isVisible }) => {
   };
 
   return (
-    <Modal isVisible={isVisible}>
+    <Modal>
       <h2>Dodawanie grupy</h2>
       <label htmlFor='shortName'>Nazwa</label>
       <br />

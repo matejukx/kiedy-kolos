@@ -7,7 +7,7 @@ import { setEditEventPopup } from '../../../redux/slices/editEventPopup';
 import { forceEventsRefresh } from '../../../redux/slices/forceEventsRefresh';
 import Modal from '../../user/Modal/Modal';
 
-const EditEventModal = ({ isVisible }) => {
+const EditEventModal = () => {
   const dispatch = useDispatch();
   const subjects = useSelector((state) => state.subjects.value);
   const groups = useSelector((state) => state.groups.value);
@@ -25,10 +25,9 @@ const EditEventModal = ({ isVisible }) => {
   const [password, setPassword] = useState('');
 
   useEffect(() => {
-    if (!isVisible) return;
     setInitialEventData();
     formAllGroupArray();
-  }, [isVisible]);
+  }, []);
 
   const setInitialEventData = async () => {
     const response = await fetch(`https://kiedykolos.bieda.it/yearCourses/${id}/Events/${chosenEventID}`);
@@ -147,7 +146,7 @@ const EditEventModal = ({ isVisible }) => {
   };
 
   return (
-    <Modal isVisible={isVisible}>
+    <Modal>
       <h2>Edytowanie wydarzenia {chosenEventID}</h2>
       <label htmlFor='subject'>Przedmiot</label>
       <br />

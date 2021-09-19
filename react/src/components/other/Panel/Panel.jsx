@@ -23,6 +23,8 @@ import AddGroupModal from '../../user/Modals/AddGroupModal';
 import RemoveGroupModal from '../../user/Modals/RemoveGroupModal';
 import EditGroupModal from '../../user/Modals/EditGroupModal';
 import NoIDPanel from '../NoIDPanel/NoIDPanel';
+import { AnimatePresence } from 'framer-motion';
+import Modal from '../../user/Modal/Modal';
 
 const Panel = () => {
   const addEventsPopup = useSelector((state) => state.addEventPopup.value);
@@ -52,10 +54,12 @@ const Panel = () => {
           </Header>
           <Calendar />
           <DailyEvents />
-          <AddEventModal isVisible={addEventsPopup} />
-          <RemoveEventModal isVisible={removeEventsPopup} />
-          <EditEventModal isVisible={editEventPopup} />
-          <SettingsModal isVisible={settingsPopup} />
+          <AnimatePresence>
+            {addEventsPopup && <AddEventModal />}
+            {removeEventsPopup && <RemoveEventModal />}
+            {editEventPopup && <EditEventModal />}
+            {settingsPopup && <SettingsModal />}
+          </AnimatePresence>
         </Route>
         <Route path='/:id/admin'>
           <AdminBackgroundAPI />
@@ -64,13 +68,15 @@ const Panel = () => {
             <Toolbar />
           </Header>
           <AdminPanel />
-          <AddSubjectModal isVisible={addSubjectPopup} />
-          <RemoveSubjectModal isVisible={removeSubjectPopup} />
-          <EditSubjectModal isVisible={editSubjectPopup} />
+          <AnimatePresence>
+            {addSubjectPopup && <AddSubjectModal />}
+            {removeSubjectPopup && <RemoveSubjectModal />}
+            {editSubjectPopup && <EditSubjectModal />}
 
-          <AddGroupModal isVisible={addGroupPopup} />
-          <RemoveGroupModal isVisible={removeGroupPopup} />
-          <EditGroupModal isVisible={editGroupPopup} />
+            {addGroupPopup && <AddGroupModal />}
+            {removeGroupPopup && <RemoveGroupModal />}
+            {editGroupPopup && <EditGroupModal />}
+          </AnimatePresence>
         </Route>
       </Switch>
     </div>

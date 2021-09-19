@@ -8,7 +8,7 @@ import { forceAdminRefresh } from '../../../redux/slices/forceAdminRefresh';
 import { forceEventsRefresh } from '../../../redux/slices/forceEventsRefresh';
 import Modal from '../Modal/Modal';
 
-const EditSubjectModal = ({ isVisible }) => {
+const EditSubjectModal = () => {
   const dispatch = useDispatch();
   const chosenSubjectID = useSelector((state) => state.chosenSubject.value);
 
@@ -19,9 +19,8 @@ const EditSubjectModal = ({ isVisible }) => {
   const [password, setPassword] = useState('');
 
   useEffect(() => {
-    if (!isVisible) return;
     setInitialSubjectData();
-  }, [isVisible]);
+  }, []);
 
   const setInitialSubjectData = async () => {
     const response = await fetch(`https://kiedykolos.bieda.it/yearCourses/${id}/Subjects/${chosenSubjectID}`);
@@ -79,7 +78,7 @@ const EditSubjectModal = ({ isVisible }) => {
   };
 
   return (
-    <Modal isVisible={isVisible}>
+    <Modal>
       <h2>Edytowanie przedmiotu {chosenSubjectID} </h2>
       <label htmlFor='shortName'>Pełna nazwa</label>
       <br />
