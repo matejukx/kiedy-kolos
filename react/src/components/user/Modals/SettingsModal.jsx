@@ -39,6 +39,7 @@ const SettingsModal = () => {
         ))}
       </select>
       <br />
+      <br />
       <button onClick={() => acceptClicked()}>Akceptuj</button>
     </Modal>
   );

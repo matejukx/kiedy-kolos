@@ -23,7 +23,7 @@ const Toolbar = () => {
           notifications
         </span>
       </Button>
-      <LoginButton />
+      {/* <LoginButton /> */}
     </div>
   );
 };

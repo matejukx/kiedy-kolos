@@ -4,6 +4,7 @@ import { useParams } from 'react-router';
 import { setAddEventPopup } from '../../../redux/slices/addEventPopup';
 import { forceEventsRefresh } from '../../../redux/slices/forceEventsRefresh';
 import Modal from '../../user/Modal/Modal';
+import './Modals.scss';
 
 const AddEventModal = () => {
   const dispatch = useDispatch();
@@ -185,9 +186,8 @@ const AddEventModal = () => {
       <button className='event-adder__button--reject' onClick={handleCloseClick}>
         Anuluj
       </button>
-      .......................
       <button className='event-adder__button--accept' onClick={handleAcceptClick}>
-        Utwórz wydarzenie
+        Utwórz
       </button>
     </Modal>
   );

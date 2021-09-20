@@ -235,10 +235,10 @@ const EditEventModal = () => {
       <br />
       <input type='password' id='password' name='password' placeholder='Hasło' onChange={updatePassword}></input>
       <br />
+      <br />
       <button className='event-adder__button--reject' onClick={closeClicked}>
         Anuluj
       </button>
-      .......................
       <button className='event-adder__button--accept' onClick={acceptClicked}>
         Edytuj wydarzenie
       </button>

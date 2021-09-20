@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom';
 import './Modal.scss';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
-const Modal = ({ isVisible, children }) => {
+const Modal = ({ children }) => {
   return ReactDOM.createPortal(
     <>
       <motion.div

@@ -53,10 +53,10 @@ const RemoveSubjectModal = () => {
       <br />
       <input type='password' id='password' name='password' placeholder='Hasło' onChange={updatePassword}></input>
       <br />
+      <br />
       <button className='event-adder__button--reject' onClick={cancelPressed}>
         Anuluj
       </button>
-      .......................
       <button className='event-adder__button--accept' onClick={deletePressed}>
         Usuń
       </button>

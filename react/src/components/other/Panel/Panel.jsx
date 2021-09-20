@@ -65,7 +65,6 @@ const Panel = () => {
           <AdminBackgroundAPI />
           <Header>
             <Title>Panel Administratora</Title>
-            <Toolbar />
           </Header>
           <AdminPanel />
           <AnimatePresence>

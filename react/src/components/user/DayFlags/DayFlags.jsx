@@ -22,17 +22,27 @@ const DayFlags = ({ handleResize, events }) => {
       if (els[i].offsetTop <= els[0].offsetTop) {
         break;
       }
-
       counter++;
     }
 
     return els.length - counter;
   };
 
+  const eventTypeDictionary = {
+    Egzamin: 'exam',
+    Kolokwium: 'exam',
+    Laboratorium: 'lab',
+    Projekt: 'project',
+    Wykład: 'project',
+    Inne: 'other',
+  };
+
   return (
     <div ref={flags} className='day__flags'>
       {events.length > 0 &&
-        events.map((event) => <div className={`day__flag day__flag--${event.type}`}>{event.subjectShortName}</div>)}
+        events.map((event) => (
+          <div className={`day__flag day__flag--${eventTypeDictionary[event.type]}`}>{event.subjectShortName}</div>
+        ))}
     </div>
   );
 };

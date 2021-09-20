@@ -100,7 +100,6 @@ const EditSubjectModal = () => {
       <button className='event-adder__button--reject' onClick={handleCloseClick}>
         Anuluj
       </button>
-      .......................
       <button className='event-adder__button--accept' onClick={handleAcceptClick}>
         Edytuj
       </button>
