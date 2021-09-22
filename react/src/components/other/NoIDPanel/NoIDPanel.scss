@@ -1,10 +1,39 @@
-.noIdText,
-.noIdTextSmaller {
-  width: 100%;
-  height: 100%;
-  line-height: 100vh;
-  position: absolute;
-  text-align: center;
-  justify-content: center;
-  font-size: 5rem;
+.noIdContainer {
+  padding: 5em;
+  grid-area: calendar;
+  overflow: scroll;
+}
+
+.noIdContainer h1 {
+  font-size: 5em;
+}
+
+.noIdContainer p {
+  font-size: 2em;
+  margin-bottom: 2em;
+}
+
+.noIdContainer a {
+  font-size: 2em;
+  color: white;
+}
+
+.yearCoursesList {
+  grid-area: extension;
+  padding: 5em;
+}
+
+.yearCoursesList h2 {
+  font-size: 3em;
+  white-space: nowrap;
+}
+
+.yearCoursesList p {
+  font-size: 2em;
+  margin-bottom: 2em;
+}
+
+.yearCoursesList a {
+  font-size: 2em;
+  color: white;
 }
