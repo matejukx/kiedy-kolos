@@ -24,7 +24,7 @@ const DailyEvents = () => {
   const [localEvents, setLocalEvents] = useState();
 
   const renderEvent = (event) => (
-    <motion.div variants={itemVariants}>
+    <motion.div key={event.id} variants={itemVariants}>
       <EventCard key={event.id} event={event} />
     </motion.div>
   );

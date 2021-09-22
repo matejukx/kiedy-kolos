@@ -24,6 +24,8 @@ const EditEventModal = () => {
   const [description, setDescription] = useState('');
   const [password, setPassword] = useState('');
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   useEffect(() => {
     setInitialEventData();
     formAllGroupArray();
@@ -36,8 +38,8 @@ const EditEventModal = () => {
 
     setTypeID(eventData.eventTypeId);
     setSubjectID(eventData.subjectId);
-    setGroupID(eventData.groupIds[0]);
-    setGroupIDs([eventData.groupIds[0]]);
+    setGroupID(eventData.groupIds.length > 1 ? -1 : eventData.groupIds[0]);
+    setGroupIDs(eventData.groupIds);
 
     setDescription(eventData.description);
     setTime(dayjs(eventData.date).format('HH:mm'));
@@ -70,6 +72,8 @@ const EditEventModal = () => {
     if (response.ok) {
       dispatch(setEditEventPopup(false));
       dispatch(forceEventsRefresh());
+    } else {
+      setErrorMessage('Nieprawidłowe hasło!');
     }
   };
 
@@ -146,7 +150,7 @@ const EditEventModal = () => {
   };
 
   return (
-    <Modal>
+    <Modal errorMessage={errorMessage}>
       <h2>Edytowanie wydarzenia {chosenEventID}</h2>
       <label htmlFor='subject'>Przedmiot</label>
       <br />

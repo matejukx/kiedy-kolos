@@ -14,6 +14,8 @@ const RemoveEventModal = () => {
 
   const [password, setPassword] = useState('');
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   const deletePressed = async () => {
     const requestOptions = {
       method: 'DELETE',
@@ -31,6 +33,8 @@ const RemoveEventModal = () => {
     if (response.ok) {
       dispatch(setRemoveEventPopup(false));
       dispatch(forceEventsRefresh());
+    } else {
+      setErrorMessage('Nieprawidłowe hasło!');
     }
   };
   const cancelPressed = () => {
@@ -42,7 +46,7 @@ const RemoveEventModal = () => {
   };
 
   return (
-    <Modal>
+    <Modal errorMessage={errorMessage}>
       <h2>Usuwanie wydarzenia {chosenEventID}</h2>
       <br />
       <label className='edition__label' htmlFor='password'>

@@ -17,6 +17,8 @@ const AddGroupModal = () => {
   const [number, setNumber] = useState('');
   const [password, setPassword] = useState('');
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   const addGroup = async () => {
     const requestOptions = {
       method: 'POST',
@@ -36,6 +38,8 @@ const AddGroupModal = () => {
     if (response.ok) {
       dispatch(setAddGroupPopup(false));
       dispatch(forceAdminRefresh());
+    } else {
+      setErrorMessage('Nieprawidłowe hasło!');
     }
   };
 
@@ -62,7 +66,7 @@ const AddGroupModal = () => {
   };
 
   return (
-    <Modal>
+    <Modal errorMessage={errorMessage}>
       <h2>Dodawanie grupy</h2>
       <label htmlFor='shortName'>Nazwa</label>
       <br />

@@ -41,7 +41,9 @@ const DayFlags = ({ handleResize, events }) => {
     <div ref={flags} className='day__flags'>
       {events.length > 0 &&
         events.map((event) => (
-          <div className={`day__flag day__flag--${eventTypeDictionary[event.type]}`}>{event.subjectShortName}</div>
+          <div key={event.subjectShortName} className={`day__flag day__flag--${eventTypeDictionary[event.type]}`}>
+            {event.subjectShortName}
+          </div>
         ))}
     </div>
   );

@@ -18,6 +18,8 @@ const EditSubjectModal = () => {
   const [longName, setLongName] = useState('');
   const [password, setPassword] = useState('');
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   useEffect(() => {
     setInitialSubjectData();
   }, []);
@@ -52,6 +54,8 @@ const EditSubjectModal = () => {
     if (response.ok) {
       dispatch(setEditSubjectPopup(false));
       dispatch(forceAdminRefresh());
+    } else {
+      setErrorMessage('Nieprawidłowe hasło!');
     }
   };
 
@@ -78,7 +82,7 @@ const EditSubjectModal = () => {
   };
 
   return (
-    <Modal>
+    <Modal errorMessage={errorMessage}>
       <h2>Edytowanie przedmiotu {chosenSubjectID} </h2>
       <label htmlFor='shortName'>Pełna nazwa</label>
       <br />

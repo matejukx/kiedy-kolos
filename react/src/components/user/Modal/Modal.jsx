@@ -1,8 +1,9 @@
 import ReactDOM from 'react-dom';
 import './Modal.scss';
 import { motion } from 'framer-motion';
+import React, { useState } from 'react';
 
-const Modal = ({ children }) => {
+const Modal = ({ children, errorMessage }) => {
   return ReactDOM.createPortal(
     <>
       <motion.div
@@ -20,6 +21,7 @@ const Modal = ({ children }) => {
           transition={{ ease: [0.17, 0.67, 0.4, 0.88] }}
         >
           {children}
+          {errorMessage}
         </motion.div>
       </motion.div>
     </>,

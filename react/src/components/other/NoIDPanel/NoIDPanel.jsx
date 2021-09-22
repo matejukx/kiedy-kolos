@@ -38,7 +38,9 @@ const NoIDPanel = () => {
         </p>
 
         <h1>Kontakt</h1>
-        <a href='#'>Facebook</a>
+        <a href='https://www.facebook.com/kiedykolos/' target='_blank'>
+          Facebook
+        </a>
       </div>
       <div className='yearCoursesList'>
         <h2>Dostępne kierunki:</h2>

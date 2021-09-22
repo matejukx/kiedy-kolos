@@ -17,6 +17,8 @@ const RemoveGroupModal = () => {
 
   const [password, setPassword] = useState('');
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   const deletePressed = async () => {
     const requestOptions = {
       method: 'DELETE',
@@ -31,6 +33,8 @@ const RemoveGroupModal = () => {
     if (response.ok) {
       dispatch(setRemoveGroupPopup(false));
       dispatch(forceAdminRefresh());
+    } else {
+      setErrorMessage('Nieprawidłowe hasło!');
     }
   };
   const cancelPressed = () => {
@@ -42,7 +46,7 @@ const RemoveGroupModal = () => {
   };
 
   return (
-    <Modal>
+    <Modal errorMessage={errorMessage}>
       <h2>Usuwanie grupy {chosenGroup}</h2>
       <br />
       <label className='edition__label' htmlFor='password'>

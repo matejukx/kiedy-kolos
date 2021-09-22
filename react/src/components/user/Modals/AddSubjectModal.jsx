@@ -16,6 +16,8 @@ const AddSubjectModal = () => {
   const [longName, setLongName] = useState('');
   const [password, setPassword] = useState('');
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   const addSubject = async () => {
     const requestOptions = {
       method: 'POST',
@@ -35,6 +37,8 @@ const AddSubjectModal = () => {
     if (response.ok) {
       dispatch(setAddSubjectPopup(false));
       dispatch(forceAdminRefresh());
+    } else {
+      setErrorMessage('Nieprawidłowe hasło!');
     }
   };
 
@@ -61,7 +65,7 @@ const AddSubjectModal = () => {
   };
 
   return (
-    <Modal>
+    <Modal errorMessage={errorMessage}>
       <h2>Dodawanie przedmiotu</h2>
       <label htmlFor='shortName'>Pełna nazwa</label>
       <br />

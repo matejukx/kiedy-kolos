@@ -15,6 +15,8 @@ const EditGroupModal = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   useEffect(() => {
     setInitialGroupData();
   }, []);
@@ -49,6 +51,8 @@ const EditGroupModal = () => {
     if (response.ok) {
       dispatch(setEditGroupPopup(false));
       dispatch(forceAdminRefresh());
+    } else {
+      setErrorMessage('Nieprawidłowe hasło!');
     }
   };
 
@@ -75,7 +79,7 @@ const EditGroupModal = () => {
   };
 
   return (
-    <Modal>
+    <Modal errorMessage={errorMessage}>
       <h2>Edytowanie groupy {chosenGroup} </h2>
       <label htmlFor='shortName'>Nazwa</label>
       <br />

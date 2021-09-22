@@ -24,6 +24,8 @@ const AddEventModal = () => {
   const [description, setDescription] = useState('');
   const [password, setPassword] = useState('');
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   useEffect(() => {
     setTypeID(types[0].id);
     setSubjectID(subjects[0].id);
@@ -50,11 +52,13 @@ const AddEventModal = () => {
       }),
       mode: 'cors',
     };
-    const response = await fetch(`https://kiedykolos.bieda.it/yearCourses/${id}/Events`, requestOptions);
 
+    const response = await fetch(`https://kiedykolos.bieda.it/yearCourses/${id}/Events`, requestOptions);
     if (response.ok) {
       dispatch(setAddEventPopup(false));
       dispatch(forceEventsRefresh());
+    } else {
+      setErrorMessage('Nieprawidłowe hasło!');
     }
   };
 
@@ -108,7 +112,7 @@ const AddEventModal = () => {
   };
 
   return (
-    <Modal>
+    <Modal errorMessage={errorMessage}>
       <h2>Dodawanie wydarzenia</h2>
       <label htmlFor='subject'>Przedmiot</label>
       <br />
