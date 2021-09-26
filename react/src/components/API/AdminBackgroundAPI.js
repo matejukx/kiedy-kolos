@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import dayjs from 'dayjs';
-import { setDailyEvents } from '../../redux/slices/dailyEvents';
-import { setAllEvents } from '../../redux/slices/allEvents';
 import { setSubjects } from '../../redux/slices/subjects';
 import { setGroups } from '../../redux/slices/groups';
-import { setTypes } from '../../redux/slices/types';
-import { setChosenGroupID } from '../../redux/slices/chosenGroupIDSlice';
+import { setYearCourseInformation } from '../../redux/slices/yearCourseInformation';
 
 const AdminBackgroundAPI = () => {
   const dispatch = useDispatch();
@@ -15,53 +11,35 @@ const AdminBackgroundAPI = () => {
 
   const forceAdminRefresh = useSelector((state) => state.forceAdminRefresh.value);
 
-  const [dataDownloaded, setDataDownloaded] = useState(false);
-  const [subjectsLocal, setSubjectsLocal] = useState([]);
-  const [groupsLocal, setGroupsLocal] = useState([]);
-
   const { id } = useParams();
 
   useEffect(() => {
     downloadData();
   }, [forceAdminRefresh]);
 
-  useEffect(() => {
-    dispatch(setSubjects(subjectsLocal));
-    dispatch(setGroups(groupsLocal));
-  }, [dataDownloaded]);
-
   const getResource = async (extensionURL) => {
     const URL = baseURL + extensionURL;
-
     const response = await fetch(URL);
     const data = await response.json();
     return data.result;
   };
 
   const getSubjects = async () => {
-    const data = await getResource(`yearCourses/${id}/subjects`);
-    dispatch(setSubjects(data));
-    return data;
+    return await getResource(`yearCourses/${id}/subjects`);
   };
 
   const getGroups = async () => {
-    const data = await getResource(`yearCourses/${id}/groups`);
-    dispatch(setGroups(data));
-    return data;
+    return await getResource(`yearCourses/${id}/groups`);
+  };
+
+  const getYearCourseInformation = async () => {
+    return await getResource(`yearCourses/${id}`);
   };
 
   const downloadData = async () => {
-    setSubjectsLocal(await getSubjects());
-    setGroupsLocal(await getGroups());
-    setDataDownloaded(true);
-  };
-
-  const getPropertyFromObjectByID = (array, searchedID, searchedProperty) => {
-    for (let object of array) {
-      if (object.id == searchedID) {
-        return object[searchedProperty];
-      }
-    }
+    dispatch(setSubjects(await getSubjects()));
+    dispatch(setGroups(await getGroups()));
+    dispatch(setYearCourseInformation(await getYearCourseInformation()));
   };
 
   return null;

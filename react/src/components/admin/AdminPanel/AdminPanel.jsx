@@ -16,6 +16,7 @@ const AdminPanel = () => {
   const dispatch = useDispatch();
   const subjects = useSelector((state) => state.subjects.value);
   const groups = useSelector((state) => state.groups.value);
+  const yearCourseInformation = useSelector((state) => state.yearCourseInformation.value);
 
   const renderBarCourses = ({ id, name, shortName }) => (
     <ItemBar
@@ -67,7 +68,13 @@ const AdminPanel = () => {
           addFunction={() => dispatch(setAddGroupPopup(true))}
         />
       </div>
-      <CourseInfo course='Informatyka' university='Politechnika Gdańska' />
+      <CourseInfo
+        course={yearCourseInformation.course}
+        university={yearCourseInformation.university}
+        faculty={yearCourseInformation.faculty}
+        semester={yearCourseInformation.currentSemester}
+        year={yearCourseInformation.courseStartYear}
+      />
     </div>
   );
 };

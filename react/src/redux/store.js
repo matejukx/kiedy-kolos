@@ -35,6 +35,7 @@ import addGroupPopupReducer from './slices/addGroupPopup';
 import editGroupPopupReducer from './slices/editGroupPopup';
 import removeGroupPopupReducer from './slices/removeGroupPopup';
 import chosenGroupAdminReducer from './slices/chosenGroupAdmin';
+import yearCourseInformationReducer from './slices/yearCourseInformation';
 
 const persistConfig = {
   key: 'root',
@@ -50,6 +51,7 @@ const reducers = combineReducers({
   dailyEvents: dailyEventsReducer,
   allEvents: allEventsReducer,
   chosenSubject: chosenSubjectReducer,
+  yearCourseInformation: yearCourseInformationReducer,
 
   addEventPopup: addEventPopupReducer,
   removeEventPopup: removeEventPopupReducer,

@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import { setAddEventPopup } from '../../../redux/slices/addEventPopup';
 import { setAddGroupPopup } from '../../../redux/slices/addGroupPopup';
-import { setAddSubjectPopup } from '../../../redux/slices/addSubjectPopup';
 import { forceAdminRefresh } from '../../../redux/slices/forceAdminRefresh';
-import { forceEventsRefresh } from '../../../redux/slices/forceEventsRefresh';
 import Modal from '../Modal/Modal';
 
 const AddGroupModal = () => {
