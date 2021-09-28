@@ -49,6 +49,7 @@ const MonthPagination = () => {
       setSwipeDirection(-1);
     }
     setLastRememberedMonthOffset(monthOffset);
+    console.log(monthOffset);
   }, [monthOffset]);
 
   return (
@@ -58,7 +59,7 @@ const MonthPagination = () => {
       </Button>
       <Title>
         <motion.div key={lastRememberedMonthOffset} initial='hidden' animate='show' variants={titleVariants}>
-          {monthNames[parseInt(dayjs().format('MM')) + monthOffset - 1]}
+          {monthNames[(parseInt(dayjs().format('MM')) + monthOffset - 1) % 12]}
         </motion.div>
       </Title>
       <Button handleClick={() => dispatch(incrementMonthOffset())}>
