@@ -86,11 +86,6 @@ const EditGroupModal = () => {
       <input type='text' id='shortName' value={name} onChange={updateName} />
       <br />
       <br />
-      <label htmlFor='shortName'>Numer grupy</label>
-      <br />
-      <input type='text' id='shortName' value={number} onChange={updateNumber} />
-      <br />
-      <br />
       <label className='edition__label' htmlFor='password'>
         Hasło
       </label>

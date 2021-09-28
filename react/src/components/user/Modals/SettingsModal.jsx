@@ -34,7 +34,7 @@ const SettingsModal = () => {
       <select className='event-adder__input' id='group' value={groupID} onChange={updateGroupID}>
         {groups.map((group) => (
           <option key={group.id} value={group.id}>
-            {group.groupNumber}
+            {group.groupName}
           </option>
         ))}
       </select>

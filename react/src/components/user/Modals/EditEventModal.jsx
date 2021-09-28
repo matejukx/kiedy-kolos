@@ -172,7 +172,7 @@ const EditEventModal = () => {
         </option>
         {groups.map((group) => (
           <option key={group.id} value={group.id}>
-            {group.groupNumber}
+            {group.groupName}
           </option>
         ))}
       </select>

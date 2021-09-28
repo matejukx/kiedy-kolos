@@ -11,7 +11,7 @@ const AddGroupModal = () => {
   const { id } = useParams();
 
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const number = Math.floor(Math.random() * 10000).toString();
   const [password, setPassword] = useState('');
 
   const [errorMessage, setErrorMessage] = useState('');
@@ -44,10 +44,6 @@ const AddGroupModal = () => {
     setName(e.target.value);
   };
 
-  const updateNumber = (e) => {
-    setNumber(e.target.value);
-  };
-
   const updatePassword = (e) => {
     setPassword(e.target.value);
   };
@@ -68,11 +64,6 @@ const AddGroupModal = () => {
       <label htmlFor='shortName'>Nazwa</label>
       <br />
       <input type='text' id='groupName' value={name} onChange={updateName} />
-      <br />
-      <br />
-      <label htmlFor='shortName'>Numer grupy</label>
-      <br />
-      <input type='text' id='groupNumber' value={number} onChange={updateNumber} />
       <br />
       <br />
       <label className='edition__label' htmlFor='password'>

@@ -34,7 +34,7 @@ const AdminPanel = () => {
     </ItemBar>
   );
 
-  const renderBarGroups = ({ id, groupName, groupNumber }) => (
+  const renderBarGroups = ({ id, groupName }) => (
     <ItemBar
       key={groupName}
       handleEdit={() => {
@@ -46,7 +46,7 @@ const AdminPanel = () => {
         dispatch(setRemoveGroupPopup(true));
       }}
     >
-      {groupName} ({groupNumber})
+      {groupName}
     </ItemBar>
   );
 
