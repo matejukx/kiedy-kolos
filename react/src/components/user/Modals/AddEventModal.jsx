@@ -17,8 +17,7 @@ const AddEventModal = () => {
 
   const { id } = useParams();
   const [subjectID, setSubjectID] = useState(0);
-  const [groupID, setGroupID] = useState(0);
-  const [groupIDs, setGroupIDs] = useState([]);
+  const [groupIDs, setGroupIDs] = useState([currentlyChosenGroup.toString()]);
   const [typeID, setTypeID] = useState(0);
   const [time, setTime] = useState('12:00');
   const [description, setDescription] = useState('');
@@ -29,8 +28,7 @@ const AddEventModal = () => {
   useEffect(() => {
     setTypeID(types[0].id);
     setSubjectID(subjects[0].id);
-    setGroupID(currentlyChosenGroup);
-    setGroupIDs([currentlyChosenGroup]);
+    console.log(currentlyChosenGroup);
   }, []);
 
   const addEvent = async () => {
@@ -62,26 +60,17 @@ const AddEventModal = () => {
     }
   };
 
-  const formAllGroupArray = () => {
-    let groupsTemp = [];
-    for (let group of groups) {
-      groupsTemp.push(group.id);
-    }
-
-    return groupsTemp;
-  };
-
   const updateSubjectID = (e) => {
     setSubjectID(e.target.value);
   };
 
   const updateGroupID = (e) => {
-    setGroupID(e.target.value);
-
-    if (e.target.value == -1) {
-      setGroupIDs(formAllGroupArray());
+    if (e.target.checked) {
+      if (!groupIDs.includes(e.target.value)) {
+        setGroupIDs([...groupIDs, e.target.value]);
+      }
     } else {
-      setGroupIDs([e.target.value]);
+      setGroupIDs(groupIDs.filter((group) => group != e.target.value));
     }
   };
 
@@ -128,17 +117,19 @@ const AddEventModal = () => {
         Grupa
       </label>
       <br />
-      <select className='event-adder__input' id='group' value={groupID} onChange={updateGroupID}>
-        <option key={0} value={-1}>
-          Wszystkie
-        </option>
-        {groups.map((group) => (
-          <option key={group.id} value={group.id}>
-            {group.groupName}
-          </option>
-        ))}
-      </select>
-      <br />
+      {groups.map((group) => (
+        <label key={group.id}>
+          <input
+            type='checkbox'
+            key={group.id}
+            value={group.id}
+            onChange={(e) => updateGroupID(e)}
+            defaultChecked={groupIDs.includes(group.id.toString())}
+          />
+          {group.groupName}
+          <br />
+        </label>
+      ))}
       <label className='event-adder__label' htmlFor='type'>
         Typ
       </label>

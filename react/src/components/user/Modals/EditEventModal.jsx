@@ -16,7 +16,6 @@ const EditEventModal = () => {
 
   const { id } = useParams();
   const [subjectID, setSubjectID] = useState(0);
-  const [groupID, setGroupID] = useState(0);
   const [groupIDs, setGroupIDs] = useState([]);
   const [typeID, setTypeID] = useState(0);
   const [time, setTime] = useState('12:00');
@@ -28,7 +27,6 @@ const EditEventModal = () => {
 
   useEffect(() => {
     setInitialEventData();
-    formAllGroupArray();
   }, []);
 
   const setInitialEventData = async () => {
@@ -38,21 +36,21 @@ const EditEventModal = () => {
 
     setTypeID(eventData.eventTypeId);
     setSubjectID(eventData.subjectId);
-    setGroupID(eventData.groupIds.length > 1 ? -1 : eventData.groupIds[0]);
-    setGroupIDs(eventData.groupIds);
+    setInitialGroupIDs(eventData);
 
     setDescription(eventData.description);
     setTime(dayjs(eventData.date).format('HH:mm'));
     setDate(dayjs(eventData.date).format('YYYY-MM-DD'));
+
+    console.log(eventData.groupIds);
   };
 
-  const formAllGroupArray = () => {
-    let groupsTemp = [];
-    for (let group of groups) {
-      groupsTemp.push(group.id);
-    }
-
-    return groupsTemp;
+  const setInitialGroupIDs = (eventData) => {
+    const ids = [];
+    eventData.groupIds.forEach((id) => {
+      ids.push(id.toString());
+    });
+    setGroupIDs(ids);
   };
 
   const removeEvent = async () => {
@@ -109,12 +107,14 @@ const EditEventModal = () => {
   };
 
   const updateGroupID = (e) => {
-    setGroupID(e.target.value);
-
-    if (e.target.value == -1) {
-      setGroupIDs(formAllGroupArray());
+    if (e.target.checked) {
+      if (!groupIDs.includes(e.target.value)) {
+        console.log('Adding!');
+        setGroupIDs([...groupIDs, e.target.value]);
+      }
     } else {
-      setGroupIDs([e.target.value]);
+      console.log('Removing');
+      setGroupIDs(groupIDs.filter((group) => group != e.target.value));
     }
   };
 
@@ -166,17 +166,19 @@ const EditEventModal = () => {
         Grupa
       </label>
       <br />
-      <select className='event-adder__input' id='group' value={groupID} onChange={updateGroupID}>
-        <option key={0} value={-1}>
-          Wszystkie
-        </option>
-        {groups.map((group) => (
-          <option key={group.id} value={group.id}>
-            {group.groupName}
-          </option>
-        ))}
-      </select>
-      <br />
+      {groups.map((group) => (
+        <label key={group.id}>
+          <input
+            type='checkbox'
+            key={group.id}
+            value={group.id}
+            onChange={(e) => updateGroupID(e)}
+            checked={groupIDs.includes(group.id.toString())}
+          />
+          {group.groupName}
+          <br />
+        </label>
+      ))}
       <label className='event-adder__label' htmlFor='type'>
         Typ
       </label>
