@@ -6,13 +6,15 @@ import { forceEventsRefresh } from '../../../redux/slices/forceEventsRefresh';
 import { setRemoveEventPopup } from '../../../redux/slices/removeEventPopup';
 import Modal from '../../user/Modal/Modal';
 
-const RemoveEventModal = ({ isVisible }) => {
+const RemoveEventModal = () => {
   const dispatch = useDispatch();
   const chosenEventID = useSelector((state) => state.chosenEvent.value);
 
   const { id } = useParams();
 
   const [password, setPassword] = useState('');
+
+  const [errorMessage, setErrorMessage] = useState('');
 
   const deletePressed = async () => {
     const requestOptions = {
@@ -24,13 +26,15 @@ const RemoveEventModal = ({ isVisible }) => {
       mode: 'cors',
     };
     const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Events/${chosenEventID}`,
+      `https://kiedykolos.bieda.it/yearCourses/${id}/Events/${chosenEventID}`,
       requestOptions
     );
 
     if (response.ok) {
       dispatch(setRemoveEventPopup(false));
       dispatch(forceEventsRefresh());
+    } else {
+      setErrorMessage('Nieprawidłowe hasło!');
     }
   };
   const cancelPressed = () => {
@@ -42,7 +46,7 @@ const RemoveEventModal = ({ isVisible }) => {
   };
 
   return (
-    <Modal isVisible={isVisible}>
+    <Modal errorMessage={errorMessage}>
       <h2>Usuwanie wydarzenia {chosenEventID}</h2>
       <br />
       <label className='edition__label' htmlFor='password'>
@@ -51,10 +55,10 @@ const RemoveEventModal = ({ isVisible }) => {
       <br />
       <input type='password' id='password' name='password' placeholder='Hasło' onChange={updatePassword}></input>
       <br />
+      <br />
       <button className='event-adder__button--reject' onClick={cancelPressed}>
         Anuluj
       </button>
-      .......................
       <button className='event-adder__button--accept' onClick={deletePressed}>
         Usuń
       </button>

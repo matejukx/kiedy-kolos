@@ -11,20 +11,6 @@ import { PersistGate } from 'reduxjs-toolkit-persist/integration/react';
 import './index.css';
 import App from './App';
 
-// const persistedStore = loadState();
-// const store = createStore(
-//     allReducer,
-//     persistedStore,
-//     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-// );
-
-// store.subscribe(() => {
-//     saveState({
-//         chosenGroup: store.getState().chosenGroup,
-//         chosenTheme: store.getState().chosenTheme,
-//     });
-// });
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

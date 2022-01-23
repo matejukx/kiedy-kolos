@@ -6,20 +6,6 @@ import ItemList from '../../other/ItemList/ItemList';
 import EventCard from '../EventCard/EventCard';
 import './DailyEvents.scss';
 
-const objs = [
-  { name: 'Wytwarzanie Aplikacji Internetowych' },
-  { name: 'Grafika Komputerowa' },
-  { name: 'Architektura Komputerów' },
-  { name: 'Fizyka Współczesna' },
-  { name: 'Metody Numeryczne' },
-  { name: 'Metody Probabilistyczne' },
-  { name: 'Matematyka Elementarna' },
-  { name: 'Systemy Wbudowane i Mikroprocesory' },
-  { name: 'Heja' },
-  { name: 'Okej' },
-  { name: 'Siema' },
-];
-
 const itemVariants = {
   hidden: { opacity: 0, y: 50 },
   show: {
@@ -38,7 +24,7 @@ const DailyEvents = () => {
   const [localEvents, setLocalEvents] = useState();
 
   const renderEvent = (event) => (
-    <motion.div variants={itemVariants}>
+    <motion.div key={event.id} variants={itemVariants}>
       <EventCard key={event.id} event={event} />
     </motion.div>
   );

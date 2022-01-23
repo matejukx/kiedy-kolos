@@ -7,7 +7,7 @@ import { forceAdminRefresh } from '../../../redux/slices/forceAdminRefresh';
 import { forceEventsRefresh } from '../../../redux/slices/forceEventsRefresh';
 import Modal from '../../user/Modal/Modal';
 
-const AddSubjectModal = ({ isVisible }) => {
+const AddSubjectModal = () => {
   const dispatch = useDispatch();
 
   const { id } = useParams();
@@ -15,6 +15,8 @@ const AddSubjectModal = ({ isVisible }) => {
   const [shortName, setShortName] = useState('');
   const [longName, setLongName] = useState('');
   const [password, setPassword] = useState('');
+
+  const [errorMessage, setErrorMessage] = useState('');
 
   const addSubject = async () => {
     const requestOptions = {
@@ -30,14 +32,13 @@ const AddSubjectModal = ({ isVisible }) => {
       }),
       mode: 'cors',
     };
-    const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Subjects`,
-      requestOptions
-    );
+    const response = await fetch(`https://kiedykolos.bieda.it/yearCourses/${id}/Subjects`, requestOptions);
 
     if (response.ok) {
       dispatch(setAddSubjectPopup(false));
       dispatch(forceAdminRefresh());
+    } else {
+      setErrorMessage('Nieprawidłowe hasło!');
     }
   };
 
@@ -64,7 +65,7 @@ const AddSubjectModal = ({ isVisible }) => {
   };
 
   return (
-    <Modal isVisible={isVisible}>
+    <Modal errorMessage={errorMessage}>
       <h2>Dodawanie przedmiotu</h2>
       <label htmlFor='shortName'>Pełna nazwa</label>
       <br />
@@ -86,7 +87,6 @@ const AddSubjectModal = ({ isVisible }) => {
       <button className='event-adder__button--reject' onClick={handleCloseClick}>
         Anuluj
       </button>
-      .......................
       <button className='event-adder__button--accept' onClick={handleAcceptClick}>
         Utwórz przedmiot
       </button>

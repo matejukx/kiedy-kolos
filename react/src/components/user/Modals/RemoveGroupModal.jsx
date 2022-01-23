@@ -9,13 +9,15 @@ import { setRemoveGroupPopup } from '../../../redux/slices/removeGroupPopup';
 import { setRemoveSubjectPopup } from '../../../redux/slices/removeSubjectPopup';
 import Modal from '../Modal/Modal';
 
-const RemoveGroupModal = ({ isVisible }) => {
+const RemoveGroupModal = () => {
   const dispatch = useDispatch();
   const chosenGroup = useSelector((state) => state.chosenGroupAdmin.value);
 
   const { id } = useParams();
 
   const [password, setPassword] = useState('');
+
+  const [errorMessage, setErrorMessage] = useState('');
 
   const deletePressed = async () => {
     const requestOptions = {
@@ -26,14 +28,13 @@ const RemoveGroupModal = ({ isVisible }) => {
       },
       mode: 'cors',
     };
-    const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Groups/${chosenGroup}`,
-      requestOptions
-    );
+    const response = await fetch(`https://kiedykolos.bieda.it/yearCourses/${id}/Groups/${chosenGroup}`, requestOptions);
 
     if (response.ok) {
       dispatch(setRemoveGroupPopup(false));
       dispatch(forceAdminRefresh());
+    } else {
+      setErrorMessage('Nieprawidłowe hasło!');
     }
   };
   const cancelPressed = () => {
@@ -45,7 +46,7 @@ const RemoveGroupModal = ({ isVisible }) => {
   };
 
   return (
-    <Modal isVisible={isVisible}>
+    <Modal errorMessage={errorMessage}>
       <h2>Usuwanie grupy {chosenGroup}</h2>
       <br />
       <label className='edition__label' htmlFor='password'>
@@ -54,10 +55,10 @@ const RemoveGroupModal = ({ isVisible }) => {
       <br />
       <input type='password' id='password' name='password' placeholder='Hasło' onChange={updatePassword}></input>
       <br />
+      <br />
       <button className='event-adder__button--reject' onClick={cancelPressed}>
         Anuluj
       </button>
-      .......................
       <button className='event-adder__button--accept' onClick={deletePressed}>
         Usuń
       </button>

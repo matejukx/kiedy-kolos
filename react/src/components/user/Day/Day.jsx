@@ -16,6 +16,7 @@ const Day = ({ date, active }) => {
 
   const choosenDate = useSelector((state) => state.chosenDate.value);
   const allEvents = useSelector((state) => state.allEvents.value);
+  const [eventsForThisDay, seteventsForThisDay] = useState([]);
 
   useEffect(() => {
     if (choosenDate == date) {
@@ -24,6 +25,10 @@ const Day = ({ date, active }) => {
       setSelected(false);
     }
   }, [choosenDate]);
+
+  useEffect(() => {
+    seteventsForThisDay(allEvents.filter((event) => event.date == date));
+  }, [allEvents]);
 
   const classModifier = () => {
     if (dayjs().format('YYYY-MM-DD') == dayjs(date).format('YYYY-MM-DD')) {
@@ -42,13 +47,9 @@ const Day = ({ date, active }) => {
     dispatch(setChoosenDate(date));
   };
 
-  const eventsForThisDay = () => {
-    return allEvents.filter((event) => event.date == date);
-  };
-
   return (
     <div onClick={handleClick} ref={ref} className={`day ${classModifier()} ${selected ? 'day--selected' : ''}`}>
-      <DayFlags events={eventsForThisDay()} handleResize={setOtherCount} />
+      <DayFlags events={eventsForThisDay} handleResize={setOtherCount} />
       <DayFooter otherCount={otherCount} day={dayjs(date).format('DD')} />
     </div>
   );

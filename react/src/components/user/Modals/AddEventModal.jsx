@@ -4,8 +4,9 @@ import { useParams } from 'react-router';
 import { setAddEventPopup } from '../../../redux/slices/addEventPopup';
 import { forceEventsRefresh } from '../../../redux/slices/forceEventsRefresh';
 import Modal from '../../user/Modal/Modal';
+import './Modals.scss';
 
-const AddEventModal = ({ isVisible }) => {
+const AddEventModal = () => {
   const dispatch = useDispatch();
 
   const currentlyChosenGroup = useSelector((state) => state.chosenGroupID.value);
@@ -16,20 +17,19 @@ const AddEventModal = ({ isVisible }) => {
 
   const { id } = useParams();
   const [subjectID, setSubjectID] = useState(0);
-  const [groupID, setGroupID] = useState(0);
-  const [groupIDs, setGroupIDs] = useState([]);
+  const [groupIDs, setGroupIDs] = useState([currentlyChosenGroup.toString()]);
   const [typeID, setTypeID] = useState(0);
   const [time, setTime] = useState('12:00');
   const [description, setDescription] = useState('');
   const [password, setPassword] = useState('');
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   useEffect(() => {
-    if (!isVisible) return;
     setTypeID(types[0].id);
     setSubjectID(subjects[0].id);
-    setGroupID(currentlyChosenGroup);
-    setGroupIDs([currentlyChosenGroup]);
-  }, [isVisible]);
+    console.log(currentlyChosenGroup);
+  }, []);
 
   const addEvent = async () => {
     const requestOptions = {
@@ -50,24 +50,14 @@ const AddEventModal = ({ isVisible }) => {
       }),
       mode: 'cors',
     };
-    const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Events`,
-      requestOptions
-    );
 
+    const response = await fetch(`https://kiedykolos.bieda.it/yearCourses/${id}/Events`, requestOptions);
     if (response.ok) {
       dispatch(setAddEventPopup(false));
       dispatch(forceEventsRefresh());
+    } else {
+      setErrorMessage('Nieprawidłowe hasło!');
     }
-  };
-
-  const formAllGroupArray = () => {
-    let groupsTemp = [];
-    for (let group of groups) {
-      groupsTemp.push(group.id);
-    }
-
-    return groupsTemp;
   };
 
   const updateSubjectID = (e) => {
@@ -75,12 +65,12 @@ const AddEventModal = ({ isVisible }) => {
   };
 
   const updateGroupID = (e) => {
-    setGroupID(e.target.value);
-
-    if (e.target.value == -1) {
-      setGroupIDs(formAllGroupArray());
+    if (e.target.checked) {
+      if (!groupIDs.includes(e.target.value)) {
+        setGroupIDs([...groupIDs, e.target.value]);
+      }
     } else {
-      setGroupIDs([e.target.value]);
+      setGroupIDs(groupIDs.filter((group) => group != e.target.value));
     }
   };
 
@@ -111,7 +101,7 @@ const AddEventModal = ({ isVisible }) => {
   };
 
   return (
-    <Modal isVisible={isVisible}>
+    <Modal errorMessage={errorMessage}>
       <h2>Dodawanie wydarzenia</h2>
       <label htmlFor='subject'>Przedmiot</label>
       <br />
@@ -127,17 +117,19 @@ const AddEventModal = ({ isVisible }) => {
         Grupa
       </label>
       <br />
-      <select className='event-adder__input' id='group' value={groupID} onChange={updateGroupID}>
-        <option key={0} value={-1}>
-          Wszystkie
-        </option>
-        {groups.map((group) => (
-          <option key={group.id} value={group.id}>
-            {group.groupNumber}
-          </option>
-        ))}
-      </select>
-      <br />
+      {groups.map((group) => (
+        <label key={group.id}>
+          <input
+            type='checkbox'
+            key={group.id}
+            value={group.id}
+            onChange={(e) => updateGroupID(e)}
+            defaultChecked={groupIDs.includes(group.id.toString())}
+          />
+          {group.groupName}
+          <br />
+        </label>
+      ))}
       <label className='event-adder__label' htmlFor='type'>
         Typ
       </label>
@@ -189,9 +181,8 @@ const AddEventModal = ({ isVisible }) => {
       <button className='event-adder__button--reject' onClick={handleCloseClick}>
         Anuluj
       </button>
-      .......................
       <button className='event-adder__button--accept' onClick={handleAcceptClick}>
-        Utwórz wydarzenie
+        Utwórz
       </button>
     </Modal>
   );

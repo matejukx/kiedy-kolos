@@ -4,7 +4,7 @@ import { setChosenGroupID } from '../../../redux/slices/chosenGroupIDSlice';
 import { setSettingsPopup } from '../../../redux/slices/settingsPopup';
 import Modal from '../Modal/Modal';
 
-const SettingsModal = ({ isVisible }) => {
+const SettingsModal = () => {
   const dispatch = useDispatch();
   const groups = useSelector((state) => state.groups.value);
   const choosenGroupID = useSelector((state) => state.chosenGroupID.value);
@@ -25,7 +25,7 @@ const SettingsModal = ({ isVisible }) => {
   };
 
   return (
-    <Modal isVisible={isVisible}>
+    <Modal>
       <h2>Ustawienia</h2>
       <label className='event-adder__label' htmlFor='group'>
         Grupa
@@ -34,10 +34,11 @@ const SettingsModal = ({ isVisible }) => {
       <select className='event-adder__input' id='group' value={groupID} onChange={updateGroupID}>
         {groups.map((group) => (
           <option key={group.id} value={group.id}>
-            {group.groupNumber}
+            {group.groupName}
           </option>
         ))}
       </select>
+      <br />
       <br />
       <button onClick={() => acceptClicked()}>Akceptuj</button>
     </Modal>

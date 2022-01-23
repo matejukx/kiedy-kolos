@@ -1,21 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import { setAddEventPopup } from '../../../redux/slices/addEventPopup';
 import { setAddGroupPopup } from '../../../redux/slices/addGroupPopup';
-import { setAddSubjectPopup } from '../../../redux/slices/addSubjectPopup';
 import { forceAdminRefresh } from '../../../redux/slices/forceAdminRefresh';
-import { forceEventsRefresh } from '../../../redux/slices/forceEventsRefresh';
 import Modal from '../Modal/Modal';
 
-const AddGroupModal = ({ isVisible }) => {
+const AddGroupModal = () => {
   const dispatch = useDispatch();
 
   const { id } = useParams();
 
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const number = Math.floor(Math.random() * 10000).toString();
   const [password, setPassword] = useState('');
+
+  const [errorMessage, setErrorMessage] = useState('');
 
   const addGroup = async () => {
     const requestOptions = {
@@ -31,23 +30,18 @@ const AddGroupModal = ({ isVisible }) => {
       }),
       mode: 'cors',
     };
-    const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Groups`,
-      requestOptions
-    );
+    const response = await fetch(`https://kiedykolos.bieda.it/yearCourses/${id}/Groups`, requestOptions);
 
     if (response.ok) {
       dispatch(setAddGroupPopup(false));
       dispatch(forceAdminRefresh());
+    } else {
+      setErrorMessage('Nieprawidłowe hasło!');
     }
   };
 
   const updateName = (e) => {
     setName(e.target.value);
-  };
-
-  const updateNumber = (e) => {
-    setNumber(e.target.value);
   };
 
   const updatePassword = (e) => {
@@ -65,16 +59,11 @@ const AddGroupModal = ({ isVisible }) => {
   };
 
   return (
-    <Modal isVisible={isVisible}>
+    <Modal errorMessage={errorMessage}>
       <h2>Dodawanie grupy</h2>
       <label htmlFor='shortName'>Nazwa</label>
       <br />
-      <input type='text' id='shortName' value={name} onChange={updateName} />
-      <br />
-      <br />
-      <label htmlFor='shortName'>Numer grupy</label>
-      <br />
-      <input type='text' id='shortName' value={number} onChange={updateNumber} />
+      <input type='text' id='groupName' value={name} onChange={updateName} />
       <br />
       <br />
       <label className='edition__label' htmlFor='password'>
@@ -87,9 +76,8 @@ const AddGroupModal = ({ isVisible }) => {
       <button className='event-adder__button--reject' onClick={handleCloseClick}>
         Anuluj
       </button>
-      .......................
       <button className='event-adder__button--accept' onClick={handleAcceptClick}>
-        Utwórz grupę
+        Utwórz
       </button>
     </Modal>
   );

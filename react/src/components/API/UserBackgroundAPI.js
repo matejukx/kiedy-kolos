@@ -11,7 +11,7 @@ import { setChosenGroupID } from '../../redux/slices/chosenGroupIDSlice';
 
 const UserBackgroundAPI = () => {
   const dispatch = useDispatch();
-  const baseURL = 'https://kiedy-kolos-backend.azurewebsites.net/';
+  const baseURL = 'https://kiedykolos.bieda.it/';
 
   const forceEventsRefresh = useSelector((state) => state.forceEventsRefresh.value);
   const chosenDate = useSelector((state) => state.chosenDate.value);
@@ -36,7 +36,7 @@ const UserBackgroundAPI = () => {
     buildDayEvents(chosenDate);
   }, [dataDownloaded]);
 
-  useEffect(() => {
+  useEffect(async () => {
     buildDayEvents(chosenDate);
   }, [chosenDate]);
 

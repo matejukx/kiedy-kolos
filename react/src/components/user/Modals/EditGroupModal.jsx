@@ -1,15 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import { setAddEventPopup } from '../../../redux/slices/addEventPopup';
-import { setAddSubjectPopup } from '../../../redux/slices/addSubjectPopup';
 import { setEditGroupPopup } from '../../../redux/slices/editGroupPopup';
-import { setEditSubjectPopup } from '../../../redux/slices/editSubjectPopup';
 import { forceAdminRefresh } from '../../../redux/slices/forceAdminRefresh';
-import { forceEventsRefresh } from '../../../redux/slices/forceEventsRefresh';
 import Modal from '../Modal/Modal';
 
-const EditGroupModal = ({ isVisible }) => {
+const EditGroupModal = () => {
   const dispatch = useDispatch();
   const chosenGroup = useSelector((state) => state.chosenGroupAdmin.value);
 
@@ -19,15 +15,14 @@ const EditGroupModal = ({ isVisible }) => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   useEffect(() => {
-    if (!isVisible) return;
     setInitialGroupData();
-  }, [isVisible]);
+  }, []);
 
   const setInitialGroupData = async () => {
-    const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Groups/${chosenGroup}`
-    );
+    const response = await fetch(`https://kiedykolos.bieda.it/yearCourses/${id}/Groups/${chosenGroup}`);
 
     const json = await response.json();
     const groupData = await json.result;
@@ -51,14 +46,13 @@ const EditGroupModal = ({ isVisible }) => {
       }),
       mode: 'cors',
     };
-    const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Groups`,
-      requestOptions
-    );
+    const response = await fetch(`https://kiedykolos.bieda.it/yearCourses/${id}/Groups`, requestOptions);
 
     if (response.ok) {
       dispatch(setEditGroupPopup(false));
       dispatch(forceAdminRefresh());
+    } else {
+      setErrorMessage('Nieprawidłowe hasło!');
     }
   };
 
@@ -85,16 +79,11 @@ const EditGroupModal = ({ isVisible }) => {
   };
 
   return (
-    <Modal isVisible={isVisible}>
+    <Modal errorMessage={errorMessage}>
       <h2>Edytowanie groupy {chosenGroup} </h2>
       <label htmlFor='shortName'>Nazwa</label>
       <br />
       <input type='text' id='shortName' value={name} onChange={updateName} />
-      <br />
-      <br />
-      <label htmlFor='shortName'>Numer grupy</label>
-      <br />
-      <input type='text' id='shortName' value={number} onChange={updateNumber} />
       <br />
       <br />
       <label className='edition__label' htmlFor='password'>
@@ -107,7 +96,6 @@ const EditGroupModal = ({ isVisible }) => {
       <button className='event-adder__button--reject' onClick={handleCloseClick}>
         Anuluj
       </button>
-      .......................
       <button className='event-adder__button--accept' onClick={handleAcceptClick}>
         Edytuj
       </button>

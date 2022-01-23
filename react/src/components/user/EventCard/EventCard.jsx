@@ -18,9 +18,18 @@ const EventCard = ({ event }) => {
     dispatch(setRemoveEventPopup(true));
   };
 
+  const eventTypeDictionary = {
+    Egzamin: 'red',
+    Kolokwium: 'red',
+    Laboratorium: 'blue',
+    Projekt: 'green',
+    Wykład: 'green',
+    Inne: 'yellow',
+  };
+
   return (
     <div className='eventCard'>
-      <div className='eventCard__topbar eventCard__topbar--blue'>
+      <div className={`eventCard__topbar eventCard__topbar--${eventTypeDictionary[event.type]}`}>
         <h3 className='eventCard__title'>{event.subjectLongName}</h3>
         <div className='eventCard__buttons'>
           <Button modifier='button--transparent button--edit button--small' handleClick={() => editClicked()}>

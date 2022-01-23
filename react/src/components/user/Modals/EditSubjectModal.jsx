@@ -8,7 +8,7 @@ import { forceAdminRefresh } from '../../../redux/slices/forceAdminRefresh';
 import { forceEventsRefresh } from '../../../redux/slices/forceEventsRefresh';
 import Modal from '../Modal/Modal';
 
-const EditSubjectModal = ({ isVisible }) => {
+const EditSubjectModal = () => {
   const dispatch = useDispatch();
   const chosenSubjectID = useSelector((state) => state.chosenSubject.value);
 
@@ -18,15 +18,14 @@ const EditSubjectModal = ({ isVisible }) => {
   const [longName, setLongName] = useState('');
   const [password, setPassword] = useState('');
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   useEffect(() => {
-    if (!isVisible) return;
     setInitialSubjectData();
-  }, [isVisible]);
+  }, []);
 
   const setInitialSubjectData = async () => {
-    const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Subjects/${chosenSubjectID}`
-    );
+    const response = await fetch(`https://kiedykolos.bieda.it/yearCourses/${id}/Subjects/${chosenSubjectID}`);
 
     const json = await response.json();
     const subjectData = await json.result;
@@ -50,14 +49,13 @@ const EditSubjectModal = ({ isVisible }) => {
       }),
       mode: 'cors',
     };
-    const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Subjects`,
-      requestOptions
-    );
+    const response = await fetch(`https://kiedykolos.bieda.it/yearCourses/${id}/Subjects`, requestOptions);
 
     if (response.ok) {
       dispatch(setEditSubjectPopup(false));
       dispatch(forceAdminRefresh());
+    } else {
+      setErrorMessage('Nieprawidłowe hasło!');
     }
   };
 
@@ -84,7 +82,7 @@ const EditSubjectModal = ({ isVisible }) => {
   };
 
   return (
-    <Modal isVisible={isVisible}>
+    <Modal errorMessage={errorMessage}>
       <h2>Edytowanie przedmiotu {chosenSubjectID} </h2>
       <label htmlFor='shortName'>Pełna nazwa</label>
       <br />
@@ -106,7 +104,6 @@ const EditSubjectModal = ({ isVisible }) => {
       <button className='event-adder__button--reject' onClick={handleCloseClick}>
         Anuluj
       </button>
-      .......................
       <button className='event-adder__button--accept' onClick={handleAcceptClick}>
         Edytuj
       </button>

@@ -7,7 +7,7 @@ import { setEditEventPopup } from '../../../redux/slices/editEventPopup';
 import { forceEventsRefresh } from '../../../redux/slices/forceEventsRefresh';
 import Modal from '../../user/Modal/Modal';
 
-const EditEventModal = ({ isVisible }) => {
+const EditEventModal = () => {
   const dispatch = useDispatch();
   const subjects = useSelector((state) => state.subjects.value);
   const groups = useSelector((state) => state.groups.value);
@@ -16,7 +16,6 @@ const EditEventModal = ({ isVisible }) => {
 
   const { id } = useParams();
   const [subjectID, setSubjectID] = useState(0);
-  const [groupID, setGroupID] = useState(0);
   const [groupIDs, setGroupIDs] = useState([]);
   const [typeID, setTypeID] = useState(0);
   const [time, setTime] = useState('12:00');
@@ -24,36 +23,34 @@ const EditEventModal = ({ isVisible }) => {
   const [description, setDescription] = useState('');
   const [password, setPassword] = useState('');
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   useEffect(() => {
-    if (!isVisible) return;
     setInitialEventData();
-    formAllGroupArray();
-  }, [isVisible]);
+  }, []);
 
   const setInitialEventData = async () => {
-    const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Events/${chosenEventID}`
-    );
+    const response = await fetch(`https://kiedykolos.bieda.it/yearCourses/${id}/Events/${chosenEventID}`);
     const json = await response.json();
     const eventData = await json.result;
 
     setTypeID(eventData.eventTypeId);
     setSubjectID(eventData.subjectId);
-    setGroupID(eventData.groupIds[0]);
-    setGroupIDs([eventData.groupIds[0]]);
+    setInitialGroupIDs(eventData);
 
     setDescription(eventData.description);
     setTime(dayjs(eventData.date).format('HH:mm'));
     setDate(dayjs(eventData.date).format('YYYY-MM-DD'));
+
+    console.log(eventData.groupIds);
   };
 
-  const formAllGroupArray = () => {
-    let groupsTemp = [];
-    for (let group of groups) {
-      groupsTemp.push(group.id);
-    }
-
-    return groupsTemp;
+  const setInitialGroupIDs = (eventData) => {
+    const ids = [];
+    eventData.groupIds.forEach((id) => {
+      ids.push(id.toString());
+    });
+    setGroupIDs(ids);
   };
 
   const removeEvent = async () => {
@@ -66,13 +63,15 @@ const EditEventModal = ({ isVisible }) => {
       mode: 'cors',
     };
     const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Events/${chosenEventID}`,
+      `https://kiedykolos.bieda.it/yearCourses/${id}/Events/${chosenEventID}`,
       requestOptions
     );
 
     if (response.ok) {
       dispatch(setEditEventPopup(false));
       dispatch(forceEventsRefresh());
+    } else {
+      setErrorMessage('Nieprawidłowe hasło!');
     }
   };
 
@@ -95,10 +94,7 @@ const EditEventModal = ({ isVisible }) => {
       }),
       mode: 'cors',
     };
-    const response = await fetch(
-      `https://kiedy-kolos-backend.azurewebsites.net/yearCourses/${id}/Events`,
-      requestOptions
-    );
+    const response = await fetch(`https://kiedykolos.bieda.it/yearCourses/${id}/Events`, requestOptions);
 
     if (response.ok) {
       dispatch(setEditEventPopup(false));
@@ -111,12 +107,14 @@ const EditEventModal = ({ isVisible }) => {
   };
 
   const updateGroupID = (e) => {
-    setGroupID(e.target.value);
-
-    if (e.target.value == -1) {
-      setGroupIDs(formAllGroupArray());
+    if (e.target.checked) {
+      if (!groupIDs.includes(e.target.value)) {
+        console.log('Adding!');
+        setGroupIDs([...groupIDs, e.target.value]);
+      }
     } else {
-      setGroupIDs([e.target.value]);
+      console.log('Removing');
+      setGroupIDs(groupIDs.filter((group) => group != e.target.value));
     }
   };
 
@@ -152,7 +150,7 @@ const EditEventModal = ({ isVisible }) => {
   };
 
   return (
-    <Modal isVisible={isVisible}>
+    <Modal errorMessage={errorMessage}>
       <h2>Edytowanie wydarzenia {chosenEventID}</h2>
       <label htmlFor='subject'>Przedmiot</label>
       <br />
@@ -168,17 +166,19 @@ const EditEventModal = ({ isVisible }) => {
         Grupa
       </label>
       <br />
-      <select className='event-adder__input' id='group' value={groupID} onChange={updateGroupID}>
-        <option key={0} value={-1}>
-          Wszystkie
-        </option>
-        {groups.map((group) => (
-          <option key={group.id} value={group.id}>
-            {group.groupNumber}
-          </option>
-        ))}
-      </select>
-      <br />
+      {groups.map((group) => (
+        <label key={group.id}>
+          <input
+            type='checkbox'
+            key={group.id}
+            value={group.id}
+            onChange={(e) => updateGroupID(e)}
+            checked={groupIDs.includes(group.id.toString())}
+          />
+          {group.groupName}
+          <br />
+        </label>
+      ))}
       <label className='event-adder__label' htmlFor='type'>
         Typ
       </label>
@@ -241,10 +241,10 @@ const EditEventModal = ({ isVisible }) => {
       <br />
       <input type='password' id='password' name='password' placeholder='Hasło' onChange={updatePassword}></input>
       <br />
+      <br />
       <button className='event-adder__button--reject' onClick={closeClicked}>
         Anuluj
       </button>
-      .......................
       <button className='event-adder__button--accept' onClick={acceptClicked}>
         Edytuj wydarzenie
       </button>
