@@ -225,6 +225,7 @@ body {
   font-size: 3rem;
   font-weight: normal;
   color: var(--color-font-light);
+  width: 12rem;
 }
 
 .month__button {
